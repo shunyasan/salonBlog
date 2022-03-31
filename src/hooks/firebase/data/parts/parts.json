@@ -1,0 +1,72 @@
+{
+	"parts_category": {
+		"A000001": {
+			"name": "顔（鼻から上）",
+			"set": false
+		},
+		"A000002": {
+			"name": "顔（鼻から下）",
+			"set": false
+		},
+		"A000003": {
+			"name": "顔セット",
+			"set": true
+		},
+		"A000004": {
+			"name": "腕",
+			"set": false
+		},
+		"A000005": {
+			"name": "脚",
+			"set": false
+		},
+		"A000006": {
+			"name": "四肢セット",
+			"set": true
+		},
+		"A000007": {
+			"name": "体幹前面",
+			"set": false
+		},
+		"A000008": {
+			"name": "体幹後面",
+			"set": false
+		},
+		"A000009": {
+			"name": "体幹セット",
+			"set": true
+		},
+		"A000010": {
+			"name": "VIO",
+			"set": false
+		},
+		"A000011": {
+			"name": "VIOセット",
+			"set": true
+		},
+		"A000012": {
+			"name": "全身",
+			"set": true
+		},
+		"A000013": {
+			"name": "セレクト",
+			"set": false
+		},
+		"A000014": {
+			"name": "時間",
+			"set": false
+		},
+		"A000015": {
+			"name": "範囲",
+			"set": false
+		},
+		"A000016": {
+			"name": "上半身セット",
+			"set": true
+		},
+		"A000017": {
+			"name": "下半身セット",
+			"set": true
+		}
+	}
+}
