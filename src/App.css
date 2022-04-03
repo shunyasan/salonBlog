@@ -223,8 +223,7 @@
   animation-duration: 0.5s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-  margin-top: 2rem;
-  margin-bottom: -3rem;
+  padding-top: 2rem;
 }
 @keyframes detailServiceOpenAnime {
   0% {
@@ -256,7 +255,7 @@
     display: none;
   }
   70% {
-    height: 6rem;
+    height: 28rem;
     display: block;
     opacity: 0;
   }
@@ -270,14 +269,14 @@
   animation-duration: 0.5s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-  margin-top: 0;
+  padding-top: 0;
 }
 @keyframes detailServiceCloseClinicAnime {
   0% {
     opacity: 1;
   }
   30% {
-    height: 6rem;
+    height: 28rem;
     opacity: 0;
   }
   100% {

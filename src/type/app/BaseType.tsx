@@ -1,28 +1,19 @@
-import { AboutCategory, ApiBaseParts } from "../api/ApiType";
+import { AboutCategory } from "../api/AboutCategory";
+import { BaseParts } from "../api/BaseParts";
 
 export type ViewCard = {
   name: string;
   number: number;
 };
 
-export type CardName = {
-  first: string;
-  second: string;
-  third: string;
-  fourth: string;
-  fifth: string;
-  sixth: string;
-  seventh: string;
-};
-
 export type QueryOrderPlan = {
   gender: string | null;
-  skinCollor: string | null;
-  hair: string | null;
   paySystem: string | null;
   originParts: string | null;
   AboutCategory: string | null;
   parts: string | null;
+  skinCollor: string | null;
+  hair: string | null;
 };
 
 export type HomeFeatureText = {
@@ -44,12 +35,12 @@ export type OptionServiceText = {
 
 export type OrderPlan = {
   gender: string;
-  skinCollor: string;
-  hair: string;
   paySystem: string;
   originParts: string;
   AboutCategory: string;
   parts: string | null;
+  skinCollor: string | null;
+  hair: string | null;
 };
 
 export type AboutCategoryByName = {
@@ -62,21 +53,21 @@ export type AboutCategoryByName = {
 };
 
 export type BasePartsByName = {
-  upperFace: ApiBaseParts[];
-  lowerFace: ApiBaseParts[];
-  faceSet: ApiBaseParts[];
-  arm: ApiBaseParts[];
-  leg: ApiBaseParts[];
-  limb: ApiBaseParts[];
-  frontBody: ApiBaseParts[];
-  backBody: ApiBaseParts[];
-  bodySet: ApiBaseParts[];
-  vio: ApiBaseParts[];
-  vioSet: ApiBaseParts[];
-  allBody: ApiBaseParts[];
-  select: ApiBaseParts[];
-  time: ApiBaseParts[];
-  range: ApiBaseParts[];
-  upperBody: ApiBaseParts[];
-  lowerBody: ApiBaseParts[];
+  upperFace: BaseParts[];
+  lowerFace: BaseParts[];
+  faceSet: BaseParts[];
+  arm: BaseParts[];
+  leg: BaseParts[];
+  limb: BaseParts[];
+  frontBody: BaseParts[];
+  backBody: BaseParts[];
+  bodySet: BaseParts[];
+  vio: BaseParts[];
+  vioSet: BaseParts[];
+  allBody: BaseParts[];
+  select: BaseParts[];
+  time: BaseParts[];
+  range: BaseParts[];
+  upperBody: BaseParts[];
+  lowerBody: BaseParts[];
 };

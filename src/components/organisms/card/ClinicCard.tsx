@@ -16,16 +16,27 @@ import {
 } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { PriceApi } from "../../../hooks/api/PriceApi";
-import { ClinicOptionHook } from "../../../hooks/app/ClinicOptionHook";
+import { SalonListHook } from "../../../hooks/app/salon/search/SalonListHook";
 import clinicImg from "../../../resorces/clinic.jpg";
-import { ApiOnlyPrice, ClinicNestPrice } from "../../../type/api/ApiType";
+import {
+  ApiOnlyPrice,
+  ClinicNestPrice,
+  PagenationParameter,
+} from "../../../type/api/ApiType";
 import { OptionText } from "../../../type/app/BaseType";
 import { InlineTitleBadge } from "../../atoms/badge/InlineTitleBadge";
+import { FreeServiceTable } from "../../atoms/table/FreeServiceTable";
+import { OpeningHoursTable } from "../../atoms/table/OpeningHoursTable";
+import { PaymentRerationsTable } from "../../atoms/table/PaymentRerationsTable";
 import { SmallPlanCard } from "../../molecules/card/SmallPlanCard";
 
 type Props = {
   clinic: ClinicNestPrice;
 };
+
+const take = 10;
+const skip = 2;
+
 export const ClinicCard: VFC<Props> = memo((props) => {
   const { clinic } = props;
   const [freeOption, setFreeOption] = useState<string>("");
@@ -35,12 +46,13 @@ export const ClinicCard: VFC<Props> = memo((props) => {
   const [detailViewClass, setDetailViewClass] =
     useState<string>("defaultDisplayNone");
 
-  const { checkFreeOption, newOptionFunc } = ClinicOptionHook();
+  const { checkFreeOption, newOptionFunc } = SalonListHook();
   const { getPriceByClinicId } = PriceApi();
 
   const getApiPrice = useCallback(
     async (clinicId: string) => {
-      const data = await getPriceByClinicId(clinicId);
+      const query: PagenationParameter = { take, skip };
+      const data = await getPriceByClinicId(clinicId, query);
       setAdditionalPrice(data);
     },
     [getPriceByClinicId]
@@ -89,58 +101,30 @@ export const ClinicCard: VFC<Props> = memo((props) => {
           <Box pb={"2px"}>{clinic.name}</Box>
           <Image maxH={"80%"} src={clinicImg} />
         </Box>
-        <Stack h={"100%"} w={"55%"} spacing={"8px"}>
-          <Box mb={"1rem"}>
-            <InlineTitleBadge bg={"originBlack"} color={"originWhite"}>
-              無料サービス
-            </InlineTitleBadge>
-            <Text>{freeOption}</Text>
-          </Box>
-          <Flex wrap={"wrap"} justifyContent={"space-evenly"}>
-            {payment.map((data, i) => (
-              <Box key={i}>
-                <InlineTitleBadge fontSize={"1px"}>
-                  {data.name}
-                </InlineTitleBadge>
-                <Text pt={"2px"} fontSize={"0.8rem"}>
-                  {data.text || "不明"}
-                </Text>
-              </Box>
-            ))}
-          </Flex>
+        <Stack
+          h={"100%"}
+          w={"55%"}
+          spacing={"1rem"}
+          alignContent={"space-evenly"}
+        >
           <Box>
-            <Table variant={"unstyled"} size={"sm"}>
-              <Thead>
-                <Tr>
-                  <Th>診察時間</Th>
-                  <Th>月</Th>
-                  <Th>火</Th>
-                  <Th>水</Th>
-                  <Th>木</Th>
-                  <Th>金</Th>
-                  <Th>土</Th>
-                  <Th>日</Th>
-                  <Th>祝</Th>
-                </Tr>
-              </Thead>
-              <Tbody fontSize={"1rem"}>
-                {clinic.clinicOpeningHours.map((hours, int) => (
-                  <Tr key={int}>
-                    <Td>
-                      {hours.startHours}〜{hours.endHours}
-                    </Td>
-                    <Td>{hours.mon ? "〇" : "-"}</Td>
-                    <Td>{hours.thu ? "〇" : "-"}</Td>
-                    <Td>{hours.wed ? "〇" : "-"}</Td>
-                    <Td>{hours.thir ? "〇" : "-"}</Td>
-                    <Td>{hours.fri ? "〇" : "-"}</Td>
-                    <Td>{hours.sat ? "〇" : "-"}</Td>
-                    <Td>{hours.sun ? "〇" : "-"}</Td>
-                    <Td>{hours.hol ? "〇" : "-"}</Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
+            <InlineTitleBadge bg={"originWhite"}>無料サービス</InlineTitleBadge>
+            <Box mt={"0.5rem"}>
+              <FreeServiceTable datas={clinic.clinicOption} />
+            </Box>
+            {/* <Text>{freeOption}</Text> */}
+          </Box>
+          <Box>
+            <InlineTitleBadge bg={"originWhite"}>診察時間</InlineTitleBadge>
+            <Box mt={"0.5rem"} maxW={"80%"} mx={"auto"}>
+              <OpeningHoursTable datas={clinic.clinicOpeningHours} />
+            </Box>
+          </Box>
+          <Box>
+            <InlineTitleBadge fontSize={"1px"}>支払い関連</InlineTitleBadge>
+            <Box mt={"0.5rem"} maxW={"60%"} mx={"auto"}>
+              <PaymentRerationsTable datas={payment} />
+            </Box>
           </Box>
           <Box textAlign={"left"} pt={"1rem"}>
             <Text fontSize={"0.6rem"}>
@@ -177,19 +161,24 @@ export const ClinicCard: VFC<Props> = memo((props) => {
           </Box>
         ))}
       </Flex>
-      <Flex
-        className={detailViewClass}
-        wrap={"wrap"}
-        w={"90%"}
-        m={"auto"}
-        justifyContent={"space-around"}
-      >
-        {additionalPrice.map((data, int) => (
-          <Box w={"45%"} m={"0.7rem"} key={int}>
-            <SmallPlanCard price={data} />
-          </Box>
-        ))}
-      </Flex>
+      <Box className={detailViewClass}>
+        <Flex
+          wrap={"wrap"}
+          w={"90%"}
+          m={"auto"}
+          justifyContent={"space-around"}
+        >
+          {additionalPrice.map((data, int) => (
+            <Box w={"45%"} m={"0.7rem"} key={int}>
+              <SmallPlanCard price={data} />
+            </Box>
+          ))}
+        </Flex>
+        <Button variant={"whiteNotSpace"} p={"5px 10px"} my={"1rem"}>
+          他のプランも見る
+        </Button>
+      </Box>
+
       <Link
         display={"inline-block"}
         fontSize={"0.7rem"}

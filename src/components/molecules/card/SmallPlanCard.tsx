@@ -35,7 +35,7 @@ export const SmallPlanCard: VFC<Props> = memo((props) => {
       </HStack>
       <HStack>
         <Box textAlign={"center"} display={"inline-block"}>
-          <InlineTitleBadge>価格</InlineTitleBadge>
+          <InlineTitleBadge>総額</InlineTitleBadge>
           <Text fontSize="1.3rem">
             ¥{price.price.toLocaleString()}
             {/* <Text as={"a"} fontSize={"0.6rem"}>

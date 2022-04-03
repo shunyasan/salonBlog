@@ -20,7 +20,7 @@ export const StaffGenderText: VFC<Props> = memo((props) => {
       ) : (
         ""
       )}
-      <Text display={"inline"} fontSize={"0.8rem"}>
+      <Text ml={"5px"} display={"inline"} fontSize={"0.8rem"}>
         が施術
       </Text>
     </Box>

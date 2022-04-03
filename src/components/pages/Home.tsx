@@ -6,7 +6,7 @@ import { useHistory } from "react-router";
 import testImg from "../../resorces/top-image.jpg";
 import textImg from "../../resorces/22223019_l.jpg";
 import clinicImg from "../../resorces/clinic.jpg";
-import { SearchButton } from "../atoms/button/SearchButton";
+import { BaseButton } from "../atoms/button/BaseButton";
 import { HomeFeaturesBoxList } from "../organisms/boxList/HomeFeaturesBoxList";
 import { HomeSearchBoxList } from "../organisms/boxList/HomeSearchBoxList";
 
@@ -25,7 +25,7 @@ export const Home: VFC = memo(() => {
           color={"#fff"}
         >
           <Text>あなたの脱毛</Text>
-          <SearchButton
+          <BaseButton
             text={"プランを探す"}
             path={"/salon"}
             size={"lg"}
@@ -52,7 +52,7 @@ export const Home: VFC = memo(() => {
             </Box>
           </Flex>
           {/* <Box textAlign={"center"} mt={"2rem"}>
-						<SearchButton
+						<BaseButton
 							text={"プランを探す"}
 							path={"/salon"}
 							size={"lg"}

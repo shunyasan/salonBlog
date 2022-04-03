@@ -15,62 +15,57 @@ import {
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { CardName } from "../../../enums/SerchSalonCardName";
-import { SalonListHook } from "../../../hooks/app/search/SalonListHook";
-import {
-  LocalConditionData,
-  OrderPlanIdName,
-  PlanResaerch,
-  ViewDataIdName,
-} from "../../../type/app/ViewTypeFromApi";
-import { PartsSelect } from "../../atoms/select/PartsSelect";
+import { SalonListHook } from "../../../hooks/app/salon/search/SalonListHook";
+import { IdAndNameDto } from "../../../type/api/dto/IdAndNameDto";
+import { OrderPlanIdName } from "../../../type/app/ViewTypeFromApi";
 import { ConditionText } from "../../atoms/text/ConditionText";
+import { PartsSelectBox } from "../../molecules/box/PartsSelectBox";
 
 type Props = {
   OrderPlan: OrderPlanIdName;
   isOpen: boolean;
   onClose: () => void;
+  resetPages: () => void;
 };
 
 export const PlanResearchModal: VFC<Props> = memo((props) => {
-  const { OrderPlan, isOpen, onClose } = props;
+  const { OrderPlan, isOpen, onClose, resetPages } = props;
+  const { getResearchCardData, createParameter } = SalonListHook();
+
   const [orderData, setOrderData] = useState<OrderPlanIdName>();
-  const [planResearchData, setPlanResearchData] = useState<PlanResaerch>();
+  const [partsAndCategory, setPartsAndCategory] = useState<{
+    originCategory: IdAndNameDto[];
+    aboutCategory: IdAndNameDto[];
+    parts: IdAndNameDto[];
+  }>();
 
-  const { createConditionData } = SalonListHook();
-  const history = useHistory();
-
-  const returnConditionData = useCallback(
+  const getAllPartsAndCategory = useCallback(
     async (orderParams: OrderPlanIdName) => {
-      return await createConditionData(orderParams);
-    },
-    [createConditionData]
-  );
-
-  const returnLocalConditionData = useCallback(
-    async (orderParams: OrderPlanIdName) => {
-      const conditionData = await returnConditionData(orderParams);
-      setPlanResearchData({
-        local: conditionData.local,
-        parts: conditionData.parts,
-      });
+      const data = await getResearchCardData(
+        orderParams.originParts.id,
+        orderParams.AboutCategory.id,
+        orderParams.parts?.id
+      );
+      setPartsAndCategory(data);
       setOrderData({
         gender: orderParams.gender,
         skinCollor: orderParams.skinCollor,
         hair: orderParams.hair,
         paySystem: orderParams.paySystem,
-        originParts: orderParams.originParts,
-        AboutCategory: orderParams.AboutCategory,
-        parts: orderParams.parts,
+        originParts: data.originCategory[0],
+        AboutCategory: data.aboutCategory[0],
+        parts: data.parts[0],
       });
+      return data;
     },
-    [returnConditionData]
+    [getResearchCardData]
   );
 
   const checkNewAboutPartsData = useCallback(
     (newOrderData: OrderPlanIdName, key: string, name: string, id: string) => {
       if (key === "広域カテゴリ") {
         newOrderData.originParts = { id, name };
-        newOrderData.AboutCategory = { id, name };
+        newOrderData.AboutCategory = { id: "", name: "" };
         newOrderData.parts = null;
       } else if (key === "詳細カテゴリ") {
         newOrderData.AboutCategory = { id, name };
@@ -98,54 +93,23 @@ export const PlanResearchModal: VFC<Props> = memo((props) => {
         const checkedParts: OrderPlanIdName = id
           ? checkNewAboutPartsData(newOrderData, key, name, id)
           : newOrderData;
-        await returnLocalConditionData(checkedParts);
-        console.log(orderData);
+        await getAllPartsAndCategory(checkedParts);
       }
     },
-    [returnLocalConditionData, orderData, checkNewAboutPartsData]
-  );
-
-  const createParam = useCallback((key: string, value: string) => {
-    return `${key}=${value}&`;
-  }, []);
-
-  const checkNoneParameter = useCallback(
-    (cardName: string, id: string) => {
-      if (id === "none") {
-        return "";
-      } else {
-        return createParam(cardName, id);
-      }
-    },
-    [createParam]
+    [getAllPartsAndCategory, orderData, checkNewAboutPartsData]
   );
 
   const researchPlan = useCallback(async () => {
     if (orderData) {
-      let newParams: string = "";
-      newParams += createParam(CardName.first, orderData.gender);
-      newParams += createParam(CardName.second, orderData.skinCollor);
-      newParams += createParam(CardName.third, orderData.hair);
-      newParams += createParam(CardName.fourth, orderData.paySystem);
-      newParams += createParam(CardName.fifth, orderData.originParts.id);
-      newParams += orderData.AboutCategory
-        ? checkNoneParameter(CardName.sixth, orderData.AboutCategory.id)
-        : "";
-      newParams += orderData.parts
-        ? checkNoneParameter(CardName.seventh, orderData.parts.id)
-        : "";
-      history.push({
-        pathname: "/salon/search",
-        search: `?${newParams}`,
-      });
+      createParameter(orderData);
       onClose();
+      resetPages();
     }
-  }, [history, createParam, checkNoneParameter, orderData, onClose]);
+  }, [orderData, createParameter, onClose, resetPages]);
 
   useEffect(() => {
-    returnLocalConditionData(OrderPlan);
-    console.log("tes");
-  }, [returnLocalConditionData, OrderPlan]);
+    getAllPartsAndCategory(OrderPlan);
+  }, [getAllPartsAndCategory, OrderPlan]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -154,37 +118,60 @@ export const PlanResearchModal: VFC<Props> = memo((props) => {
         <ModalCloseButton />
         <ModalBody p={"2rem"}>
           <Stack m={"auto"} textAlign={"center"} spacing={"2rem"}>
-            {planResearchData?.local.map((data, int) => (
-              <ConditionText
-                key={int}
-                title={data.title}
-                orderData={data.orderData}
-                texts={data.texts}
-                onClick={(name: string) => getSetOrderData(data.title, name)}
-              />
-            ))}
-            {planResearchData?.parts.map((part, int) => (
-              <Box key={int}>
-                <Center
-                  w={"30%"}
-                  display={"inline-block"}
-                  bg={"originLiteGray"}
-                  border={"1px"}
-                  borderColor={"originBlack"}
-                >
-                  {part.title}
-                </Center>
-                <Box w={"70%"} display={"inline-block"}>
-                  <PartsSelect
-                    data={part.value}
-                    noneValue={"未指定"}
-                    onChange={(name: string, id: string) =>
-                      getSetOrderData(part.title, name, id)
-                    }
-                  />
-                </Box>
-              </Box>
-            ))}
+            {orderData && partsAndCategory ? (
+              <>
+                <ConditionText
+                  title={"性別"}
+                  orderData={orderData.gender}
+                  texts={["女性", "男性"]}
+                  onClick={(name: string) => getSetOrderData("性別", name)}
+                />
+                <ConditionText
+                  title={"料金体系"}
+                  orderData={orderData.paySystem}
+                  texts={["総額", "１回分"]}
+                  onClick={(name: string) => getSetOrderData("料金体系", name)}
+                />
+                <PartsSelectBox
+                  title={"広域カテゴリ"}
+                  data={partsAndCategory.originCategory}
+                  noneValue={"未指定"}
+                  onChange={(name: string, id: string) =>
+                    getSetOrderData("広域カテゴリ", name, id)
+                  }
+                />
+                <PartsSelectBox
+                  title={"詳細カテゴリ"}
+                  data={partsAndCategory.aboutCategory}
+                  noneValue={"未指定"}
+                  onChange={(name: string, id: string) =>
+                    getSetOrderData("詳細カテゴリ", name, id)
+                  }
+                />
+                <PartsSelectBox
+                  title={"部位"}
+                  data={partsAndCategory.parts}
+                  noneValue={"未指定"}
+                  onChange={(name: string, id: string) =>
+                    getSetOrderData("部位", name, id)
+                  }
+                />
+                <ConditionText
+                  title={"肌色"}
+                  orderData={orderData.skinCollor || "未選択"}
+                  texts={["白色", "薄茶色", "色黒", "未選択"]}
+                  onClick={(name: string) => getSetOrderData("肌色", name)}
+                />
+                <ConditionText
+                  title={"毛量"}
+                  orderData={orderData.hair || "未選択"}
+                  texts={["産毛", "標準", "太い", "未選択"]}
+                  onClick={(name: string) => getSetOrderData("毛量", name)}
+                />
+              </>
+            ) : (
+              ""
+            )}
           </Stack>
           <Center mt={"2rem"}>
             <Button

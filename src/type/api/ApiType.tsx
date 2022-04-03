@@ -1,60 +1,10 @@
-export type AboutCategory = {
-  id: string;
-  name: string;
-  set: boolean;
-  originId: string;
-  imgUrlMen: string;
-  imgUrlLady: string;
-  tableName: string;
-  origin?: string;
-  baseParts?: ApiParts[];
-};
-
-export type ApiParts = {
-  id: string;
-  name: string;
-  places: number;
-};
-
-export type ApiBaseParts = {
-  id: string;
-  name: string;
-  description: string;
-  aboutCategoryId: string;
-};
-
-export type OriginCategory = {
-  id: string;
-  name: string;
-  imgUrlMen: string;
-  imgUrlLady: string;
-  aboutCategory?: AboutCategory[];
-};
-
-export type PartsIdNameDto = {
-  id: string;
-  name: string;
-};
-
-export type IdAndNameDto = {
-  id: string;
-  name: string;
-};
-
-export type ApiOrderPlan = {
-  gender: string;
-  skinCollor: string;
-  hair: string;
-  paySystem: string;
-  originCategoryId: string;
-  aboutCategoryId: string;
-  partsId: string | null;
-};
+import { IdAndNameDto } from "./dto/IdAndNameDto";
+import { Parts } from "./Parts";
 
 export type ApiIncludePartsAndCategoryPriceDto = {
-  originCategory: PartsIdNameDto;
-  aboutCategory: PartsIdNameDto;
-  baseParts: PartsIdNameDto;
+  originCategory: IdAndNameDto;
+  aboutCategory: IdAndNameDto;
+  baseParts: IdAndNameDto;
   prices: ApiPrice[];
 };
 
@@ -69,7 +19,7 @@ export type ApiPrice = {
   clinicId: string;
   clinic: ApiClinic;
   partsId: string;
-  parts: ApiParts;
+  parts: Parts;
 };
 
 export type ApiOnlyPrice = {
@@ -160,15 +110,22 @@ export type ApiMachine = {
   machineShrId: string;
 };
 
-export type ApiCliniArea = {
+export type ApiClinicArea = {
   id: string;
   area: string;
+  description: string;
+  registrationNumber: number;
 };
 
 export type ApiClinicGroup = {
   id: string;
   exampleClinic: string;
   groupName: string;
+};
+
+export type PagenationParameter = {
+  take: number;
+  skip: number;
 };
 
 ////

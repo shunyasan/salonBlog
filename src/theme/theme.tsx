@@ -30,6 +30,8 @@ const theme = extendTheme({
     originGray: "#b7b7b7",
     originLiteGray: "#e1e1e1",
     originGold: "#a59968",
+    SeeThroughGold: "#ebdfc2",
+    SeeThroughBlue: "#d9eeff",
   },
   components: {
     Button: {
@@ -37,12 +39,13 @@ const theme = extendTheme({
         color: "originWhite",
         backgroundColor: "originBlack",
         borderRadius: "1px",
+        borderColor: "originBlack",
         _hover: {
           backgroundColor: "originGray",
         },
         _focus: {
           boxShadow: "none",
-          backgroundColor: "originGray",
+          backgroundColor: "none",
           outline: "none",
         },
       },
@@ -67,6 +70,12 @@ const theme = extendTheme({
           backgroundColor: "originWhite",
           borderBottom: "2px",
           borderColor: "originBlack",
+        },
+        whiteNotSpace: {
+          color: "originBlack",
+          backgroundColor: "originWhite",
+          h: "100%",
+          border: "2px",
         },
       },
     },

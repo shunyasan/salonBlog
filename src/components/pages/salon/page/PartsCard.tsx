@@ -13,13 +13,10 @@ import {
 import { PartsButton } from "../../../atoms/button/PartsButton";
 import { Image } from "@chakra-ui/react";
 import { QueryOrderPlan } from "../../../../type/app/BaseType";
-import {
-  AboutCategory,
-  IdAndNameDto,
-  PartsIdNameDto,
-} from "../../../../type/api/ApiType";
 import { AboutCategoryApi } from "../../../../hooks/api/AboutCategoryApi";
 import { BasePartsApi } from "../../../../hooks/api/BasePartsApi";
+import { AboutCategory } from "../../../../type/api/AboutCategory";
+import { IdAndNameDto } from "../../../../type/api/dto/IdAndNameDto";
 
 type Props = {
   setPartsData: (data: any) => void;
@@ -59,7 +56,7 @@ export const PartsCard: VFC<Props> = memo((props) => {
 
   const getPartsById = useCallback(async () => {
     if (orderPlan.AboutCategory) {
-      const res: PartsIdNameDto[] = await getAllBasePartsIdAndName(
+      const res: IdAndNameDto[] = await getAllBasePartsIdAndName(
         orderPlan.AboutCategory
       );
       console.log(res);

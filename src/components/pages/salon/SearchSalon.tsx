@@ -5,7 +5,7 @@ import { useHistory, useLocation } from "react-router";
 import { CardName } from "../../../enums/SerchSalonCardName";
 import { QueryOrderPlan, ViewCard } from "../../../type/app/BaseType";
 import { CompleteBadge } from "../../atoms/badge/CompleteBadge";
-import { SearchButton } from "../../atoms/button/SearchButton";
+import { BaseButton } from "../../atoms/button/BaseButton";
 import { AboutPartsSelectCard } from "./page/AboutPartsSelectCard";
 import { GenderCard } from "./page/GenderCard";
 import { HairCard } from "./page/HairCard";
@@ -42,7 +42,6 @@ export const SearchSalon: VFC = memo(() => {
       skinCollor: query.get("skinCollor"),
       hair: query.get("hair"),
       paySystem: query.get("paySystem"),
-
       originParts: query.get("originParts"),
       AboutCategory: query.get("AboutCategory"),
       parts: query.get("parts"),
@@ -126,6 +125,7 @@ export const SearchSalon: VFC = memo(() => {
     setNewParams("");
   }, [history, prevParamsData]);
 
+  // 検索ボタン
   const findPlan = useCallback(async () => {
     history.push({
       pathname: "/salon/search",
@@ -169,47 +169,47 @@ export const SearchSalon: VFC = memo(() => {
           <CompleteBadge number={7} selected={showNumber >= 6} />
         </Center>
       </Box>
-      {/* 部位別を選択 */}
+      {/* 毛量を選択 */}
       {showNumber === 6 && queryOrderPlan ? (
+        <HairCard
+          setHairData={(data) => selectParamsData(data, CardName.seventh)}
+        />
+      ) : null}
+      {/* 肌色を選択 */}
+      {showNumber === 5 && queryOrderPlan ? (
+        <SkinCollorCard
+          setSkinCollorData={(data) => selectParamsData(data, CardName.sixth)}
+        />
+      ) : null}
+      {/* 部位別を選択 */}
+      {showNumber === 4 && queryOrderPlan ? (
         <PartsCard
-          setPartsData={(data) => selectParamsData(data, CardName.seventh)}
+          setPartsData={(data) => selectParamsData(data, CardName.fifth)}
           orderPlan={queryOrderPlan}
         />
       ) : null}
       {/* 大まかな部位を選ぶ */}
-      {showNumber === 5 && queryOrderPlan ? (
+      {showNumber === 3 && queryOrderPlan ? (
         <AboutPartsSelectCard
           setAboutPartsSelectData={(data) =>
-            selectParamsData(data, CardName.sixth)
+            selectParamsData(data, CardName.fourth)
           }
           orderPlan={queryOrderPlan}
         />
       ) : null}
       {/* カテゴリを選ぶ */}
-      {showNumber === 4 && queryOrderPlan ? (
+      {showNumber === 2 && queryOrderPlan ? (
         <OriginPartsSelectCard
           setOriginPartsSelectData={(data) =>
-            selectParamsData(data, CardName.fifth)
+            selectParamsData(data, CardName.third)
           }
           orderPlan={queryOrderPlan}
         />
       ) : null}
-      {/* 毛量を選択 */}
-      {showNumber === 3 && queryOrderPlan ? (
-        <PriceViewCard
-          selectParamsData={(data) => selectParamsData(data, CardName.fourth)}
-        />
-      ) : null}
-      {/* 毛量を選択 */}
-      {showNumber === 2 && queryOrderPlan ? (
-        <HairCard
-          setHairData={(data) => selectParamsData(data, CardName.third)}
-        />
-      ) : null}
-      {/* 肌色を選択 */}
+      {/* 料金表示を選択 */}
       {showNumber === 1 && queryOrderPlan ? (
-        <SkinCollorCard
-          setSkinCollorData={(data) => selectParamsData(data, CardName.second)}
+        <PriceViewCard
+          selectParamsData={(data) => selectParamsData(data, CardName.second)}
         />
       ) : null}
       {/* 性別を選択する */}
@@ -236,7 +236,7 @@ export const SearchSalon: VFC = memo(() => {
           </Button>
         )}
       </Box>
-      {showNumber > 4 && (
+      {showNumber > 2 && (
         <Box>
           <Center m="14" textAlign="center">
             <Button
@@ -254,7 +254,7 @@ export const SearchSalon: VFC = memo(() => {
         </Box>
       )}
       <Center m="16">
-        <SearchButton text={"TOPに戻る"} path={"/"} />
+        <BaseButton text={"TOPに戻る"} path={"/"} />
         {/* <Button bg={"red"} onClick={importFunc}>
 					import
 				</Button> */}

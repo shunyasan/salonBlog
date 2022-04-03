@@ -4,13 +4,9 @@ import { AbobutCategiryId } from "../../../enums/AbobutCategiryIdEnum";
 import { OriginCategiryId } from "../../../enums/OriginCategiryIdEnum";
 import { AboutCategoryApi } from "../../../hooks/api/AboutCategoryApi";
 import { BasePartsApi } from "../../../hooks/api/BasePartsApi";
-import { AboutCategoryHook } from "../../../hooks/app/AboutCategoryHook";
-import { OriginCategoryHook } from "../../../hooks/app/OriginCategoryHook";
-import {
-  AboutCategory,
-  ApiBaseParts,
-  OriginCategory,
-} from "../../../type/api/ApiType";
+import { TreatmentPartsHook } from "../../../hooks/app/treatment-parts/TreatmentPartsHook";
+import { AboutCategory } from "../../../type/api/AboutCategory";
+import { BaseParts } from "../../../type/api/BaseParts";
 import {
   AboutCategoryByName,
   BasePartsByName,
@@ -22,13 +18,14 @@ import { PartsBox } from "../../molecules/box/PartsBox";
 export const TreatmentParts: VFC = memo(() => {
   const { getAboutCategoryByOriginId } = AboutCategoryApi();
   const { getAllBasePartsByAboutCategoryId } = BasePartsApi();
-  const { checkAboutCategoryKey, boxData } = OriginCategoryHook();
-  const { checkBasePartsKey } = AboutCategoryHook();
+  const { checkBasePartsKey, checkAboutCategoryKey, boxData, searchForPlan } =
+    TreatmentPartsHook();
 
+  const [gender, setGender] = useState<string>("女性");
   const [viewAboutCategory, setViewAboutCategory] = useState<AboutCategory[]>(
     []
   );
-  const [viewBaseParts, setViewBaseParts] = useState<ApiBaseParts[]>([]);
+  const [viewBaseParts, setViewBaseParts] = useState<BaseParts[]>([]);
   const [aboutCategoryData, setAboutCategoryData] =
     useState<AboutCategoryByName>({
       face: [],
@@ -38,7 +35,6 @@ export const TreatmentParts: VFC = memo(() => {
       allBody: [],
       other: [],
     });
-
   const [basePartsData, setBasePartsData] = useState<BasePartsByName>({
     upperFace: [],
     lowerFace: [],
@@ -66,14 +62,15 @@ export const TreatmentParts: VFC = memo(() => {
         const setData: any = basePartsData;
         if (setData[dataKey].length === 0) {
           setData[dataKey] = await getAllBasePartsByAboutCategoryId(
-            aboutCategoryId
+            aboutCategoryId,
+            gender
           );
         }
         setBasePartsData(setData);
         setViewBaseParts(setData[dataKey]);
       }
     },
-    [basePartsData, checkBasePartsKey, getAllBasePartsByAboutCategoryId]
+    [basePartsData, checkBasePartsKey, getAllBasePartsByAboutCategoryId, gender]
   );
 
   const getAboutCategory = useCallback(
@@ -98,6 +95,42 @@ export const TreatmentParts: VFC = memo(() => {
     ]
   );
 
+  const changeGenderState = useCallback(
+    (genderParam: string) => {
+      if (gender !== genderParam) {
+        setGender(genderParam);
+        setAboutCategoryData({
+          face: [],
+          limb: [],
+          body: [],
+          vio: [],
+          allBody: [],
+          other: [],
+        });
+        setBasePartsData({
+          upperFace: [],
+          lowerFace: [],
+          faceSet: [],
+          arm: [],
+          leg: [],
+          limb: [],
+          frontBody: [],
+          backBody: [],
+          bodySet: [],
+          vio: [],
+          vioSet: [],
+          allBody: [],
+          select: [],
+          time: [],
+          range: [],
+          upperBody: [],
+          lowerBody: [],
+        });
+      }
+    },
+    [gender]
+  );
+
   useEffect(() => {
     getAboutCategory(OriginCategiryId.face);
     getBaseParts(AbobutCategiryId.upperFace);
@@ -106,6 +139,26 @@ export const TreatmentParts: VFC = memo(() => {
   return (
     <Box m={"3rem"} textAlign={"center"}>
       <Text fontSize={"1.5rem"}>施術可能な部位一覧</Text>
+      <HStack mt="2rem" justifyContent={"center"}>
+        <Box
+          cursor={"pointer"}
+          p={"0.5rem 1rem"}
+          color={gender === "女性" ? "originWhite" : ""}
+          bg={gender === "女性" ? "originBlack" : ""}
+          onClick={() => changeGenderState("女性")}
+        >
+          女性
+        </Box>
+        <Box
+          cursor={"pointer"}
+          p={"0.5rem 1rem"}
+          color={gender === "男性" ? "originWhite" : ""}
+          bg={gender === "男性" ? "originBlack" : ""}
+          onClick={() => changeGenderState("男性")}
+        >
+          男性
+        </Box>
+      </HStack>
       <HStack mt="2rem" justifyContent={"center"} spacing={"1rem "}>
         {boxData.map((data, int) => (
           <OriginCategoryBox
@@ -116,6 +169,7 @@ export const TreatmentParts: VFC = memo(() => {
               viewAboutCategory[0] &&
               viewAboutCategory[0].originId === data.originId
             }
+            fontSize={"1.2rem"}
           />
         ))}
       </HStack>
@@ -126,10 +180,11 @@ export const TreatmentParts: VFC = memo(() => {
         wrap={"wrap"}
         justifyContent={"space-evenly"}
       >
-        {viewAboutCategory.map((data) => (
+        {viewAboutCategory.map((data, i) => (
           <CategoryBox
+            key={i}
             category={data}
-            gender={1}
+            gender={gender}
             width={"10rem"}
             arrow={
               viewBaseParts[0] && viewBaseParts[0].aboutCategoryId === data.id
@@ -137,6 +192,7 @@ export const TreatmentParts: VFC = memo(() => {
                 : false
             }
             onClick={() => getBaseParts(data.id)}
+            search={() => searchForPlan(gender, data.originId, data.id)}
           />
         ))}
       </HStack>
@@ -147,8 +203,20 @@ export const TreatmentParts: VFC = memo(() => {
         wrap={"wrap"}
         justifyContent={"space-evenly"}
       >
-        {viewBaseParts.map((data) => (
-          <PartsBox parts={data} width={"10rem"} />
+        {viewBaseParts.map((data, i) => (
+          <PartsBox
+            key={i}
+            parts={data}
+            width={"10rem"}
+            search={() =>
+              searchForPlan(
+                gender,
+                viewAboutCategory[0].originId,
+                data.aboutCategoryId,
+                data.id
+              )
+            }
+          />
         ))}
       </HStack>
     </Box>

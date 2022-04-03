@@ -1,7 +1,5 @@
 import { Box, Image, Text } from "@chakra-ui/react";
 import { memo, VFC } from "react";
-import { inherits } from "util";
-import { AboutCategory, OriginCategory } from "../../../type/api/ApiType";
 
 type Props = {
   area: string;

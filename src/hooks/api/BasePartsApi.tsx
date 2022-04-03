@@ -1,21 +1,18 @@
 import axios from "axios";
 import { useCallback } from "react";
-import {
-  ApiBaseParts,
-  IdAndNameDto,
-  PartsIdNameDto,
-} from "../../type/api/ApiType";
+import { BaseParts } from "../../type/api/BaseParts";
+import { IdAndNameDto } from "../../type/api/dto/IdAndNameDto";
 import { baseURL, getAxios } from "./config/ApiConfig";
 
 export const BasePartsApi = () => {
   const getAllBasePartsIdAndName = useCallback(
-    async (aboutCategoryId: string): Promise<PartsIdNameDto[]> => {
+    async (aboutCategoryId: string): Promise<IdAndNameDto[]> => {
       const originData = await axios
         .get(
           baseURL + "base-parts/id-and-name/aboutCategoryId/" + aboutCategoryId
         )
         .then((response) => {
-          return response.data as PartsIdNameDto[];
+          return response.data as IdAndNameDto[];
         })
         .catch((err) => {
           console.log(err);
@@ -28,9 +25,10 @@ export const BasePartsApi = () => {
   );
 
   const getAllBasePartsByAboutCategoryId = useCallback(
-    async (aboutCategoryId: string): Promise<ApiBaseParts[]> => {
+    async (aboutCategoryId: string, gender: string): Promise<BaseParts[]> => {
+      const query = "?gender=" + gender;
       const data = await axios
-        .get(baseURL + "base-parts/aboutCategoryId/" + aboutCategoryId)
+        .get(baseURL + "base-parts/aboutCategoryId/" + aboutCategoryId + query)
         .then((response) => {
           return response.data;
         })

@@ -14,47 +14,6 @@ export type OpeningHours = {
   description: string;
 };
 
-export type PriceAndClinics = {
-  id: string;
-  clinic: ClinicAndOption;
-  description: string;
-  parts: string;
-  price: number;
-  once_price: number;
-  times: number;
-};
-
-export type ClinicAndOption = {
-  id: string;
-  name: string;
-  Interior: string;
-  address: string;
-  card_pay: string;
-  medhical_loan: string;
-  nearest_station: string;
-  reserve: string;
-  review: string;
-  room_type: string;
-  staff_gender: number;
-  tax: string;
-  tel: string;
-  url: string;
-  clinic_option: ClinicOption;
-};
-
-export type ClinicOption = {
-  Irradiation_leakage: string;
-  aftercare: string;
-  anesthesia: string;
-  campaign: string;
-  contract_cancellation: string;
-  first_visit_fees: string;
-  shaving: string;
-  student_discount: string;
-  subsequent_visit_fees: string;
-  trouble_treatment: string;
-};
-
 export type ViewDataIdName = {
   id: string;
   name: string;
@@ -89,12 +48,12 @@ export type PlanResaerch = {
 
 export type OrderPlanIdName = {
   gender: string;
-  skinCollor: string;
-  hair: string;
   paySystem: string;
   originParts: ViewDataIdName;
   AboutCategory: ViewDataIdName;
   parts: ViewDataIdName | null;
+  skinCollor: string | null;
+  hair: string | null;
 };
 
 export type SortPlanData = {

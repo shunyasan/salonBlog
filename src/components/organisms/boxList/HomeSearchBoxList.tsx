@@ -20,19 +20,19 @@ export const HomeSearchBoxList: VFC = () => {
   //   description: "クリニックから選ぶ検索方法だお",
   //   path: "",
   // };
+  const partsList: HomeFeatureText = {
+    img: planImg,
+    text: "施術部位一覧",
+    description: "掲載している施術可能な部位の一覧",
+    path: "/treatment-parts",
+  };
   const clinicList: HomeFeatureText = {
     img: planImg,
     text: "クリニック一覧",
     description: "掲載しているクリニックの一覧",
     path: "/clinic",
   };
-  const partsList: HomeFeatureText = {
-    img: planImg,
-    text: "施術部位一覧",
-    description: "掲載している施術可能な部位の一覧",
-    path: "",
-  };
-  const datas: HomeFeatureText[] = [plan, clinicList, partsList];
+  const datas: HomeFeatureText[] = [plan, partsList, clinicList];
 
   return (
     <Flex wrap={"wrap"} w={"90%"} m={"auto"} justifyContent={"space-evenly"}>

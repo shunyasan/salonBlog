@@ -4,7 +4,7 @@ import { Box, Center, HStack, Text, Wrap, WrapItem } from "@chakra-ui/layout";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import "../../../../App.css";
 import { OriginCategoryApi } from "../../../../hooks/api/OriginCategoryApi";
-import { OriginCategory } from "../../../../type/api/ApiType";
+import { OriginCategory } from "../../../../type/api/OriginCategory";
 import { QueryOrderPlan } from "../../../../type/app/BaseType";
 
 type Props = {
@@ -21,9 +21,9 @@ export const OriginPartsSelectCard: VFC<Props> = memo((props) => {
   const { getAllOriginCategory } = OriginCategoryApi();
 
   const selectAboutPartsSelect = useCallback(
-    (AboutCategory: string) => {
-      setOriginPartsSelectData(AboutCategory);
-      setSelected(AboutCategory);
+    (aboutCategory: string) => {
+      setOriginPartsSelectData(aboutCategory);
+      setSelected(aboutCategory);
     },
     [setOriginPartsSelectData]
   );

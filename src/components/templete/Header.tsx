@@ -9,12 +9,15 @@ type Props = {
   topPage?: boolean;
 };
 
+const clinicDefoultNum = "349";
+const planDefoultNum = "32442";
+
 export const Header: VFC<Props> = memo((props) => {
   const { children, topPage } = props;
   const [clinicMeterTrigger, setClinicMeterTrigger] = useState<boolean>(false);
   const [planMeterTrigger, setPlanMeterTrigger] = useState<boolean>(false);
-  const [clinicNum, setClinicNum] = useState<string>("100");
-  const [planNum, setPlanNum] = useState<string>("10000");
+  const [clinicNum, setClinicNum] = useState<string>(clinicDefoultNum);
+  const [planNum, setPlanNum] = useState<string>(planDefoultNum);
 
   const history = useHistory();
   const onClickTransition = (path: string) => history.push(path);
@@ -48,15 +51,45 @@ export const Header: VFC<Props> = memo((props) => {
       if (clinicMeterTrigger) {
         setClinicNum(clinicRandom.join(""));
       } else {
-        setClinicNum("100");
+        setClinicNum(clinicDefoultNum);
       }
       if (planMeterTrigger) {
         setPlanNum(planRandom.join(""));
       } else {
-        setPlanNum("10000");
+        setPlanNum(planDefoultNum);
       }
     }
-  }, [clinicNum, planNum, clinicMeterTrigger, planMeterTrigger, topPage]);
+  }, [clinicMeterTrigger, planMeterTrigger, topPage, clinicNum, planNum]);
+
+  // const clinicCountFunc = useCallback(() => {
+  //   if (topPage) {
+  //     const random = [...Array(5)].map(() =>
+  //       Math.floor(Math.random() * 10).toString()
+  //     );
+  //     const clinicRandom = random.slice(0, 3);
+
+  //     if (clinicMeterTrigger) {
+  //       return clinicRandom.join("");
+  //     } else {
+  //       return clinicDefoultNum;
+  //     }
+  //   }
+  // }, [clinicMeterTrigger, topPage]);
+
+  // const planCountFunc = useCallback(() => {
+  //   if (topPage) {
+  //     const random = [...Array(5)].map(() =>
+  //       Math.floor(Math.random() * 10).toString()
+  //     );
+  //     const planRandom = random.slice(0, 5);
+
+  //     if (planMeterTrigger) {
+  //       return planRandom.join("");
+  //     } else {
+  //       return planDefoultNum;
+  //     }
+  //   }
+  // }, [planMeterTrigger, topPage]);
 
   return (
     <>

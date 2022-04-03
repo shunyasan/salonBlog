@@ -4,7 +4,7 @@ import { Box, Center, HStack, Text, Wrap, WrapItem } from "@chakra-ui/layout";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import "../../../../App.css";
 import { AboutCategoryApi } from "../../../../hooks/api/AboutCategoryApi";
-import { AboutCategory } from "../../../../type/api/ApiType";
+import { AboutCategory } from "../../../../type/api/AboutCategory";
 import { QueryOrderPlan } from "../../../../type/app/BaseType";
 
 type Props = {

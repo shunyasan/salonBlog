@@ -8,10 +8,11 @@ import { PlanResearchModal } from "../../organisms/modal/PlanResearchModal";
 
 type Props = {
   orderPlan: OrderPlanIdName;
+  resetPages: () => void;
 };
 
 export const SearchResultCard: VFC<Props> = memo((props) => {
-  const { orderPlan } = props;
+  const { orderPlan, resetPages } = props;
   const [orderData, setOrderData] = useState<ConditionData[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -22,30 +23,28 @@ export const SearchResultCard: VFC<Props> = memo((props) => {
         value: orderPlan.gender,
       },
       {
-        title: "肌の色",
-        value: orderPlan.skinCollor,
-      },
-      {
-        title: "毛量",
-        value: orderPlan.hair,
-      },
-      {
-        title: "料金体系",
+        title: "料金表示",
         value: orderPlan.paySystem,
       },
       {
         title: "広域カテゴリ",
-        value: orderPlan.originParts ? orderPlan.originParts.name : "未指定",
+        value: orderPlan.originParts.name,
       },
       {
         title: "詳細カテゴリ",
-        value: orderPlan.AboutCategory
-          ? orderPlan.AboutCategory.name
-          : "未指定",
+        value: orderPlan.AboutCategory.name,
       },
       {
         title: "部位",
         value: orderPlan.parts ? orderPlan.parts.name : "未指定",
+      },
+      {
+        title: "肌の色",
+        value: orderPlan.skinCollor || "未指定",
+      },
+      {
+        title: "毛量",
+        value: orderPlan.hair || "未指定",
       },
     ];
     setOrderData(data);
@@ -60,13 +59,13 @@ export const SearchResultCard: VFC<Props> = memo((props) => {
       <Box m={"auto"} w={"100%"} border={"1px"} py={"1rem"}>
         <Stack m={"auto"} justifyContent={"center"} w={"70%"} spacing={"2px"}>
           {orderData.map((data, int) => (
-            <Box key={int} fontSize={"0.7rem"}>
+            <Box key={int} fontSize={"0.8rem"}>
               <Text
                 w={"50%"}
                 textAlign={"center"}
                 display={"inline-block"}
                 bg={"originLiteGray"}
-                my={"2px"}
+                my={"4px"}
                 border={"1px"}
                 borderColor={"originBlack"}
               >
@@ -82,7 +81,7 @@ export const SearchResultCard: VFC<Props> = memo((props) => {
               onClick={onOpen}
               mt={"0.5rem"}
               w={"70%"}
-              variant={"secBase"}
+              variant={"gold"}
               size={"xs"}
             >
               条件を変更
@@ -95,6 +94,7 @@ export const SearchResultCard: VFC<Props> = memo((props) => {
           OrderPlan={orderPlan}
           isOpen={isOpen}
           onClose={onClose}
+          resetPages={resetPages}
         />
       )}
     </>

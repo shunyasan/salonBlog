@@ -6,7 +6,7 @@ import {
   OrderPlanIdName,
   SortPlanData,
 } from "../../../type/app/ViewTypeFromApi";
-import { PlanCardList } from "../../organisms/cardList/PlanCardList";
+import { PlanCard } from "../../organisms/card/PlanCard";
 import testImg from "../../../resorces/top-image.jpg";
 import { Image } from "@chakra-ui/react";
 import { ApiPrice } from "../../../type/api/ApiType";
@@ -25,13 +25,13 @@ export const FeatureSearch: VFC<Props> = memo((props) => {
   const { search } = useLocation();
   const { getTreatmentPrice } = PriceApi();
 
-  const getPriceFirestore = useCallback(
-    async (order: OrderPlan) => {
-      const plans = await getTreatmentPrice(order);
-      setPlanData(plans.prices);
-    },
-    [getTreatmentPrice]
-  );
+  // const getPriceFirestore = useCallback(
+  //   async (order: OrderPlan) => {
+  //     const plans = await getTreatmentPrice(order);
+  //     setPlanData(plans.prices);
+  //   },
+  //   [getTreatmentPrice]
+  // );
 
   // useEffect(() => {
   // 	getPriceFirestore(orderParams);
@@ -56,7 +56,7 @@ export const FeatureSearch: VFC<Props> = memo((props) => {
       <Box w="80%" px={"3rem"}>
         {orderDataIdName &&
           planData.map((plan) => (
-            <PlanCardList
+            <PlanCard
               key={plan.id}
               plan={plan}
               orderDataIdName={orderDataIdName}

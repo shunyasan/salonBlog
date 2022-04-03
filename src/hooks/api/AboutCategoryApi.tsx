@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useCallback } from "react";
-import { AboutCategory, IdAndNameDto } from "../../type/api/ApiType";
+import { AboutCategory } from "../../type/api/AboutCategory";
+import { IdAndNameDto } from "../../type/api/dto/IdAndNameDto";
 import { baseURL, getAxios } from "./config/ApiConfig";
 
 export const AboutCategoryApi = () => {
@@ -37,7 +38,7 @@ export const AboutCategoryApi = () => {
   const getAboutCategories = useCallback(
     async (
       originCategoryId: string,
-      aboutCategoryId: string
+      aboutCategoryId?: string
     ): Promise<IdAndNameDto[]> => {
       const url =
         baseURL +

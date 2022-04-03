@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useCallback } from "react";
 import AWS from "aws-sdk";
-import { IdAndNameDto, OriginCategory } from "../../type/api/ApiType";
 import { baseURL, getAxios } from "./config/ApiConfig";
+import { OriginCategory } from "../../type/api/OriginCategory";
+import { IdAndNameDto } from "../../type/api/dto/IdAndNameDto";
 
 export const OriginCategoryApi = () => {
   const getAllOriginCategory = useCallback(async (): Promise<

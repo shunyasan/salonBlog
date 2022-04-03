@@ -1,20 +1,41 @@
 import { Box, HStack, Text } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { ClinicApi } from "../../../hooks/api/ClinicApi";
-import { ApiClinic, ClinicNestPrice } from "../../../type/api/ApiType";
+import { ClinicAreaApi } from "../../../hooks/api/ClinicAreaApi";
+import {
+  ApiClinic,
+  ApiClinicArea,
+  ClinicNestPrice,
+} from "../../../type/api/ApiType";
 import { AreaBox } from "../../molecules/box/AreaBox";
 import { ClinicCard } from "../../organisms/card/ClinicCard";
-import { Pagenation } from "../../templete/Pagenation";
+import { Pagenation } from "../../templete/pagenation/Pagenation";
 
 const numOfTakeData = 10;
+const defaultMax = 349;
 
 export const Clinics: VFC = memo(() => {
   const { getAllClinic, getAllClinicByAreaId } = ClinicApi();
-  const [clinicData, setClinicData] = useState<ClinicNestPrice[]>([]);
-  const [areaIdState, setAreaIdState] = useState<string | undefined>();
-  const [nowPage, setNowPage] = useState<number>(0);
+  const { getAllArea } = ClinicAreaApi();
 
-  const getArea = useCallback(() => {}, []);
+  const [clinicData, setClinicData] = useState<ClinicNestPrice[]>([]);
+  const [areaData, setAreaData] = useState<ApiClinicArea[]>([]);
+  const [areaIdState, setAreaIdState] = useState<{
+    id: string | undefined;
+    max: number;
+  }>({ id: undefined, max: defaultMax });
+  const [pagenationData, setPagenationData] = useState<{
+    now: number;
+    block: number;
+  }>({
+    now: 0,
+    block: 0,
+  });
+
+  const getArea = useCallback(async () => {
+    const areas = await getAllArea();
+    setAreaData(areas);
+  }, [getAllArea]);
 
   const getClinics = useCallback(
     async (page: number, areaId?: string) => {
@@ -32,48 +53,36 @@ export const Clinics: VFC = memo(() => {
   );
 
   const getClinicDataAndAreaId = useCallback(
-    async (page: number, areaId?: string) => {
+    async (page: number, areaId?: string, max?: number) => {
       const clinics = await getClinics(page, areaId);
       setClinicData(clinics);
-      setAreaIdState(areaId);
+      if (max) {
+        setAreaIdState({ id: areaId, max: max });
+      }
     },
     [getClinics]
   );
 
   const getPageNumber = useCallback(
-    async (page: number) => {
-      console.log(page);
-      setNowPage(page);
-      getClinicDataAndAreaId(page, areaIdState);
+    async (page: number, block?: number) => {
+      getClinicDataAndAreaId(page, areaIdState.id);
+      if (block || block === 0) {
+        setPagenationData({ now: page, block: block });
+      } else {
+        setPagenationData({ ...pagenationData, now: page });
+      }
     },
-    [getClinicDataAndAreaId, areaIdState]
+    [getClinicDataAndAreaId, areaIdState, pagenationData]
   );
 
   useEffect(() => {
-    getClinicDataAndAreaId(0);
-  }, [getClinicDataAndAreaId]);
+    getClinicDataAndAreaId(0, undefined, defaultMax);
+    getArea();
+  }, [getClinicDataAndAreaId, getArea]);
 
   useEffect(() => {
-    setNowPage(0);
+    setPagenationData({ now: 0, block: 0 });
   }, [areaIdState]);
-
-  const AreaCard = [
-    {
-      area: "中央区",
-      areaId: "AC000001",
-      description: "説明文",
-    },
-    {
-      area: "渋谷区",
-      areaId: "AC000003",
-      description: "説明文",
-    },
-    {
-      area: "新宿区",
-      areaId: "AC000005",
-      description: "説明文",
-    },
-  ];
 
   return (
     <Box m={"3rem"} textAlign={"center"}>
@@ -92,28 +101,33 @@ export const Clinics: VFC = memo(() => {
             border={"1px"}
             p={"0.5rem 1rem"}
             fontSize={"1.2rem"}
-            onClick={() => getClinicDataAndAreaId(0)}
+            onClick={() => getClinicDataAndAreaId(0, undefined, defaultMax)}
           >
             <Text>全ての区域</Text>
           </Box>
-          {!areaIdState ? <Box fontSize={"1.3rem"}>▼</Box> : ""}
+          {!areaIdState.id ? <Box fontSize={"1.3rem"}>▼</Box> : ""}
         </Box>
-        {AreaCard.map((data, int) => (
+        {areaData.map((data, int) => (
           <AreaBox
             key={int}
             area={data.area}
             description={data.description}
-            arrow={areaIdState === data.areaId ? true : false}
-            onClick={() => getClinicDataAndAreaId(0, data.areaId)}
+            arrow={areaIdState?.id === data.id ? true : false}
+            onClick={() =>
+              getClinicDataAndAreaId(0, data.id, data.registrationNumber)
+            }
             fontSize={"1.2rem"}
           />
         ))}
       </HStack>
       <Pagenation
-        max={100}
+        max={areaIdState.max}
         take={numOfTakeData}
-        nowPage={nowPage}
-        onClick={(page: number) => getPageNumber(page)}
+        nowPage={pagenationData.now}
+        pageBlock={pagenationData.block}
+        onClickNumber={(page: number, block?: number) =>
+          getPageNumber(page, block)
+        }
       >
         <Box w={"80%"} m="auto">
           {clinicData.map((data, int) => (
