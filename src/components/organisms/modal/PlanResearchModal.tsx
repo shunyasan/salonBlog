@@ -17,7 +17,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { CardName } from "../../../enums/SerchSalonCardName";
 import { SalonListHook } from "../../../hooks/app/salon/search/SalonListHook";
 import { IdAndNameDto } from "../../../type/api/dto/IdAndNameDto";
-import { OrderPlanIdName } from "../../../type/app/ViewTypeFromApi";
+import { OrderPlanIdName } from "../../../type/app/OrderPlanIdName";
 import { ConditionText } from "../../atoms/text/ConditionText";
 import { PartsSelectBox } from "../../molecules/box/PartsSelectBox";
 

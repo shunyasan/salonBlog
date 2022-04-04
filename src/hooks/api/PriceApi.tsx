@@ -1,12 +1,10 @@
 import axios from "axios";
 import { useCallback } from "react";
-import {
-  ApiIncludePartsAndCategoryPriceDto,
-  ApiOnlyPrice,
-  ApiPrice,
-  PagenationParameter,
-} from "../../type/api/ApiType";
-import { OrderPlan } from "../../type/app/BaseType";
+import { IncludePartsAndCategoryPriceDto } from "../../type/api/dto/IncludePartsAndCategoryPriceDto";
+import { OnlyPriceDto } from "../../type/api/dto/OnlyPriceDto";
+import { PagenationParameter } from "../../type/api/dto/PagenationParameterDto";
+import { Price } from "../../type/api/Price";
+import { OrderPlan } from "../../type/app/OrderPlan";
 import { baseURL } from "./config/ApiConfig";
 
 export const PriceApi = () => {
@@ -43,7 +41,7 @@ export const PriceApi = () => {
       orderPlan: OrderPlan,
       take: number,
       skip: number
-    ): Promise<ApiIncludePartsAndCategoryPriceDto> => {
+    ): Promise<IncludePartsAndCategoryPriceDto> => {
       const params = createQuery(orderPlan, take, skip);
       const originData = await axios
         .get(baseURL + "price/order-plan?" + params)
@@ -82,12 +80,12 @@ export const PriceApi = () => {
     async (
       clinicId: string,
       pagenation?: PagenationParameter
-    ): Promise<ApiOnlyPrice[]> => {
+    ): Promise<OnlyPriceDto[]> => {
       let query = "";
       if (pagenation) {
         query = `take=${pagenation.take}&skip=${pagenation.skip}`;
       }
-      const data: ApiPrice[] = await axios
+      const data: Price[] = await axios
         .get(
           baseURL + `price/only-price/pagenation/clinic/${clinicId}?${query}`
         )

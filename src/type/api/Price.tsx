@@ -11,6 +11,6 @@ export type Price = {
   description: string;
   partsId: string;
   clinicId: string;
-  parts?: Parts;
-  clinic?: Clinic;
+  parts: Parts;
+  clinic: Clinic;
 };

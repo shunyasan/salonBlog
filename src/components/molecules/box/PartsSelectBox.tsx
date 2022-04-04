@@ -1,10 +1,10 @@
 import { Box, Center, Select, Text } from "@chakra-ui/react";
 import { ChangeEvent, memo, useCallback, VFC } from "react";
-import { ViewDataIdName } from "../../../type/app/ViewTypeFromApi";
+import { IdAndNameDto } from "../../../type/api/dto/IdAndNameDto";
 
 type Props = {
   title: string;
-  data: ViewDataIdName[];
+  data: IdAndNameDto[];
   noneValue: string;
   onChange: (name: string, id: string) => void;
 };

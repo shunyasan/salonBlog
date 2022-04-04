@@ -1,12 +1,11 @@
 import axios from "axios";
 import { useCallback } from "react";
-import { ApiClinicArea, ApiOnlyPrice, ApiPrice } from "../../type/api/ApiType";
-import { OrderPlan } from "../../type/app/BaseType";
+import { ClinicArea } from "../../type/api/ClinicArea";
 import { baseURL } from "./config/ApiConfig";
 
 export const ClinicAreaApi = () => {
-  const getAllArea = useCallback(async (): Promise<ApiClinicArea[]> => {
-    const data: ApiClinicArea[] = await axios
+  const getAllArea = useCallback(async (): Promise<ClinicArea[]> => {
+    const data: ClinicArea[] = await axios
       .get(baseURL + `clinic-area`)
       .then((response) => {
         return response.data;

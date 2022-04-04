@@ -2,7 +2,6 @@ import { memo, ReactNode, useEffect, useState, VFC } from "react";
 import { Box, Flex, Text, Link, useDisclosure, HStack } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { useCallback } from "react";
-import { DropHeader } from "../molecules/DropHeader";
 
 type Props = {
   children: ReactNode;

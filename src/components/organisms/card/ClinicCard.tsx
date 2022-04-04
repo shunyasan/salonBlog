@@ -18,20 +18,19 @@ import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { PriceApi } from "../../../hooks/api/PriceApi";
 import { SalonListHook } from "../../../hooks/app/salon/search/SalonListHook";
 import clinicImg from "../../../resorces/clinic.jpg";
-import {
-  ApiOnlyPrice,
-  ClinicNestPrice,
-  PagenationParameter,
-} from "../../../type/api/ApiType";
-import { OptionText } from "../../../type/app/BaseType";
+import { ClinicNestPriceDto } from "../../../type/api/dto/ClinicNestPriceDto";
+import { Clinic } from "../../../type/api/Clinic";
+import { OnlyPriceDto } from "../../../type/api/dto/OnlyPriceDto";
 import { InlineTitleBadge } from "../../atoms/badge/InlineTitleBadge";
 import { FreeServiceTable } from "../../atoms/table/FreeServiceTable";
 import { OpeningHoursTable } from "../../atoms/table/OpeningHoursTable";
 import { PaymentRerationsTable } from "../../atoms/table/PaymentRerationsTable";
 import { SmallPlanCard } from "../../molecules/card/SmallPlanCard";
+import { PagenationParameter } from "../../../type/api/dto/PagenationParameterDto";
+import { OptionText } from "../../../type/app/OptionText";
 
 type Props = {
-  clinic: ClinicNestPrice;
+  clinic: ClinicNestPriceDto;
 };
 
 const take = 10;
@@ -41,7 +40,7 @@ export const ClinicCard: VFC<Props> = memo((props) => {
   const { clinic } = props;
   const [freeOption, setFreeOption] = useState<string>("");
   const [payment, setPayment] = useState<OptionText[]>([]);
-  const [additionalPrice, setAdditionalPrice] = useState<ApiOnlyPrice[]>([]);
+  const [additionalPrice, setAdditionalPrice] = useState<OnlyPriceDto[]>([]);
   const [detailViewState, setDetailViewState] = useState<boolean>(false);
   const [detailViewClass, setDetailViewClass] =
     useState<string>("defaultDisplayNone");

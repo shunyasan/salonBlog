@@ -21,9 +21,9 @@ export type Clinic = {
   url: string;
   areaId: string;
   clinicGroupId: string;
-  clinicGroup?: ClinicGroup;
-  area?: ClinicArea;
-  machines?: Machine[];
-  clinicOpeningHours?: ClinicOpeningHours[];
-  clinicOption?: ClinicOption;
+  clinicGroup: ClinicGroup;
+  area: ClinicArea;
+  machines: Machine[];
+  clinicOpeningHours: ClinicOpeningHours[];
+  clinicOption: ClinicOption;
 };

@@ -5,5 +5,5 @@ export type ClinicArea = {
   area: string;
   description: string;
   registrationNumber: number;
-  clinic?: Clinic[];
+  clinic: Clinic[];
 };

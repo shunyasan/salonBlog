@@ -2,7 +2,7 @@ import { Box, Flex, HStack, Image, Stack, Text } from "@chakra-ui/react";
 import { memo, useCallback, useState, VFC } from "react";
 import planImg from "../../../resorces/plan-icon.jpg";
 import { useHistory } from "react-router-dom";
-import { HomeFeatureText } from "../../../type/app/BaseType";
+import { HomeFeatureText } from "../../../type/app/HomeFeatureText";
 
 type Props = {
   homeFeature: HomeFeatureText;

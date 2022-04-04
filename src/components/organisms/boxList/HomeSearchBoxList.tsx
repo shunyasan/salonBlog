@@ -2,8 +2,8 @@ import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { memo, useCallback, useState, VFC } from "react";
 import planImg from "../../../resorces/plan-icon.jpg";
 import { useHistory } from "react-router-dom";
-import { HomeFeatureText } from "../../../type/app/BaseType";
 import { ImageBox } from "../../molecules/box/ImageBox";
+import { HomeFeatureText } from "../../../type/app/HomeFeatureText";
 
 export const HomeSearchBoxList: VFC = () => {
   const history = useHistory();

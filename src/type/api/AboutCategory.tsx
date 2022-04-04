@@ -9,6 +9,6 @@ export type AboutCategory = {
   set: boolean;
   tableName: string;
   originId: string;
-  origin?: OriginCategory;
-  baseParts?: BaseParts[];
+  origin: OriginCategory;
+  baseParts: BaseParts[];
 };

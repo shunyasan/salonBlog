@@ -12,11 +12,11 @@ import {
 } from "react";
 import { PartsButton } from "../../../atoms/button/PartsButton";
 import { Image } from "@chakra-ui/react";
-import { QueryOrderPlan } from "../../../../type/app/BaseType";
 import { AboutCategoryApi } from "../../../../hooks/api/AboutCategoryApi";
 import { BasePartsApi } from "../../../../hooks/api/BasePartsApi";
 import { AboutCategory } from "../../../../type/api/AboutCategory";
 import { IdAndNameDto } from "../../../../type/api/dto/IdAndNameDto";
+import { QueryOrderPlan } from "../../../../type/app/QueryOrderPlan";
 
 type Props = {
   setPartsData: (data: any) => void;

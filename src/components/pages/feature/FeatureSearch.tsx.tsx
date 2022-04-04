@@ -2,16 +2,12 @@ import { Box, Text, Flex } from "@chakra-ui/layout";
 import { type } from "os";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  OrderPlanIdName,
-  SortPlanData,
-} from "../../../type/app/ViewTypeFromApi";
 import { PlanCard } from "../../organisms/card/PlanCard";
 import testImg from "../../../resorces/top-image.jpg";
 import { Image } from "@chakra-ui/react";
-import { ApiPrice } from "../../../type/api/ApiType";
-import { OrderPlan } from "../../../type/app/BaseType";
 import { PriceApi } from "../../../hooks/api/PriceApi";
+import { Price } from "../../../type/api/Price";
+import { OrderPlanIdName } from "../../../type/app/OrderPlanIdName";
 
 type Props = {
   title: string;
@@ -19,8 +15,7 @@ type Props = {
 export const FeatureSearch: VFC<Props> = memo((props) => {
   const { title } = props;
   const [orderDataIdName, setOrderDataIdName] = useState<OrderPlanIdName>();
-  const [planData, setPlanData] = useState<ApiPrice[]>([]);
-  const [sortData, setsortData] = useState<SortPlanData>();
+  const [planData, setPlanData] = useState<Price[]>([]);
 
   const { search } = useLocation();
   const { getTreatmentPrice } = PriceApi();

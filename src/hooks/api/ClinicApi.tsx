@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useCallback } from "react";
-import { ApiClinic, ClinicNestPrice } from "../../type/api/ApiType";
+import { ClinicNestPriceDto } from "../../type/api/dto/ClinicNestPriceDto";
 import { baseURL } from "./config/ApiConfig";
 
 export const ClinicApi = () => {
   const getAllClinic = useCallback(
-    async (take: number, skip: number): Promise<ClinicNestPrice[]> => {
+    async (take: number, skip: number): Promise<ClinicNestPriceDto[]> => {
       const query = `take=${take}&skip=${skip}`;
       const originData = await axios
         .get(baseURL + "clinic/clinic-nest-price/pagenation?" + query)
@@ -26,7 +26,7 @@ export const ClinicApi = () => {
       areaId: string,
       take: number,
       skip: number
-    ): Promise<ClinicNestPrice[]> => {
+    ): Promise<ClinicNestPriceDto[]> => {
       const query = `take=${take}&skip=${skip}`;
       const originData = await axios
         .get(

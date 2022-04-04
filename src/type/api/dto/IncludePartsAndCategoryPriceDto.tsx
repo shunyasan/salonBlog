@@ -1,7 +1,7 @@
 import { Price } from "../Price";
 import { IdAndNameDto } from "./IdAndNameDto";
 
-export type ApiIncludePartsAndCategoryPriceDto = {
+export type IncludePartsAndCategoryPriceDto = {
   originCategory: IdAndNameDto;
   aboutCategory: IdAndNameDto;
   baseParts: IdAndNameDto;

@@ -1,8 +1,7 @@
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { memo, VFC } from "react";
 import "../../../App.css";
-import { ApiClinicOption } from "../../../type/api/ApiType";
-import { OptionText } from "../../../type/app/BaseType";
+import { OptionText } from "../../../type/app/OptionText";
 
 type Props = {
   datas: OptionText[];

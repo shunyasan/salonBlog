@@ -1,9 +1,7 @@
 import { Box, Button, Stack, Text, useDisclosure } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
-import {
-  ConditionData,
-  OrderPlanIdName,
-} from "../../../type/app/ViewTypeFromApi";
+import { ConditionData } from "../../../type/app/ConditionData";
+import { OrderPlanIdName } from "../../../type/app/OrderPlanIdName";
 import { PlanResearchModal } from "../../organisms/modal/PlanResearchModal";
 
 type Props = {

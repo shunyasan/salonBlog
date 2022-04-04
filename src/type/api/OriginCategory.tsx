@@ -5,5 +5,5 @@ export type OriginCategory = {
   name: string;
   imgUrlLady: string;
   imgUrlMen: string;
-  aboutCategory?: AboutCategory[];
+  aboutCategory: AboutCategory[];
 };

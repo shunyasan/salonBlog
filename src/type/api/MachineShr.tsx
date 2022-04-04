@@ -7,5 +7,5 @@ export type MachineShr = {
   shotDetail: string;
   shotType: string;
   skinColor: number;
-  machine?: Machine[];
+  machine: Machine[];
 };

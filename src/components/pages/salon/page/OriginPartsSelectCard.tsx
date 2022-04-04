@@ -5,7 +5,7 @@ import { memo, useCallback, useEffect, useState, VFC } from "react";
 import "../../../../App.css";
 import { OriginCategoryApi } from "../../../../hooks/api/OriginCategoryApi";
 import { OriginCategory } from "../../../../type/api/OriginCategory";
-import { QueryOrderPlan } from "../../../../type/app/BaseType";
+import { QueryOrderPlan } from "../../../../type/app/QueryOrderPlan";
 
 type Props = {
   setOriginPartsSelectData: (data: any) => void;

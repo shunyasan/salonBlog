@@ -1,10 +1,10 @@
 import { Box, Button, HStack, Text } from "@chakra-ui/react";
 import { memo, useCallback, VFC } from "react";
-import { ApiOnlyPrice, ApiPrice } from "../../../type/api/ApiType";
+import { OnlyPriceDto } from "../../../type/api/dto/OnlyPriceDto";
 import { InlineTitleBadge } from "../../atoms/badge/InlineTitleBadge";
 
 type Props = {
-  price: ApiOnlyPrice;
+  price: OnlyPriceDto;
 };
 export const SmallPlanCard: VFC<Props> = memo((props) => {
   const { price } = props;

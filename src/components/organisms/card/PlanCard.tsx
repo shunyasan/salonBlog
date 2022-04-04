@@ -10,19 +10,19 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
-import { OrderPlanIdName } from "../../../type/app/ViewTypeFromApi";
 import clinicImg from "../../../resorces/clinic.jpg";
 import { OptionServiceCard } from "../../molecules/card/OptionServiceCard";
 import { useHistory } from "react-router-dom";
 import { StaffGenderText } from "../../atoms/text/StaffGenderText";
-import { OptionServiceText, OptionText } from "../../../type/app/BaseType";
-import { ApiPrice } from "../../../type/api/ApiType";
 import { InlineTitleBadge } from "../../atoms/badge/InlineTitleBadge";
 import { StatusText } from "../../atoms/text/StatusText";
 import { SalonListHook } from "../../../hooks/app/salon/search/SalonListHook";
+import { Price } from "../../../type/api/Price";
+import { OrderPlanIdName } from "../../../type/app/OrderPlanIdName";
+import { OptionText } from "../../../type/app/OptionText";
 
 type Props = {
-  plan: ApiPrice;
+  plan: Price;
   orderDataIdName: OrderPlanIdName;
 };
 export const PlanCard: VFC<Props> = memo((props) => {

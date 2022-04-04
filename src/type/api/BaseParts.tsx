@@ -7,6 +7,6 @@ export type BaseParts = {
   description: string;
   aboutCategoryId: string;
   gender: number;
-  aboutCategory?: AboutCategory;
-  parts?: Parts[];
+  aboutCategory: AboutCategory;
+  parts: Parts[];
 };

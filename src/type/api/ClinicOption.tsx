@@ -12,5 +12,5 @@ export type ClinicOption = {
   shaving: string;
   studentDiscount: string;
   troubleTreatment: string;
-  clinic?: Clinic;
+  clinic: Clinic;
 };

@@ -1,10 +1,10 @@
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { memo, VFC } from "react";
 import "../../../App.css";
-import { ApiClinicOpeningHours } from "../../../type/api/ApiType";
+import { ClinicOpeningHours } from "../../../type/api/ClinicOpeningHours";
 
 type Props = {
-  datas: ApiClinicOpeningHours[];
+  datas: ClinicOpeningHours[];
 };
 
 export const OpeningHoursTable: VFC<Props> = memo((props) => {

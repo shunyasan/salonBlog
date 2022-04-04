@@ -14,5 +14,5 @@ export type ClinicOpeningHours = {
   sun: boolean;
   hol: boolean;
   clinicId: string;
-  clinic?: Clinic;
+  clinic: Clinic;
 };

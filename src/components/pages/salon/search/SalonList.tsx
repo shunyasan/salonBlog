@@ -2,14 +2,14 @@ import { Box, Text, Flex } from "@chakra-ui/layout";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { useLocation } from "react-router-dom";
 import "../../../../App.css";
-import { OrderPlanIdName } from "../../../../type/app/ViewTypeFromApi";
 import { Button, Image, Select } from "@chakra-ui/react";
 import { PlanCard } from "../../../organisms/card/PlanCard";
 import { SearchResultCard } from "../../../molecules/card/SearchResultCard";
-import { ApiPrice } from "../../../../type/api/ApiType";
-import { OrderPlan } from "../../../../type/app/BaseType";
 import { PriceApi } from "../../../../hooks/api/PriceApi";
 import { Pagenation } from "../../../templete/pagenation/Pagenation";
+import { Price } from "../../../../type/api/Price";
+import { OrderPlanIdName } from "../../../../type/app/OrderPlanIdName";
+import { OrderPlan } from "../../../../type/app/OrderPlan";
 
 const numOfTakeData = 10;
 
@@ -19,7 +19,7 @@ export const SalonList: VFC = memo(() => {
 
   const [orderDataIdName, setOrderDataIdName] = useState<OrderPlanIdName>();
   const [orderPlanData, setOrderPlanData] = useState<OrderPlan>();
-  const [planData, setPlanData] = useState<ApiPrice[]>([]);
+  const [planData, setPlanData] = useState<Price[]>([]);
   const [maxValue, setMaxvalue] = useState<number | undefined>();
   const [pagenationData, setPagenationData] = useState<{
     now: number;

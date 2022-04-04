@@ -1,12 +1,12 @@
 import { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { CardName } from "../../../../enums/SerchSalonCardName";
-import { ApiClinic, ApiClinicOption } from "../../../../type/api/ApiType";
-import { OptionText } from "../../../../type/app/BaseType";
-import {
-  OrderPlanIdName,
-  ViewDataIdName,
-} from "../../../../type/app/ViewTypeFromApi";
+import { Clinic } from "../../../../type/api/Clinic";
+import { ClinicOption } from "../../../../type/api/ClinicOption";
+import { ClinicNestPriceDto } from "../../../../type/api/dto/ClinicNestPriceDto";
+import { IdAndNameDto } from "../../../../type/api/dto/IdAndNameDto";
+import { OptionText } from "../../../../type/app/OptionText";
+import { OrderPlanIdName } from "../../../../type/app/OrderPlanIdName";
 import { AboutCategoryApi } from "../../../api/AboutCategoryApi";
 import { BasePartsApi } from "../../../api/BasePartsApi";
 import { OriginCategoryApi } from "../../../api/OriginCategoryApi";
@@ -17,7 +17,7 @@ export const SalonListHook = () => {
   const { getAboutCategories } = AboutCategoryApi();
   const { getBaseParts } = BasePartsApi();
 
-  const noneValuePush = useCallback((): ViewDataIdName => {
+  const noneValuePush = useCallback((): IdAndNameDto => {
     return { id: "none", name: "指定しない" };
   }, []);
 
@@ -45,7 +45,7 @@ export const SalonListHook = () => {
     [noneValuePush, getOriginCategories, getAboutCategories, getBaseParts]
   );
 
-  const newOptionFunc = useCallback((clinic: ApiClinic) => {
+  const newOptionFunc = useCallback((clinic: Clinic | ClinicNestPriceDto) => {
     const irradiation: OptionText = {
       name: "照射漏れ",
       text: clinic.clinicOption.irradiationLeakage,
@@ -97,7 +97,7 @@ export const SalonListHook = () => {
     };
   }, []);
 
-  const checkFreeOption = useCallback((option: ApiClinicOption) => {
+  const checkFreeOption = useCallback((option: ClinicOption) => {
     const func: any = {};
     func["irradiationLeakage"] = "照射漏れ";
     func["aftercare"] = "アフターケア";

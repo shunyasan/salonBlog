@@ -7,7 +7,7 @@ export type Machine = {
   machineName: string;
   machineHrId: string;
   machineShrId: string;
-  machineHr?: MachineHr;
-  machineShr?: MachineShr;
-  clinics?: Clinic[];
+  machineHr: MachineHr;
+  machineShr: MachineShr;
+  clinics: Clinic[];
 };

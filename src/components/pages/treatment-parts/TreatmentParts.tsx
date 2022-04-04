@@ -7,10 +7,8 @@ import { BasePartsApi } from "../../../hooks/api/BasePartsApi";
 import { TreatmentPartsHook } from "../../../hooks/app/treatment-parts/TreatmentPartsHook";
 import { AboutCategory } from "../../../type/api/AboutCategory";
 import { BaseParts } from "../../../type/api/BaseParts";
-import {
-  AboutCategoryByName,
-  BasePartsByName,
-} from "../../../type/app/BaseType";
+import { AboutCategoryByName } from "../../../type/app/AboutCategoryByName";
+import { BasePartsByName } from "../../../type/app/BasePartsByName";
 import { CategoryBox } from "../../molecules/box/CategoryBox";
 import { OriginCategoryBox } from "../../molecules/box/OriginCategoryBox";
 import { PartsBox } from "../../molecules/box/PartsBox";

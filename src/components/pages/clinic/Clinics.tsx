@@ -2,11 +2,8 @@ import { Box, HStack, Text } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { ClinicApi } from "../../../hooks/api/ClinicApi";
 import { ClinicAreaApi } from "../../../hooks/api/ClinicAreaApi";
-import {
-  ApiClinic,
-  ApiClinicArea,
-  ClinicNestPrice,
-} from "../../../type/api/ApiType";
+import { ClinicArea } from "../../../type/api/ClinicArea";
+import { ClinicNestPriceDto } from "../../../type/api/dto/ClinicNestPriceDto";
 import { AreaBox } from "../../molecules/box/AreaBox";
 import { ClinicCard } from "../../organisms/card/ClinicCard";
 import { Pagenation } from "../../templete/pagenation/Pagenation";
@@ -18,8 +15,8 @@ export const Clinics: VFC = memo(() => {
   const { getAllClinic, getAllClinicByAreaId } = ClinicApi();
   const { getAllArea } = ClinicAreaApi();
 
-  const [clinicData, setClinicData] = useState<ClinicNestPrice[]>([]);
-  const [areaData, setAreaData] = useState<ApiClinicArea[]>([]);
+  const [clinicData, setClinicData] = useState<ClinicNestPriceDto[]>([]);
+  const [areaData, setAreaData] = useState<ClinicArea[]>([]);
   const [areaIdState, setAreaIdState] = useState<{
     id: string | undefined;
     max: number;

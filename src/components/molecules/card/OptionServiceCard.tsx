@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { memo, useCallback, useState, VFC } from "react";
-import { OptionText, OptionServiceText } from "../../../type/app/BaseType";
+import { OptionText } from "../../../type/app/OptionText";
 import { InlineTitleBadge } from "../../atoms/badge/InlineTitleBadge";
 
 type Props = {
