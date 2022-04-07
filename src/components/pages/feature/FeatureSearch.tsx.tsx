@@ -6,7 +6,7 @@ import { PlanCard } from "../../organisms/card/PlanCard";
 import testImg from "../../../resorces/top-image.jpg";
 import { Image } from "@chakra-ui/react";
 import { PriceApi } from "../../../hooks/api/PriceApi";
-import { Price } from "../../../type/api/Price";
+import { PriceDto } from "../../../type/api/dto/PriceDto";
 import { OrderPlanIdName } from "../../../type/app/OrderPlanIdName";
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
 export const FeatureSearch: VFC<Props> = memo((props) => {
   const { title } = props;
   const [orderDataIdName, setOrderDataIdName] = useState<OrderPlanIdName>();
-  const [planData, setPlanData] = useState<Price[]>([]);
+  const [planData, setPlanData] = useState<PriceDto[]>([]);
 
   const { search } = useLocation();
   const { getTreatmentPrice } = PriceApi();

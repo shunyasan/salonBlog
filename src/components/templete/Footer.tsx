@@ -8,8 +8,8 @@ export const Footer: VFC = memo((props) => {
   const onClickHome = () => history.push("/");
   const onClickSerch = () => history.push("/salon");
   return (
-    <Box bg={"originBlack"} mt={"2rem"} py="2rem">
-      <Box as="footer">
+    <Box as="footer" bg={"originBlack"} mt={"2rem"} py="2rem">
+      <Box>
         <HStack
           as="nav"
           bg="originBlack"
@@ -17,9 +17,11 @@ export const Footer: VFC = memo((props) => {
           h={"4rem"}
           fontSize="0.8rem"
           alignItems={"center"}
-          justifyContent={"space-around"}
+          justifyContent={"space-evenly"}
+          wrap={"wrap"}
         >
           <Box
+            w={{ md: "inherit", sm: "40%" }}
             textAlign="center"
             px={"1.3rem"}
             py={"0.1rem"}
@@ -33,6 +35,7 @@ export const Footer: VFC = memo((props) => {
             TOP
           </Box>
           <Box
+            w={{ md: "inherit", sm: "40%" }}
             textAlign="center"
             px={"1.3rem"}
             py={"0.1rem"}
@@ -47,6 +50,7 @@ export const Footer: VFC = memo((props) => {
             プランを探す
           </Box>
           <Box
+            w={{ md: "inherit", sm: "40%" }}
             textAlign="center"
             px={"1.3rem"}
             py={"0.1rem"}
@@ -60,6 +64,7 @@ export const Footer: VFC = memo((props) => {
             地域から探す
           </Box>
           <Box
+            w={{ md: "inherit", sm: "45%" }}
             textAlign="center"
             px={"1.3rem"}
             py={"0.1rem"}
@@ -73,16 +78,18 @@ export const Footer: VFC = memo((props) => {
             クリニックから探す
           </Box>
         </HStack>
-        <Box
-          color={"#fff"}
-          display={"inline-block"}
-          textAlign="center"
-          my={4}
-          w="100%"
-        >
-          <Text fontSize="2rem">あなたの脱毛</Text>
-          <Text fontSize="0.7rem">東京都</Text>
-        </Box>
+        <Link href="/" textDecoration={"none !important"}>
+          <Box
+            color={"#fff"}
+            display={"inline-block"}
+            textAlign="center"
+            my={4}
+            w="100%"
+          >
+            <Text fontSize="2rem">あなたの脱毛</Text>
+            <Text fontSize="0.7rem">東京都</Text>
+          </Box>
+        </Link>
       </Box>
     </Box>
   );

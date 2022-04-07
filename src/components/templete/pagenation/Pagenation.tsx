@@ -62,6 +62,9 @@ export const Pagenation: VFC<Props> = memo((props) => {
   return (
     <Box>
       <Box>
+        <Text my="1rem">
+          〜{takeDataNumber}件/全{max}件
+        </Text>
         <PagenationBlock
           max={max}
           take={take}
@@ -69,9 +72,6 @@ export const Pagenation: VFC<Props> = memo((props) => {
           pageBlock={pageBlock}
           onClickNumber={onClickNumber}
         />
-        <Text mt="1rem">
-          〜{takeDataNumber}件/全{max}件
-        </Text>
         {children}
         <PagenationBlock
           max={max}
@@ -81,6 +81,9 @@ export const Pagenation: VFC<Props> = memo((props) => {
           onClickNumber={onClickNumber}
         />
       </Box>
+      <Text my="1rem">
+        〜{takeDataNumber}件/全{max}件
+      </Text>
     </Box>
   );
 });

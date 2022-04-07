@@ -1,6 +1,15 @@
 import { extendTheme } from "@chakra-ui/react";
 
+const breakpoints = {
+  sm: "320px", // iPhone,Android
+  md: "768px", // iPad,タブレット
+  lg: "960px", // ノートPC
+  xl: "1200px", // デスクトップPC
+  "2xl": "1536px",
+};
+
 const theme = extendTheme({
+  breakpoints,
   styles: {
     global: {
       body: {
@@ -27,6 +36,7 @@ const theme = extendTheme({
     transparent: "transparent",
     originWhite: "#f7fafc",
     originBlack: "#111",
+    originLiteBlack: "#252525",
     originGray: "#b7b7b7",
     originLiteGray: "#e1e1e1",
     originGold: "#a59968",
@@ -38,6 +48,7 @@ const theme = extendTheme({
       baseStyle: {
         color: "originWhite",
         backgroundColor: "originBlack",
+        border: "2px",
         borderRadius: "1px",
         borderColor: "originBlack",
         _hover: {
@@ -64,6 +75,8 @@ const theme = extendTheme({
         },
         gold: {
           backgroundColor: "originGold",
+          borderColor: "originGold",
+          border: "2px",
         },
         parts: {
           color: "originBlack",
@@ -77,25 +90,6 @@ const theme = extendTheme({
           h: "100%",
           border: "2px",
         },
-      },
-    },
-    Select: {
-      baseStyle: {
-        border: "1px",
-        borderColor: "originBlack",
-        display: "inline-block",
-        // _focus: {
-        // 	outlineColor: "originBlack",
-        // },
-      },
-      sizes: {
-        sm: {
-          w: "10rem",
-          fontSize: "0.8rem",
-        },
-      },
-      variants: {
-        base: {},
       },
     },
   },

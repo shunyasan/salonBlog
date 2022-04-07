@@ -1,0 +1,29 @@
+import { VFC } from "react";
+import { Box, Image, Text } from "@chakra-ui/react";
+
+type Props = {
+  targetValue: string;
+  value: string;
+  img: string;
+  onClick?: () => void;
+  id?: string;
+};
+
+export const ImageAndTextBox: VFC<Props> = (props) => {
+  const { onClick, targetValue, value, img, id } = props;
+  return (
+    <Box
+      w={"14em"}
+      shadow="xl"
+      m={{ md: "2em !important", sm: "1em !important" }}
+      cursor="pointer"
+      onClick={onClick}
+      filter={
+        targetValue === (id || value) ? "brightness(50%)" : "brightness(100%)"
+      }
+    >
+      <Image src={img} />
+      <Text p="1em">{value}</Text>
+    </Box>
+  );
+};

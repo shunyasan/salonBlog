@@ -12,7 +12,6 @@ export const PartsBox: VFC<Props> = memo((props) => {
   const { parts, width, search } = props;
   return (
     <Box
-      m={"1rem"}
       w={width}
       // onClick={() => getId(category.id)}
     >

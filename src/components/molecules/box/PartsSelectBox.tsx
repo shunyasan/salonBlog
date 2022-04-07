@@ -25,7 +25,7 @@ export const PartsSelectBox: VFC<Props> = memo((props) => {
   return (
     <Box>
       <Center
-        w={"30%"}
+        w={{ md: "30%", sm: "38%" }}
         display={"inline-block"}
         bg={"originLiteGray"}
         border={"1px"}
@@ -33,7 +33,7 @@ export const PartsSelectBox: VFC<Props> = memo((props) => {
       >
         {title}
       </Center>
-      <Box w={"70%"} display={"inline-block"}>
+      <Box w={{ md: "70%", sm: "62%" }} display={"inline-block"}>
         <Select
           textAlign={"center"}
           display={"inline-block"}

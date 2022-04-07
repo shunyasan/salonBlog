@@ -2,14 +2,15 @@ import { Box, Text, Flex } from "@chakra-ui/layout";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { useLocation } from "react-router-dom";
 import "../../../../App.css";
-import { Button, Image, Select } from "@chakra-ui/react";
+import { Button, Image, Select, Stack } from "@chakra-ui/react";
 import { PlanCard } from "../../../organisms/card/PlanCard";
 import { SearchResultCard } from "../../../molecules/card/SearchResultCard";
 import { PriceApi } from "../../../../hooks/api/PriceApi";
 import { Pagenation } from "../../../templete/pagenation/Pagenation";
-import { Price } from "../../../../type/api/Price";
+import { PriceDto } from "../../../../type/api/dto/PriceDto";
 import { OrderPlanIdName } from "../../../../type/app/OrderPlanIdName";
 import { OrderPlan } from "../../../../type/app/OrderPlan";
+import { BaseButton } from "../../../atoms/button/BaseButton";
 
 const numOfTakeData = 10;
 
@@ -19,7 +20,7 @@ export const SalonList: VFC = memo(() => {
 
   const [orderDataIdName, setOrderDataIdName] = useState<OrderPlanIdName>();
   const [orderPlanData, setOrderPlanData] = useState<OrderPlan>();
-  const [planData, setPlanData] = useState<Price[]>([]);
+  const [planData, setPlanData] = useState<PriceDto[]>([]);
   const [maxValue, setMaxvalue] = useState<number | undefined>();
   const [pagenationData, setPagenationData] = useState<{
     now: number;
@@ -28,6 +29,7 @@ export const SalonList: VFC = memo(() => {
     now: 0,
     block: 0,
   });
+
   const getTreatmentPriceFunc = useCallback(
     async (orderParams: OrderPlan, take: number, skip: number) => {
       const data = await getTreatmentPrice(orderParams, take, skip);
@@ -47,12 +49,10 @@ export const SalonList: VFC = memo(() => {
 
   const getMaxDataCount = useCallback(
     async (orderParams: OrderPlan) => {
-      if (!maxValue) {
-        const count = await getCountPrice(orderParams);
-        setMaxvalue(count);
-      }
+      const count = await getCountPrice(orderParams);
+      setMaxvalue(count);
     },
-    [getCountPrice, maxValue]
+    [getCountPrice]
   );
 
   const serPagenationDefault = useCallback(() => {
@@ -92,13 +92,18 @@ export const SalonList: VFC = memo(() => {
       hair: query.get("hair"),
     };
     getTreatmentPriceFunc(orderParams, numOfTakeData, 0);
-    getMaxDataCount(orderParams);
     setOrderPlanData(orderParams);
-  }, [search, getTreatmentPriceFunc, getMaxDataCount]);
+  }, [search, getTreatmentPriceFunc]);
+
+  useEffect(() => {
+    if (orderPlanData) {
+      getMaxDataCount(orderPlanData);
+    }
+  }, [orderPlanData, getMaxDataCount]);
 
   return (
-    <Flex m={6} textAlign="center">
-      <Box w={"20%"} pt={"3rem"}>
+    <Flex m={6} textAlign="center" wrap={"wrap"} justifyContent={"center"}>
+      <Box w={{ md: "24rem", sm: "20rem" }} pt={"3rem"} mx={"1rem"}>
         <Text>検索結果</Text>
         {orderDataIdName && (
           <SearchResultCard
@@ -106,8 +111,16 @@ export const SalonList: VFC = memo(() => {
             resetPages={serPagenationDefault}
           />
         )}
+        <Box my={"1rem"}>
+          <BaseButton
+            text={"最初からやり直す"}
+            path={"/salon"}
+            size={undefined}
+            base={"secBase"}
+          />
+        </Box>
       </Box>
-      <Box w="80%" px={"3rem"}>
+      <Box w={{ md: "66rem", sm: "100%" }}>
         {maxValue && maxValue > 0 ? (
           <Pagenation
             max={maxValue}
@@ -118,14 +131,16 @@ export const SalonList: VFC = memo(() => {
               getPageNumber(page, block)
             }
           >
-            {orderDataIdName &&
-              planData.map((plan) => (
-                <PlanCard
-                  key={plan.id}
-                  plan={plan}
-                  orderDataIdName={orderDataIdName}
-                />
-              ))}
+            <Stack justifyContent={"center"} spacing={"0"}>
+              {orderDataIdName &&
+                planData.map((plan) => (
+                  <PlanCard
+                    key={plan.id}
+                    plan={plan}
+                    orderDataIdName={orderDataIdName}
+                  />
+                ))}
+            </Stack>
           </Pagenation>
         ) : (
           ""

@@ -1,10 +1,10 @@
 import { Box, Button, HStack, Text } from "@chakra-ui/react";
 import { memo, useCallback, VFC } from "react";
-import { OnlyPriceDto } from "../../../type/api/dto/OnlyPriceDto";
+import { PriceDto } from "../../../type/api/dto/PriceDto";
 import { InlineTitleBadge } from "../../atoms/badge/InlineTitleBadge";
 
 type Props = {
-  price: OnlyPriceDto;
+  price: PriceDto;
 };
 export const SmallPlanCard: VFC<Props> = memo((props) => {
   const { price } = props;
@@ -18,25 +18,23 @@ export const SmallPlanCard: VFC<Props> = memo((props) => {
   }, [price]);
   return (
     <HStack
-      p={"0.5rem 2rem"}
+      p={"0.5em"}
       borderRadius={8}
       border={"1px"}
       borderColor={"originGray"}
-      justifyContent={"space-between"}
+      justifyContent={"space-around"}
+      fontSize={"0.8rem"}
+      spacing={"0"}
     >
-      <HStack spacing={"5px"} fontSize={"0.8rem"}>
-        <Text as={"a"} maxW={"50%"}>
-          {price.name}
-        </Text>
-        <Text as={"a"} pr={"1rem"} fontSize={"0.8rem"}>
-          ({checkGender()})
-        </Text>
-        <Text as={"a"}>{price.times}回</Text>
+      <HStack spacing={"0"} justifyContent={"center"} w={"40%"} wrap={"wrap"}>
+        <Text>{price.name}</Text>
+        <Text>({checkGender()})</Text>
       </HStack>
+      <Text w={"2em"}>{price.times}回</Text>
       <HStack>
         <Box textAlign={"center"} display={"inline-block"}>
           <InlineTitleBadge>総額</InlineTitleBadge>
-          <Text fontSize="1.3rem">
+          <Text fontSize={{ md: "1.5em", sm: "1.3em" }}>
             ¥{price.price.toLocaleString()}
             {/* <Text as={"a"} fontSize={"0.6rem"}>
               ({price.})

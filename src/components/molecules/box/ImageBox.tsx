@@ -17,7 +17,7 @@ export const ImageBox: VFC<Props> = memo((props) => {
   }, [history, homeFeature.path]);
 
   return (
-    <Box maxW={width || "22rem"} p={"2rem 2rem 0"}>
+    <Box maxW="14rem" pt="2rem" px={"1rem"}>
       <Box
         shadow={"0 4px 8px 2px rgb(180,180,180)"}
         transitionDuration={"1s"}

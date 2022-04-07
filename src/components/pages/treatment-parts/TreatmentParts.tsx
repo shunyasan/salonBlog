@@ -135,14 +135,14 @@ export const TreatmentParts: VFC = memo(() => {
   }, [getAboutCategory, getBaseParts]);
 
   return (
-    <Box m={"3rem"} textAlign={"center"}>
+    <Box my={"3rem"} mx={{ md: "3rem", sm: "1rem" }} textAlign={"center"}>
       <Text fontSize={"1.5rem"}>施術可能な部位一覧</Text>
       <HStack mt="2rem" justifyContent={"center"}>
         <Box
           cursor={"pointer"}
           p={"0.5rem 1rem"}
           color={gender === "女性" ? "originWhite" : ""}
-          bg={gender === "女性" ? "originBlack" : ""}
+          bg={gender === "女性" ? "originGold" : ""}
           onClick={() => changeGenderState("女性")}
         >
           女性
@@ -151,13 +151,13 @@ export const TreatmentParts: VFC = memo(() => {
           cursor={"pointer"}
           p={"0.5rem 1rem"}
           color={gender === "男性" ? "originWhite" : ""}
-          bg={gender === "男性" ? "originBlack" : ""}
+          bg={gender === "男性" ? "originGold" : ""}
           onClick={() => changeGenderState("男性")}
         >
           男性
         </Box>
       </HStack>
-      <HStack mt="2rem" justifyContent={"center"} spacing={"1rem "}>
+      <HStack mt="2rem" mx={"auto"} wrap={"wrap"} justifyContent={"center"}>
         {boxData.map((data, int) => (
           <OriginCategoryBox
             key={int}
@@ -172,9 +172,10 @@ export const TreatmentParts: VFC = memo(() => {
         ))}
       </HStack>
       <HStack
-        w={"80%"}
-        mt="2rem"
-        mx="auto"
+        // w={"80%"}
+        // mx="auto"
+        mt="1rem"
+        spacing={"0"}
         wrap={"wrap"}
         justifyContent={"space-evenly"}
       >
@@ -183,7 +184,7 @@ export const TreatmentParts: VFC = memo(() => {
             key={i}
             category={data}
             gender={gender}
-            width={"10rem"}
+            width={{ md: "10rem", sm: "8.5rem" }}
             arrow={
               viewBaseParts[0] && viewBaseParts[0].aboutCategoryId === data.id
                 ? true
@@ -195,9 +196,10 @@ export const TreatmentParts: VFC = memo(() => {
         ))}
       </HStack>
       <HStack
-        w={"80%"}
-        mt="2rem"
+        w={{ md: "80%", sm: "95%" }}
         mx="auto"
+        spacing={"0"}
+        mt="1rem"
         wrap={"wrap"}
         justifyContent={"space-evenly"}
       >

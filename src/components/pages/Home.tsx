@@ -32,7 +32,7 @@ export const Home: VFC = memo(() => {
             base={"gold"}
           />
         </Box>
-        <Image src={testImg} w="100%" boxShadow="2xl" />
+        <Image src={testImg} maxW="100%" boxShadow="2xl" />
       </Flex>
       <Box>
         <Box w={"80%"} mt={"4rem"} mx={"auto"}>

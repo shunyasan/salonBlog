@@ -1,7 +1,7 @@
-import { Clinic } from "./Clinic";
-import { Parts } from "./Parts";
+import { Clinic } from "../Clinic";
+import { Parts } from "../Parts";
 
-export type Price = {
+export type PriceDto = {
   id: string;
   name: string;
   gender: number;

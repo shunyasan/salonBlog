@@ -17,12 +17,14 @@ import { StaffGenderText } from "../../atoms/text/StaffGenderText";
 import { InlineTitleBadge } from "../../atoms/badge/InlineTitleBadge";
 import { StatusText } from "../../atoms/text/StatusText";
 import { SalonListHook } from "../../../hooks/app/salon/search/SalonListHook";
-import { Price } from "../../../type/api/Price";
+import { PriceDto } from "../../../type/api/dto/PriceDto";
 import { OrderPlanIdName } from "../../../type/app/OrderPlanIdName";
 import { OptionText } from "../../../type/app/OptionText";
+import { FreeServiceBoxList } from "../boxList/FreeServiceBoxList";
+import { PayRerationsBoxList } from "../boxList/PayRerationsBoxList";
 
 type Props = {
-  plan: Price;
+  plan: PriceDto;
   orderDataIdName: OrderPlanIdName;
 };
 export const PlanCard: VFC<Props> = memo((props) => {
@@ -59,26 +61,29 @@ export const PlanCard: VFC<Props> = memo((props) => {
   return (
     <Box
       p={"1rem"}
-      my={"3rem"}
+      my={"1rem !important"}
       borderRadius={8}
       shadow={"0 4px 8px 2px rgb(180,180,180)"}
       // border="2px"
       // borderColor="#00188b"
     >
       <HStack
-        px={"2rem"}
         // minH={"15rem"}
         wrap={"wrap"}
-        justifyContent={"space-between"}
+        justifyContent={"center"}
       >
-        <Box h={"100%"} w={"40%"} textAlign={"left"}>
+        <Box h={"100%"} w={"22rem"} textAlign={"left"}>
           <Box pb={"2px"}>{plan.clinic.name}</Box>
           <Image maxH={"80%"} src={clinicImg} />
         </Box>
-        <Box h={"100%"} w={"55%"}>
-          <HStack wrap={"wrap"} justifyContent={"space-around"}>
-            <Stack spacing={"1rem"}>
-              <Box>
+        <Box h={"100%"} w={{ md: "inherit", sm: "100%" }}>
+          <HStack wrap={"wrap"} justifyContent={"space-around"} spacing={"0"}>
+            <Stack
+              spacing={"0"}
+              // w="13.3rem"
+              w={"13.3rem"}
+            >
+              <Box my={"5px"}>
                 <InlineTitleBadge>料金</InlineTitleBadge>
                 <Box>
                   <Text as={"a"} fontSize={"0.4rem"}>
@@ -86,13 +91,13 @@ export const PlanCard: VFC<Props> = memo((props) => {
                   </Text>
                   {orderDataIdName.paySystem !== "総額" ? (
                     <>
-                      <Text as={"a"} fontSize={"2rem"}>
+                      <Text as={"a"} fontSize={{ md: "2rem" }}>
                         ￥{plan.oncePrice.toLocaleString()}
                       </Text>
                       <Text as={"a"}>/回</Text>
                     </>
                   ) : (
-                    <Text as={"a"} fontSize={"2rem"}>
+                    <Text as={"a"} fontSize={{ md: "2rem", sm: "1.6rem" }}>
                       ￥{plan.price.toLocaleString()}
                     </Text>
                   )}
@@ -104,117 +109,145 @@ export const PlanCard: VFC<Props> = memo((props) => {
                   </Box>
                 )}
               </Box>
-              <Box>
+              <Box my={"5px !important"}>
                 <InlineTitleBadge>回数</InlineTitleBadge>
                 <Text my={1}>{plan.times}回</Text>
               </Box>
             </Stack>
-            <Box w={"55%"}>
-              <Flex pt={3} justifyContent={"center"}>
+            <Flex
+              w={{ md: "23rem", sm: "30rem" }}
+              spacing={"0"}
+              wrap={"wrap"}
+              justifyContent={"center"}
+            >
+              <Flex
+                justifyContent={"center"}
+                w={{ md: "100%", sm: "45%" }}
+                mt={"5px"}
+              >
                 <Box>
                   <InlineTitleBadge>部位</InlineTitleBadge>
                   <Text my={1}>{plan.name}</Text>
                 </Box>
               </Flex>
-              <Box
-                w={"65%"}
-                mx={"auto"}
-                mt={"0.5rem"}
-                // bg={"#f6f6f6"}
-                p={"0.5rem 1rem"}
+              <Flex
+                justifyContent={"center"}
+                w={{ md: "100%", sm: "45%" }}
+                mt={"5px"}
               >
-                <InlineTitleBadge>情報</InlineTitleBadge>
-
-                <HStack
-                  my={1}
-                  px={2}
-                  justifyContent={"space-between"}
-                  // borderBottom={"1px"}
-                  // borderColor={"originGray"}
+                <Box
+                  w={"9rem"}
+                  // mt={"0.5rem"}
+                  // bg={"#f6f6f6"}
+                  // p={"0.5rem 1rem"}
                 >
-                  <Text display={"inline"} fontSize={"0.7rem"}>
-                    予約 :
-                  </Text>
-                  <StatusText
-                    text={plan.clinic.reserve}
-                    first={"優良"}
-                    second={"良好"}
-                    fontSize={"0.9rem"}
-                    other={"不明"}
-                  />
-                </HStack>
-                <HStack
-                  my={1}
-                  px={2}
-                  justifyContent={"space-between"}
-                  // borderBottom={"1px"}
-                  // borderColor={"originGray"}
-                >
-                  <Text display={"inline"} fontSize={"0.7rem"}>
-                    内装 :
-                  </Text>
-                  <StatusText
-                    text={plan.clinic.interior}
-                    first={"豪華"}
-                    second={"綺麗"}
-                    fontSize={"0.9rem"}
-                    other={"不明"}
-                  />
-                </HStack>
-                <HStack
-                  my={1}
-                  px={2}
-                  justifyContent={"space-between"}
-                  // borderBottom={"1px"}
-                  // borderColor={"originGray"}
-                >
-                  <Text display={"inline"} fontSize={"0.7rem"}>
-                    施術室 :
-                  </Text>
-                  <StatusText
-                    text={plan.clinic.roomType}
-                    first={"完全個室"}
-                    second={"個室"}
-                    fontSize={"0.9rem"}
-                    other={"不明"}
-                  />
-                </HStack>
-                {plan.clinic.staffGender !== 0 && (
-                  <Box mt="1rem">
-                    <StaffGenderText staffGender={plan.clinic.staffGender} />
+                  <Box>
+                    <InlineTitleBadge>情報</InlineTitleBadge>
                   </Box>
-                )}
-              </Box>
-            </Box>
+                  <HStack
+                    my={1}
+                    px={2}
+                    justifyContent={"space-between"}
+                    // borderBottom={"1px"}
+                    // borderColor={"originGray"}
+                  >
+                    <Text display={"inline"} fontSize={"0.7rem"}>
+                      予約 :
+                    </Text>
+                    <StatusText
+                      text={plan.clinic.reserve}
+                      first={"優良"}
+                      second={"良好"}
+                      fontSize={"0.9rem"}
+                      other={"不明"}
+                    />
+                  </HStack>
+                  <HStack
+                    my={1}
+                    px={2}
+                    justifyContent={"space-between"}
+                    // borderBottom={"1px"}
+                    // borderColor={"originGray"}
+                  >
+                    <Text display={"inline"} fontSize={"0.7rem"}>
+                      内装 :
+                    </Text>
+                    <StatusText
+                      text={plan.clinic.interior}
+                      first={"豪華"}
+                      second={"綺麗"}
+                      fontSize={"0.9rem"}
+                      other={"不明"}
+                    />
+                  </HStack>
+                  <HStack
+                    my={1}
+                    px={2}
+                    justifyContent={"space-between"}
+                    // borderBottom={"1px"}
+                    // borderColor={"originGray"}
+                  >
+                    <Text display={"inline"} fontSize={"0.7rem"}>
+                      施術室 :
+                    </Text>
+                    <StatusText
+                      text={plan.clinic.roomType}
+                      first={"完全個室"}
+                      second={"個室"}
+                      fontSize={"0.9rem"}
+                      other={"不明"}
+                    />
+                  </HStack>
+                  {plan.clinic.staffGender !== 0 && (
+                    <Box mt="0.3rem">
+                      <StaffGenderText staffGender={plan.clinic.staffGender} />
+                    </Box>
+                  )}
+                </Box>
+              </Flex>
+              <Flex justifyContent={"center"} mt={"5px"}>
+                <Box textAlign={"center"}>
+                  <InlineTitleBadge bg={"originWhite"}>
+                    アクセス
+                  </InlineTitleBadge>
+                  <Box
+                    px={"1em"}
+                    fontSize={"0.8rem"}
+                    mt={"5px"}
+                    textAlign={"left"}
+                  >
+                    <Text>
+                      <Text as={"a"} fontSize={"0.6rem"} mr={"1rem"}>
+                        住所：
+                      </Text>
+                      {plan.clinic.address}
+                    </Text>
+                    <Text>
+                      <Text as={"a"} fontSize={"0.6rem"} mr={"1rem"}>
+                        最寄り駅：
+                      </Text>
+                      {plan.clinic.nearestStation}
+                    </Text>
+                  </Box>
+                </Box>
+              </Flex>
+            </Flex>
           </HStack>
-          <Box px={"1em"} textAlign={"left"} fontSize={"0.8rem"}>
-            <Text>
-              <Text as={"a"} fontSize={"0.6rem"} mr={"1rem"}>
-                住所：
-              </Text>
-              {plan.clinic.address}
-            </Text>
-            <Text>
-              <Text as={"a"} fontSize={"0.6rem"} mr={"1rem"}>
-                最寄り駅：
-              </Text>
-              {plan.clinic.nearestStation}
-            </Text>
-          </Box>
         </Box>
       </HStack>
       <Box borderBottom={"1px"} borderColor={"black"} mt={"0.5rem"}></Box>
-      <Box pt={"2rem"} pb={"1rem"}>
+      <Box>
         <Link
           href={plan.clinic.url}
           _hover={{ textDecoration: "none" }}
+          _focus={{ outline: "none" }}
           isExternal
         >
-          <Button mr={"1.5rem"} size={"lg"} variant="base">
+          <Button my={"1rem"} mx={"1.5rem"} size={"lg"} variant="base">
             公式サイト
           </Button>
         </Link>
-        <Button ml={"1.5rem"} size={"lg"} variant={"secBase"}>
+        <Button mb={"1rem"} mx={"1.5rem"} size={"lg"} variant={"secBase"}>
           詳細を開く
         </Button>
       </Box>
@@ -222,36 +255,32 @@ export const PlanCard: VFC<Props> = memo((props) => {
         {detailViewState ? "閉じる" : "もっと見る"}
       </Link>
       <Box className={detailViewClass}>
-        {optionService && (
-          <Box>
-            <OptionServiceCard
-              topTitle={"オプションサービス"}
-              datas={optionService}
-            />
+        <Stack spacing={"0"} justifyContent={"center"}>
+          {optionService && (
             <Box
-              borderBottom={"1px"}
-              borderColor={"originGray"}
-              w={"80%"}
-              mx={"auto"}
-            ></Box>
-          </Box>
-        )}
-        {medicalFee && (
-          <Box pt={"1rem"}>
-            <OptionServiceCard topTitle={"診察料"} datas={medicalFee} />
-            <Box
-              borderBottom={"1px"}
-              borderColor={"originGray"}
-              w={"80%"}
-              mx={"auto"}
-            ></Box>
-          </Box>
-        )}
-        {payment && (
-          <Box pt={"1rem"}>
-            <OptionServiceCard topTitle={"契約/支払い"} datas={payment} />
-          </Box>
-        )}
+            // w={"34rem"}
+            >
+              <InlineTitleBadge bg={"originWhite"}>
+                オプションサービス
+              </InlineTitleBadge>
+              <FreeServiceBoxList clinicOption={plan.clinic.clinicOption} />
+            </Box>
+          )}
+          <Box
+            w={"80%"}
+            mx={"auto !important"}
+            borderTop={"1px"}
+            borderColor={"originGray"}
+          ></Box>
+          {payment && (
+            <Box mt={"1em !important"}>
+              <InlineTitleBadge bg={"originWhite"}>
+                契約/支払い
+              </InlineTitleBadge>
+              <PayRerationsBoxList payments={payment} />
+            </Box>
+          )}
+        </Stack>
       </Box>
     </Box>
   );

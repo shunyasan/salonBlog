@@ -59,7 +59,6 @@ export const PartsCard: VFC<Props> = memo((props) => {
       const res: IdAndNameDto[] = await getAllBasePartsIdAndName(
         orderPlan.AboutCategory
       );
-      console.log(res);
       setParts(res);
     }
   }, [getAllBasePartsIdAndName, orderPlan]);
@@ -72,10 +71,16 @@ export const PartsCard: VFC<Props> = memo((props) => {
   return (
     parts && (
       <div className={change ? change : ""}>
-        <Box m={6} textAlign="center">
+        <Box m={"1rem"} textAlign="center">
           <Box>より詳細な部位を選択</Box>
-          <Box w={"80%"} m={"auto"} my="6" minW="xs">
-            <Box w={"30%"} m={"auto"}>
+          <Flex
+            w={{ md: "65%", sm: "85%" }}
+            mx={"auto"}
+            my="1.5rem"
+            justifyContent={"center"}
+            wrap="wrap"
+          >
+            <Box w={"16rem"} m={"auto"}>
               <Image
                 src={
                   orderPlan.gender === "女性"
@@ -83,16 +88,9 @@ export const PartsCard: VFC<Props> = memo((props) => {
                     : AboutCategory?.imgUrlMen
                 }
               />
-              <Text p="5">{AboutCategory?.name}</Text>
+              <Text p="1.5rem">{AboutCategory?.name}</Text>
             </Box>
-
-            <Flex
-              w={"80%"}
-              m={"auto"}
-              justifyContent={"center"}
-              wrap="wrap"
-              p="4"
-            >
+            <Box>
               {parts.map((data) => (
                 <PartsButton
                   key={data.id}
@@ -101,8 +99,8 @@ export const PartsCard: VFC<Props> = memo((props) => {
                   filter={selected === data.id}
                 />
               ))}
-            </Flex>
-          </Box>
+            </Box>
+          </Flex>
         </Box>
       </div>
     )

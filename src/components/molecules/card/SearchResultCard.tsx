@@ -1,4 +1,12 @@
-import { Box, Button, Stack, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Stack,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { ConditionData } from "../../../type/app/ConditionData";
 import { OrderPlanIdName } from "../../../type/app/OrderPlanIdName";
@@ -54,39 +62,51 @@ export const SearchResultCard: VFC<Props> = memo((props) => {
 
   return (
     <>
-      <Box m={"auto"} w={"100%"} border={"1px"} py={"1rem"}>
-        <Stack m={"auto"} justifyContent={"center"} w={"70%"} spacing={"2px"}>
+      <Stack justifyContent={"center"} spacing={"0"} border={"1px"} p={"1rem"}>
+        <HStack spacing={"0"} wrap={"wrap"} justifyContent={"center"}>
           {orderData.map((data, int) => (
-            <Box key={int} fontSize={"0.8rem"}>
+            <Flex
+              key={int}
+              fontSize={"0.8rem"}
+              alignItems={"center"}
+              justifyContent={"space-evenly"}
+              w={"100%"}
+            >
               <Text
-                w={"50%"}
+                w={"9em"}
                 textAlign={"center"}
                 display={"inline-block"}
                 bg={"originLiteGray"}
-                my={"4px"}
                 border={"1px"}
                 borderColor={"originBlack"}
+                m={"0.5em !important"}
               >
                 {data.title}
               </Text>
-              <Text w={"50%"} textAlign={"center"} display={"inline-block"}>
+              <Text
+                w={"9em"}
+                m={"0.4em !important"}
+                textAlign={"center"}
+                display={"inline-block"}
+              >
                 {data.value}
               </Text>
-            </Box>
+            </Flex>
           ))}
-          <Box>
-            <Button
-              onClick={onOpen}
-              mt={"0.5rem"}
-              w={"70%"}
-              variant={"gold"}
-              size={"xs"}
-            >
-              条件を変更
-            </Button>
-          </Box>
-        </Stack>
-      </Box>
+        </HStack>
+
+        <Box>
+          <Button
+            onClick={onOpen}
+            mt={"0.5rem"}
+            w={"10em"}
+            variant={"gold"}
+            size={"xs"}
+          >
+            条件を変更
+          </Button>
+        </Box>
+      </Stack>
       {orderPlan && (
         <PlanResearchModal
           OrderPlan={orderPlan}

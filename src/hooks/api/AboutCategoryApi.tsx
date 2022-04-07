@@ -7,30 +7,32 @@ import { baseURL, getAxios } from "./config/ApiConfig";
 export const AboutCategoryApi = () => {
   const getAboutCategoryByOriginId = useCallback(
     async (originId: string): Promise<AboutCategory[]> => {
-      return axios
+      const data: AboutCategory[] = await axios
         .get(baseURL + "about-category/originId/" + originId)
         .then((response) => {
           return response.data as AboutCategory[];
         })
         .catch((err) => {
-          console.log(err);
           return [];
         });
+
+      return data;
     },
     []
   );
 
   const getAboutCategoryById = useCallback(
     async (id: string): Promise<AboutCategory | null> => {
-      return axios
+      const data: AboutCategory | null = await axios
         .get(baseURL + "about-category/" + id)
         .then((response) => {
-          return response.data as AboutCategory;
+          return response.data;
         })
         .catch((err) => {
-          console.log(err);
           return null;
         });
+
+      return data;
     },
     []
   );

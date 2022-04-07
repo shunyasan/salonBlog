@@ -1,6 +1,6 @@
 import { ClinicOpeningHours } from "../ClinicOpeningHours";
 import { ClinicOption } from "../ClinicOption";
-import { OnlyPriceDto } from "./OnlyPriceDto";
+import { PriceDto } from "./PriceDto";
 
 export type ClinicNestPriceDto = {
   id: string;
@@ -20,5 +20,5 @@ export type ClinicNestPriceDto = {
   areaId: string;
   clinicOption: ClinicOption;
   clinicOpeningHours: ClinicOpeningHours[];
-  onlyPrices: OnlyPriceDto[];
+  prices: PriceDto[];
 };

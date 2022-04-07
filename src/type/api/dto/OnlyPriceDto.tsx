@@ -1,4 +1,4 @@
-export type OnlyPriceDto = {
+export type PriceDto = {
   id: string;
   name: string;
   gender: number;

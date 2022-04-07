@@ -6,6 +6,8 @@ import "../../../../App.css";
 import { AboutCategoryApi } from "../../../../hooks/api/AboutCategoryApi";
 import { AboutCategory } from "../../../../type/api/AboutCategory";
 import { QueryOrderPlan } from "../../../../type/app/QueryOrderPlan";
+import { ImageAndTextBox } from "../../../atoms/box/ImageAndTextBox";
+import { NarrowImageAndTextBox } from "../../../atoms/box/NarrowImageAndTextBox";
 
 type Props = {
   setAboutPartsSelectData: (data: any) => void;
@@ -44,11 +46,25 @@ export const AboutPartsSelectCard: VFC<Props> = memo((props) => {
       <div className={change}>
         <Box m={6} textAlign="center">
           <Box>詳細の部位を選択</Box>
-          <Wrap my={4} spacing="10" justify="center">
+          <HStack justifyContent={"center"} wrap={"wrap"} my="1.5rem">
+            {/* <Wrap my={4} spacing="1rem" justify="center"> */}
             {aboutParts?.map((data) => (
-              <WrapItem
+              <>
+                <NarrowImageAndTextBox
+                  key={data.id}
+                  targetValue={selected}
+                  value={data.name}
+                  img={
+                    orderPlan.gender === "男性"
+                      ? data.imgUrlMen
+                      : data.imgUrlLady
+                  }
+                  id={data.id}
+                  onClick={() => selectAboutPartsSelect(data.id)}
+                />
+                {/* <WrapItem
                 key={data.id}
-                w="220px"
+                w={{ md: "14rem", sm: "9rem" }}
                 shadow="xl"
                 cursor="pointer"
                 onClick={() => selectAboutPartsSelect(data.id)}
@@ -58,6 +74,7 @@ export const AboutPartsSelectCard: VFC<Props> = memo((props) => {
               >
                 <Box>
                   <Image
+                    w={"100%"}
                     src={
                       orderPlan.gender === "男性"
                         ? data.imgUrlMen
@@ -66,9 +83,11 @@ export const AboutPartsSelectCard: VFC<Props> = memo((props) => {
                   />
                   <Text p="5">{data.name}</Text>
                 </Box>
-              </WrapItem>
+              </WrapItem> */}
+              </>
             ))}
-          </Wrap>
+            {/* </Wrap> */}
+          </HStack>
         </Box>
       </div>
     )

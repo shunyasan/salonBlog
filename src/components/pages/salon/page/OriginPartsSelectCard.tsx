@@ -6,6 +6,8 @@ import "../../../../App.css";
 import { OriginCategoryApi } from "../../../../hooks/api/OriginCategoryApi";
 import { OriginCategory } from "../../../../type/api/OriginCategory";
 import { QueryOrderPlan } from "../../../../type/app/QueryOrderPlan";
+import { ImageAndTextBox } from "../../../atoms/box/ImageAndTextBox";
+import { NarrowImageAndTextBox } from "../../../atoms/box/NarrowImageAndTextBox";
 
 type Props = {
   setOriginPartsSelectData: (data: any) => void;
@@ -16,7 +18,7 @@ export const OriginPartsSelectCard: VFC<Props> = memo((props) => {
   const { setOriginPartsSelectData, orderPlan } = props;
   const [change, setChange] = useState<string>("fade");
   const [selected, setSelected] = useState<string>("");
-  const [originParts, setOriginParts] = useState<OriginCategory[] | null>([]);
+  const [originParts, setOriginParts] = useState<OriginCategory[]>([]);
 
   const { getAllOriginCategory } = OriginCategoryApi();
 
@@ -30,7 +32,6 @@ export const OriginPartsSelectCard: VFC<Props> = memo((props) => {
 
   const getOriginParts = useCallback(async () => {
     const originCategory = await getAllOriginCategory();
-    console.log(originCategory);
     setOriginParts(originCategory);
   }, [getAllOriginCategory]);
 
@@ -43,31 +44,47 @@ export const OriginPartsSelectCard: VFC<Props> = memo((props) => {
       <div className={change}>
         <Box m={6} textAlign="center">
           <Box>大まかな部位を選択</Box>
-          <Wrap my={4} spacing="10" justify="center">
+          <HStack justifyContent={"center"} wrap={"wrap"} my="1.5rem">
             {originParts.map((data) => (
-              <WrapItem
-                key={data.id}
-                w="220px"
-                shadow="xl"
-                cursor="pointer"
-                onClick={() => selectAboutPartsSelect(data.id)}
-                filter={
-                  selected === data.id ? "brightness(50%)" : "brightness(100%)"
-                }
-              >
-                <Box>
-                  <Image
-                    src={
-                      orderPlan.gender === "男性"
-                        ? data.imgUrlMen
-                        : data.imgUrlLady
-                    }
-                  />
-                  <Text p="5">{data.name}</Text>
-                </Box>
-              </WrapItem>
+              <>
+                <NarrowImageAndTextBox
+                  key={data.id}
+                  targetValue={selected}
+                  value={data.name}
+                  img={
+                    orderPlan.gender === "男性"
+                      ? data.imgUrlMen
+                      : data.imgUrlLady
+                  }
+                  id={data.id}
+                  onClick={() => selectAboutPartsSelect(data.id)}
+                />
+                {/* <WrapItem
+                  key={data.id}
+                  w={{}}
+                  shadow="xl"
+                  cursor="pointer"
+                  onClick={() => selectAboutPartsSelect(data.id)}
+                  filter={
+                    selected === data.id
+                      ? "brightness(50%)"
+                      : "brightness(100%)"
+                  }
+                >
+                  <Box>
+                    <Image
+                      src={
+                        orderPlan.gender === "男性"
+                          ? data.imgUrlMen
+                          : data.imgUrlLady
+                      }
+                    />
+                    <Text p="5">{data.name}</Text>
+                  </Box>
+                </WrapItem> */}
+              </>
             ))}
-          </Wrap>
+          </HStack>
         </Box>
       </div>
     )

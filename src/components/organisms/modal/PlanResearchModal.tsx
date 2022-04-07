@@ -62,15 +62,23 @@ export const PlanResearchModal: VFC<Props> = memo((props) => {
   );
 
   const checkNewAboutPartsData = useCallback(
-    (newOrderData: OrderPlanIdName, key: string, name: string, id: string) => {
-      if (key === "広域カテゴリ") {
+    (newOrderData: OrderPlanIdName, key: string, name: string, id?: string) => {
+      if (key === "性別") {
+        newOrderData.gender = name;
+      } else if (key === "肌色") {
+        newOrderData.skinCollor = name;
+      } else if (key === "毛量") {
+        newOrderData.hair = name;
+      } else if (key === "料金体系") {
+        newOrderData.paySystem = name;
+      } else if (id && key === "広域カテゴリ") {
         newOrderData.originParts = { id, name };
         newOrderData.AboutCategory = { id: "", name: "" };
         newOrderData.parts = null;
-      } else if (key === "詳細カテゴリ") {
+      } else if (id && key === "詳細カテゴリ") {
         newOrderData.AboutCategory = { id, name };
         newOrderData.parts = null;
-      } else if (key === "部位") {
+      } else if (id && key === "部位") {
         newOrderData.parts = { id, name };
       }
       return newOrderData;
@@ -81,18 +89,13 @@ export const PlanResearchModal: VFC<Props> = memo((props) => {
   const getSetOrderData = useCallback(
     async (key: string, name: string, id?: string) => {
       if (orderData) {
-        const newOrderData: OrderPlanIdName = {
-          gender: key === "性別" ? name : orderData.gender,
-          skinCollor: key === "肌色" ? name : orderData.skinCollor,
-          hair: key === "毛量" ? name : orderData.hair,
-          paySystem: key === "料金体系" ? name : orderData.paySystem,
-          originParts: orderData.originParts,
-          AboutCategory: orderData.AboutCategory,
-          parts: orderData.parts,
-        };
-        const checkedParts: OrderPlanIdName = id
-          ? checkNewAboutPartsData(newOrderData, key, name, id)
-          : newOrderData;
+        const checkedParts: OrderPlanIdName = checkNewAboutPartsData(
+          orderData,
+          key,
+          name,
+          id
+        );
+
         await getAllPartsAndCategory(checkedParts);
       }
     },
@@ -114,9 +117,9 @@ export const PlanResearchModal: VFC<Props> = memo((props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent w={{ md: "inherit", sm: "90%" }}>
         <ModalCloseButton />
-        <ModalBody p={"2rem"}>
+        <ModalBody p={{ md: "2rem", sm: "2rem 1rem" }}>
           <Stack m={"auto"} textAlign={"center"} spacing={"2rem"}>
             {orderData && partsAndCategory ? (
               <>

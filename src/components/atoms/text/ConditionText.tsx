@@ -12,7 +12,7 @@ export const ConditionText: VFC<Props> = memo((props) => {
   return (
     <Flex>
       <Center
-        w={"30%"}
+        w={{ md: "30%", sm: "38%" }}
         display={"inline-block"}
         bg={"originLiteGray"}
         border={"1px"}
@@ -20,7 +20,11 @@ export const ConditionText: VFC<Props> = memo((props) => {
       >
         {title}
       </Center>
-      <Flex justifyContent={"space-evenly"} w={"70%"} alignItems={"center"}>
+      <Flex
+        justifyContent={"space-evenly"}
+        w={{ md: "70%", sm: "62%" }}
+        alignItems={"center"}
+      >
         {texts.map((text, int) => (
           <Link
             key={int}

@@ -53,20 +53,16 @@ export const SearchSalon: VFC = memo(() => {
   }, [search]);
 
   // パラメーター
-  const selectParamsData = useCallback(
-    (data: string, query: string) => {
-      setNewParams(`${query}=${data}&`);
-      getQueryOrderPlan();
-    },
-    [getQueryOrderPlan]
-  );
+  const selectParamsData = useCallback((data: string, query: string) => {
+    setNewParams(`${query}=${data}&`);
+    // getQueryOrderPlan();
+  }, []);
   // 戻るパラメーター
   const prevQuery = useCallback(
     (name: string) => {
       const decode = decodeURI(search);
       const prevQuery = decode.replace(new RegExp(name + ".*"), "");
       setPrevParamsData(prevQuery);
-      console.log(prevQuery);
     },
     [search]
   );
@@ -134,7 +130,6 @@ export const SearchSalon: VFC = memo(() => {
     });
   }, [history, search, newParams]);
 
-  // 表示ページ
   useEffect(() => {
     readViewData();
   }, [readViewData]);
@@ -142,33 +137,53 @@ export const SearchSalon: VFC = memo(() => {
   return (
     <>
       <Box textAlign="center" m={8}>
-        <Center textAlign="center">
-          <CompleteBadge number={1} selected={showNumber >= 0} />
-          <Text as="a" m={2}>
-            －
-          </Text>
-          <CompleteBadge number={2} selected={showNumber >= 1} />
-          <Text as="a" m={2}>
-            －
-          </Text>
-          <CompleteBadge number={3} selected={showNumber >= 2} />
-          <Text as="a" m={2}>
-            －
-          </Text>
-          <CompleteBadge number={4} selected={showNumber >= 3} />
-          <Text as="a" m={2}>
-            －
-          </Text>
-          <CompleteBadge number={5} selected={showNumber >= 4} />
-          <Text as="a" m={2}>
-            －
-          </Text>
-          <CompleteBadge number={6} selected={showNumber >= 5} />
-          <Text as="a" m={2}>
-            －
-          </Text>
-          <CompleteBadge number={7} selected={showNumber >= 6} />
+        <Center my={"1rem"} fontSize={"1.5rem"}>
+          プランを探す{" "}
         </Center>
+        <HStack justifyContent={"center"} wrap={"wrap"}>
+          <CompleteBadge
+            number={1}
+            selected={showNumber >= 0}
+            mx={"5px"}
+            circle={{ md: "2.5rem", sm: "2rem" }}
+          />
+          <CompleteBadge
+            number={2}
+            selected={showNumber >= 1}
+            mx={"5px"}
+            circle={{ md: "2.5rem", sm: "2rem" }}
+          />
+          <CompleteBadge
+            number={3}
+            selected={showNumber >= 2}
+            mx={"5px"}
+            circle={{ md: "2.5rem", sm: "2rem" }}
+          />
+          <CompleteBadge
+            number={4}
+            selected={showNumber >= 3}
+            mx={"5px"}
+            circle={{ md: "2.5rem", sm: "2rem" }}
+          />
+          <CompleteBadge
+            number={5}
+            selected={showNumber >= 4}
+            mx={"5px"}
+            circle={{ md: "2.5rem", sm: "2rem" }}
+          />
+          <CompleteBadge
+            number={6}
+            selected={showNumber >= 5}
+            mx={"5px"}
+            circle={{ md: "2.5rem", sm: "2rem" }}
+          />
+          <CompleteBadge
+            number={7}
+            selected={showNumber >= 6}
+            mx={"5px"}
+            circle={{ md: "2.5rem", sm: "2rem" }}
+          />
+        </HStack>
       </Box>
       {/* 毛量を選択 */}
       {showNumber === 6 && queryOrderPlan ? (
@@ -255,7 +270,12 @@ export const SearchSalon: VFC = memo(() => {
         </Box>
       )}
       <Center m="16">
-        <BaseButton text={"TOPに戻る"} path={"/"} />
+        <BaseButton
+          text={"最初からやり直す"}
+          path={"/salon"}
+          size={undefined}
+          base={"secBase"}
+        />
         {/* <Button bg={"red"} onClick={importFunc}>
 					import
 				</Button> */}

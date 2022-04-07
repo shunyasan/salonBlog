@@ -201,7 +201,7 @@
   animation-duration: 0.5s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-  margin-top: 0;
+  /* margin-top: 0; */
 }
 @keyframes detailServiceCloseAnime {
   0% {
@@ -223,7 +223,7 @@
   animation-duration: 0.5s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
 @keyframes detailServiceOpenAnime {
   0% {

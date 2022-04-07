@@ -45,57 +45,67 @@ export const SalonListHook = () => {
     [noneValuePush, getOriginCategories, getAboutCategories, getBaseParts]
   );
 
-  const newOptionFunc = useCallback((clinic: Clinic | ClinicNestPriceDto) => {
-    const irradiation: OptionText = {
-      name: "照射漏れ",
-      text: clinic.clinicOption.irradiationLeakage,
-    };
-    const anesthesia: OptionText = {
-      name: "麻酔",
-      text: clinic.clinicOption.anesthesia,
-    };
-    const aftercare: OptionText = {
-      name: "アフターケア",
-      text: clinic.clinicOption.aftercare,
-    };
-    const shaving: OptionText = {
-      name: "剃毛",
-      text: clinic.clinicOption.shaving,
-    };
-    const trouble: OptionText = {
-      name: "肌トラブル対応",
-      text: clinic.clinicOption.troubleTreatment,
-    };
-    const firstVisit: OptionText = {
-      name: "初診料",
-      text: clinic.clinicOption.firstVisitFees,
-    };
-    const subsequentVisit: OptionText = {
-      name: "再診料",
-      text: clinic.clinicOption.subsequentVisitFees,
-    };
-    const studentDiscount: OptionText = {
-      name: "学割",
-      text: clinic.clinicOption.studentDiscount,
-    };
-    const cardPay: OptionText = {
-      name: "カード払い",
-      text: clinic.cardPay,
-    };
-    const medhicalLoan: OptionText = {
-      name: "医療ローン",
-      text: clinic.medhicalLoan,
-    };
-    const contractCancel: OptionText = {
-      name: "途中解約",
-      text: clinic.clinicOption.contractCancellation,
-    };
-    return {
-      service: [irradiation, anesthesia, aftercare, shaving, trouble],
-      medicalFee: [firstVisit, subsequentVisit, studentDiscount],
-      payment: [cardPay, medhicalLoan, contractCancel],
-    };
+  const checkNoneValue = useCallback((val: string) => {
+    if (!val || val === "なし") {
+      return "-";
+    }
+    return val;
   }, []);
+
+  const newOptionFunc = useCallback(
+    (clinic: Clinic | ClinicNestPriceDto) => {
+      const irradiation: OptionText = {
+        name: "照射漏れ",
+        text: checkNoneValue(clinic.clinicOption.irradiationLeakage),
+      };
+      const anesthesia: OptionText = {
+        name: "麻酔",
+        text: checkNoneValue(clinic.clinicOption.anesthesia),
+      };
+      const aftercare: OptionText = {
+        name: "アフターケア",
+        text: checkNoneValue(clinic.clinicOption.aftercare),
+      };
+      const shaving: OptionText = {
+        name: "剃毛",
+        text: checkNoneValue(clinic.clinicOption.shaving),
+      };
+      const trouble: OptionText = {
+        name: "肌トラブル対応",
+        text: checkNoneValue(clinic.clinicOption.troubleTreatment),
+      };
+      const firstVisit: OptionText = {
+        name: "初診料",
+        text: checkNoneValue(clinic.clinicOption.firstVisitFees),
+      };
+      const subsequentVisit: OptionText = {
+        name: "再診料",
+        text: checkNoneValue(clinic.clinicOption.subsequentVisitFees),
+      };
+      const studentDiscount: OptionText = {
+        name: "学割",
+        text: checkNoneValue(clinic.clinicOption.studentDiscount),
+      };
+      const cardPay: OptionText = {
+        name: "カード払い",
+        text: checkNoneValue(clinic.cardPay),
+      };
+      const medhicalLoan: OptionText = {
+        name: "医療ローン",
+        text: checkNoneValue(clinic.medhicalLoan),
+      };
+      const contractCancel: OptionText = {
+        name: "途中解約",
+        text: checkNoneValue(clinic.clinicOption.contractCancellation),
+      };
+      return {
+        service: [irradiation, anesthesia, aftercare, shaving, trouble],
+        medicalFee: [firstVisit, subsequentVisit, studentDiscount],
+        payment: [cardPay, medhicalLoan, contractCancel],
+      };
+    },
+    [checkNoneValue]
+  );
 
   const checkFreeOption = useCallback((option: ClinicOption) => {
     const func: any = {};

@@ -1,4 +1,4 @@
-import { Box, HStack, Text } from "@chakra-ui/react";
+import { Box, Checkbox, Flex, HStack, Text } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { ClinicApi } from "../../../hooks/api/ClinicApi";
 import { ClinicAreaApi } from "../../../hooks/api/ClinicAreaApi";
@@ -82,27 +82,29 @@ export const Clinics: VFC = memo(() => {
   }, [areaIdState]);
 
   return (
-    <Box m={"3rem"} textAlign={"center"}>
+    <Box my={"3rem"} mx={{ md: "3rem", sm: "1rem" }} textAlign={"center"}>
       <Text fontSize={"1.5rem"}>クリニック一覧</Text>
       <HStack
         justifyContent={"space-evenly"}
-        spacing={"1rem"}
         wrap={"wrap"}
-        w={"80%"}
+        spacing={"0"}
         my="2rem"
-        mx={"auto"}
       >
         <Box>
-          <Box
+          <Flex
             cursor={"pointer"}
-            border={"1px"}
-            p={"0.5rem 1rem"}
+            border={!areaIdState.id ? "4px" : "1px"}
+            w={"8rem"}
+            h={"8rem"}
+            m={"1rem"}
+            alignItems={"center"}
+            justifyContent={"center"}
             fontSize={"1.2rem"}
             onClick={() => getClinicDataAndAreaId(0, undefined, defaultMax)}
           >
             <Text>全ての区域</Text>
-          </Box>
-          {!areaIdState.id ? <Box fontSize={"1.3rem"}>▼</Box> : ""}
+          </Flex>
+          {/* {!areaIdState.id ? <Box fontSize={"1.3rem"}>▼</Box> : ""} */}
         </Box>
         {areaData.map((data, int) => (
           <AreaBox
@@ -126,7 +128,10 @@ export const Clinics: VFC = memo(() => {
           getPageNumber(page, block)
         }
       >
-        <Box w={"80%"} m="auto">
+        {/* <Box mt={"2rem"}>
+          <Checkbox colorScheme="yellow" value={}>系列クリニックをまとめる</Checkbox>
+        </Box> */}
+        <Box w={{ md: "80%", sm: "95%" }} m="auto">
           {clinicData.map((data, int) => (
             <ClinicCard clinic={data} key={int} />
           ))}

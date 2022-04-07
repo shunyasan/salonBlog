@@ -7,7 +7,7 @@ import { baseURL, getAxios } from "./config/ApiConfig";
 export const BasePartsApi = () => {
   const getAllBasePartsIdAndName = useCallback(
     async (aboutCategoryId: string): Promise<IdAndNameDto[]> => {
-      const originData = await axios
+      const data: IdAndNameDto[] = await axios
         .get(
           baseURL + "base-parts/id-and-name/aboutCategoryId/" + aboutCategoryId
         )
@@ -19,7 +19,7 @@ export const BasePartsApi = () => {
           return [];
         });
 
-      return originData;
+      return data;
     },
     []
   );
@@ -27,7 +27,7 @@ export const BasePartsApi = () => {
   const getAllBasePartsByAboutCategoryId = useCallback(
     async (aboutCategoryId: string, gender: string): Promise<BaseParts[]> => {
       const query = "?gender=" + gender;
-      const data = await axios
+      const data: BaseParts[] = await axios
         .get(baseURL + "base-parts/aboutCategoryId/" + aboutCategoryId + query)
         .then((response) => {
           return response.data;

@@ -9,8 +9,8 @@ export const OriginCategoryApi = () => {
   const getAllOriginCategory = useCallback(async (): Promise<
     OriginCategory[]
   > => {
-    const originData = await getAxios(baseURL + "origin-category");
-    return originData;
+    const data: OriginCategory[] = await getAxios(baseURL + "origin-category");
+    return data;
   }, []);
 
   const getOriginCategories = useCallback(

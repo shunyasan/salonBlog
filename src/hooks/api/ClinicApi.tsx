@@ -7,7 +7,7 @@ export const ClinicApi = () => {
   const getAllClinic = useCallback(
     async (take: number, skip: number): Promise<ClinicNestPriceDto[]> => {
       const query = `take=${take}&skip=${skip}`;
-      const originData = await axios
+      const data: ClinicNestPriceDto[] = await axios
         .get(baseURL + "clinic/clinic-nest-price/pagenation?" + query)
         .then((response) => {
           return response.data;
@@ -16,7 +16,7 @@ export const ClinicApi = () => {
           console.log(err);
         });
 
-      return originData;
+      return data;
     },
     []
   );
@@ -28,7 +28,7 @@ export const ClinicApi = () => {
       skip: number
     ): Promise<ClinicNestPriceDto[]> => {
       const query = `take=${take}&skip=${skip}`;
-      const originData = await axios
+      const data: ClinicNestPriceDto[] = await axios
         .get(
           baseURL +
             "clinic/clinic-nest-price/area/" +
@@ -43,7 +43,7 @@ export const ClinicApi = () => {
           console.log(err);
         });
 
-      return originData;
+      return data;
     },
     []
   );

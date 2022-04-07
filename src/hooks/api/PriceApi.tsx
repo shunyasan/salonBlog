@@ -1,9 +1,8 @@
 import axios from "axios";
 import { useCallback } from "react";
 import { IncludePartsAndCategoryPriceDto } from "../../type/api/dto/IncludePartsAndCategoryPriceDto";
-import { OnlyPriceDto } from "../../type/api/dto/OnlyPriceDto";
 import { PagenationParameter } from "../../type/api/dto/PagenationParameterDto";
-import { Price } from "../../type/api/Price";
+import { PriceDto } from "../../type/api/dto/PriceDto";
 import { OrderPlan } from "../../type/app/OrderPlan";
 import { baseURL } from "./config/ApiConfig";
 
@@ -15,10 +14,14 @@ export const PriceApi = () => {
       const originCategoryId = `originCategoryId=${orderPlan.originParts}&`;
       const aboutCategoryId = `aboutCategoryId=${orderPlan.AboutCategory}&`;
       const partsId = orderPlan.parts ? `partsId=${orderPlan.parts}&` : "";
-      const skinCollor = orderPlan.skinCollor
-        ? `skinCollor=${orderPlan.skinCollor}&`
-        : "";
-      const hair = orderPlan.hair ? `hair=${orderPlan.hair}&` : "";
+      const skinCollor =
+        orderPlan.skinCollor && orderPlan.skinCollor !== "未選択"
+          ? `skinCollor=${orderPlan.skinCollor}&`
+          : "";
+      const hair =
+        orderPlan.hair && orderPlan.hair !== "未選択"
+          ? `hair=${orderPlan.hair}&`
+          : "";
       const pagenation = `take=${take}&skip=${skip}`;
 
       const param =
@@ -43,7 +46,7 @@ export const PriceApi = () => {
       skip: number
     ): Promise<IncludePartsAndCategoryPriceDto> => {
       const params = createQuery(orderPlan, take, skip);
-      const originData = await axios
+      const data: IncludePartsAndCategoryPriceDto = await axios
         .get(baseURL + "price/order-plan?" + params)
         .then((response) => {
           return response.data;
@@ -53,7 +56,7 @@ export const PriceApi = () => {
           return [];
         });
 
-      return originData;
+      return data;
     },
     [createQuery]
   );
@@ -61,7 +64,7 @@ export const PriceApi = () => {
   const getCountPrice = useCallback(
     async (orderPlan: OrderPlan): Promise<number> => {
       const params = createQuery(orderPlan);
-      const originData: number = await axios
+      const data: number = await axios
         .get(baseURL + "price/max-count?" + params)
         .then((response) => {
           return response.data;
@@ -71,7 +74,7 @@ export const PriceApi = () => {
           return null;
         });
 
-      return originData;
+      return data;
     },
     [createQuery]
   );
@@ -80,12 +83,12 @@ export const PriceApi = () => {
     async (
       clinicId: string,
       pagenation?: PagenationParameter
-    ): Promise<OnlyPriceDto[]> => {
+    ): Promise<PriceDto[]> => {
       let query = "";
       if (pagenation) {
         query = `take=${pagenation.take}&skip=${pagenation.skip}`;
       }
-      const data: Price[] = await axios
+      const data: PriceDto[] = await axios
         .get(
           baseURL + `price/only-price/pagenation/clinic/${clinicId}?${query}`
         )
