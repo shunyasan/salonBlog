@@ -24,7 +24,10 @@ export const CategoryBox: VFC<Props> = memo((props) => {
       cursor={"pointer"}
       onClick={onClick}
       // border={arrow ? "4px" : ""}
-      shadow={arrow ? "0 0 3px 2px #111" : ""}
+      border={arrow ? "4px" : "1px"}
+      transition={"0.2s"}
+      transitionTimingFunction={"linear"}
+      // shadow={arrow ? "0 0 3px 2px #111" : ""}
     >
       <Image
         src={gender === "男性" ? category.imgUrlMen : category.imgUrlLady}

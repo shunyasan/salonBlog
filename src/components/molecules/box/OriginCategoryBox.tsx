@@ -23,6 +23,8 @@ export const OriginCategoryBox: VFC<Props> = memo((props) => {
       bg={arrow ? "originBlack" : ""}
       color={arrow ? "originWhite" : ""}
       onClick={onClick}
+      transition={"0.2s"}
+      transitionTimingFunction={"linear"}
     >
       {name}
     </Box>

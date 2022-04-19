@@ -1,5 +1,6 @@
 import { useEffect, useState, VFC } from "react";
 import { IconButton, Box, Flex, Stack, Text } from "@chakra-ui/react";
+import { StatusText } from "../../atoms/text/StatusText";
 
 type Props = {
   title: string;
@@ -7,10 +8,11 @@ type Props = {
   fontSize?: { true: string; false: string };
   height?: string;
   width?: string;
+  changeVal?: string;
 };
 
 export const FreeServiceBox: VFC<Props> = (props) => {
-  const { title, value, fontSize, height, width } = props;
+  const { title, value, fontSize, height, width, changeVal } = props;
   const [fontSizeData, setFontSizeData] = useState<string>();
   useEffect(() => {
     if (fontSize) {
@@ -25,7 +27,7 @@ export const FreeServiceBox: VFC<Props> = (props) => {
       h={height || "4rem"}
       justifyContent={"center"}
       spacing={"3px"}
-      fontSize={{ md: fontSizeData, sm: value !== "-" ? "0.7em" : "0.6em" }}
+      fontSize={{ md: fontSizeData, sm: value !== "-" ? "0.7em" : "0.5em" }}
       // onClick={onClick}
       // mx={"auto !important"}
       // cursor={"pointer"}
@@ -37,7 +39,14 @@ export const FreeServiceBox: VFC<Props> = (props) => {
         w={"80%"}
         mx={"auto !important"}
       ></Box>
-      <Text>{value}</Text>
+      <Box display={"inline-block"}>
+        <StatusText
+          text={value}
+          first={""}
+          second={changeVal || ""}
+          other={"-"}
+        />
+      </Box>
     </Stack>
   );
 };

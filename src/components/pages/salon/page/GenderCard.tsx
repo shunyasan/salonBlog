@@ -4,9 +4,8 @@ import { Image } from "@chakra-ui/react";
 import { transition } from "@chakra-ui/styled-system";
 import { Slide, SlideFade } from "@chakra-ui/transition";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
-import menImg from "../../../../resorces/salon/men.jpg";
-import ladyImg from "../../../../resorces/salon/lady.jpg";
 import "../../../../App.css";
+import { ManResource } from "../../../../resorces/ManResource";
 import { ImageAndTextBox } from "../../../atoms/box/ImageAndTextBox";
 
 type Props = {
@@ -41,13 +40,13 @@ export const GenderCard: VFC<Props> = memo((props) => {
           <ImageAndTextBox
             targetValue={selected}
             value={"男性"}
-            img={menImg}
+            img={ManResource.menImg}
             onClick={() => selectGender("男性")}
           />
           <ImageAndTextBox
             targetValue={selected}
             value={"女性"}
-            img={ladyImg}
+            img={ManResource.ladyImg}
             onClick={() => selectGender("女性")}
           />
           {/* <Box

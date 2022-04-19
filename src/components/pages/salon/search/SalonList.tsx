@@ -102,8 +102,14 @@ export const SalonList: VFC = memo(() => {
   }, [orderPlanData, getMaxDataCount]);
 
   return (
-    <Flex m={6} textAlign="center" wrap={"wrap"} justifyContent={"center"}>
-      <Box w={{ md: "24rem", sm: "20rem" }} pt={"3rem"} mx={"1rem"}>
+    <Stack
+      m={"2rem"}
+      spacing={"0"}
+      textAlign="center"
+      wrap={"wrap"}
+      justifyContent={"center"}
+    >
+      <Box w={{ md: "24rem", sm: "20rem" }} pt={"3rem"} mx={"auto"}>
         <Text>検索結果</Text>
         {orderDataIdName && (
           <SearchResultCard
@@ -120,7 +126,7 @@ export const SalonList: VFC = memo(() => {
           />
         </Box>
       </Box>
-      <Box w={{ md: "66rem", sm: "100%" }}>
+      <Box w={{ md: "55rem", sm: "100%" }} mx={"auto !important"}>
         {maxValue && maxValue > 0 ? (
           <Pagenation
             max={maxValue}
@@ -152,6 +158,6 @@ export const SalonList: VFC = memo(() => {
           </Box>
         )}
       </Box>
-    </Flex>
+    </Stack>
   );
 });

@@ -1,47 +1,50 @@
 import { Box, Flex, Image } from "@chakra-ui/react";
-import { memo, useCallback, useState, VFC } from "react";
-import clinicImg from "../../../resorces/clinic.jpg";
+import { VFC } from "react";
 import { useHistory } from "react-router-dom";
 import { ImageBox } from "../../molecules/box/ImageBox";
 import { HomeFeatureText } from "../../../type/app/HomeFeatureText";
+import { FeatureResource } from "../../../resorces/FeatureResource";
+import { TopResource } from "../../../resorces/TopResource";
 
 export const HomeFeaturesBoxList: VFC = () => {
   const history = useHistory();
 
   const interior: HomeFeatureText = {
-    img: clinicImg,
+    img: FeatureResource.interiaGrateImg,
     text: "内装が豪華なクリニック",
-    description: "内装が豪華なクリニックを紹介するお",
+    description: "施術による不安や緊張を緩和できるほど、豪華な内装のクリニック",
     path: "/feature/interior",
   };
   const visitFee: HomeFeatureText = {
-    img: clinicImg,
+    img: TopResource.clinicImg,
     text: "初診・再診料無料のクリニック",
-    description: "初診・再診料無料なクリニックを紹介するお",
+    description: "施術以外の費用がなく、安心料金のクリニック",
     path: "/feature/visitFee",
   };
   const installments: HomeFeatureText = {
-    img: clinicImg,
+    img: FeatureResource.installmentsImg,
     text: "分割払い可能なクリニック",
-    description: "分割払い可能なクリニックを紹介するお",
+    description:
+      "一括による出費を抑えることができるため、選択可能なプランの多いクリニック",
     path: "/feature/installments",
   };
   const privateRoom: HomeFeatureText = {
-    img: clinicImg,
+    img: FeatureResource.privateRoomImg,
     text: "完全個室のクリニック",
-    description: "完全個室なクリニックを紹介するお",
+    description:
+      "完全なプライベート空間で、一段と落ち着いた施術を受けることができるクリニック",
     path: "/feature/privateRoom",
   };
   const anesthesia: HomeFeatureText = {
-    img: clinicImg,
+    img: FeatureResource.anesthesiaImg,
     text: "麻酔無料のクリニック",
-    description: "麻酔無料なクリニックを紹介するお",
+    description: "痛みが心配な人でも、費用を気にせず施術できるクリニック",
     path: "/feature/anesthesia",
   };
   const sutudentDiscount: HomeFeatureText = {
-    img: clinicImg,
+    img: FeatureResource.studentImg,
     text: "学生料金（学割）のあるクリニック",
-    description: "学生料金のあるクリニックを紹介するお",
+    description: "学生に対してお得に施術を提供しているクリニック",
     path: "/feature/sutudentDiscount",
   };
 
@@ -55,9 +58,14 @@ export const HomeFeaturesBoxList: VFC = () => {
   ];
 
   return (
-    <Flex wrap={"wrap"} w={"80%"} m={"auto"} justifyContent={"center"}>
+    <Flex wrap={"wrap"} justifyContent={"center"}>
       {datas.map((data, i) => (
-        <ImageBox homeFeature={data} key={i} />
+        <ImageBox
+          homeFeature={data}
+          key={i}
+          width={{ md: "18rem", sm: "17rem" }}
+          height={{ md: "2rem", sm: "inherit" }}
+        />
       ))}
     </Flex>
   );

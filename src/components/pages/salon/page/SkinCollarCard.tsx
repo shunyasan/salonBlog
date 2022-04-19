@@ -2,10 +2,9 @@ import { Button } from "@chakra-ui/button";
 import { Image } from "@chakra-ui/image";
 import { Box, Center, HStack, Text } from "@chakra-ui/layout";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
-import whiteImg from "../../../../resorces/salon/skin/white.jpg";
-import baigeImg from "../../../../resorces/salon/skin/baige.jpg";
-import darkImg from "../../../../resorces/salon/skin/dark.jpg";
 import "../../../../App.css";
+import { HairResource } from "../../../../resorces/HairResource";
+import { SkinResource } from "../../../../resorces/SkinResource";
 import { ImageAndTextBox } from "../../../atoms/box/ImageAndTextBox";
 
 type Props = {
@@ -35,19 +34,19 @@ export const SkinCollorCard: VFC<Props> = memo((props) => {
             <ImageAndTextBox
               targetValue={selected}
               value={"白色"}
-              img={whiteImg}
+              img={SkinResource.whiteImg}
               onClick={() => selectProps("白色")}
             />
             <ImageAndTextBox
               targetValue={selected}
               value={"薄茶色"}
-              img={baigeImg}
+              img={SkinResource.baigeImg}
               onClick={() => selectProps("薄茶色")}
             />
             <ImageAndTextBox
               targetValue={selected}
               value={"色黒"}
-              img={darkImg}
+              img={SkinResource.darkImg}
               onClick={() => selectProps("色黒")}
             />
             {/* <Box

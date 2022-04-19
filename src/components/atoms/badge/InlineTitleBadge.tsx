@@ -16,7 +16,7 @@ export const InlineTitleBadge: VFC<Props> = memo((props) => {
     <Text
       px={"0.6rem"}
       display={"inline-block"}
-      border={"1px"}
+      border={"2px"}
       fontSize={fontSize || "0.7rem"}
       bg={bg || ""}
       color={color || ""}

@@ -144,6 +144,8 @@ export const TreatmentParts: VFC = memo(() => {
           color={gender === "女性" ? "originWhite" : ""}
           bg={gender === "女性" ? "originGold" : ""}
           onClick={() => changeGenderState("女性")}
+          transition={"0.2s"}
+          transitionTimingFunction={"linear"}
         >
           女性
         </Box>
@@ -153,6 +155,8 @@ export const TreatmentParts: VFC = memo(() => {
           color={gender === "男性" ? "originWhite" : ""}
           bg={gender === "男性" ? "originGold" : ""}
           onClick={() => changeGenderState("男性")}
+          transition={"0.2s"}
+          transitionTimingFunction={"linear"}
         >
           男性
         </Box>

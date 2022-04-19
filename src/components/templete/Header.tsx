@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 import { useCallback } from "react";
 import { HeaderDrawer } from "../molecules/drawer/HeaderDrawer";
 import { HamburgerIconBox } from "../atoms/box/HamburgerIconBox";
+import { Logo } from "../atoms/logo/Logo";
 
 type Props = {
   children: ReactNode;
@@ -32,6 +33,26 @@ export const Header: VFC<Props> = memo((props) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const history = useHistory();
+
+  const datas = [
+    {
+      path: "/",
+      text: "TOP",
+    },
+    {
+      path: "/salon",
+      text: "プランを探す",
+    },
+    {
+      path: "/treatment-parts",
+      text: "部位一覧",
+    },
+    {
+      path: "/clinic",
+      text: "クリニック一覧",
+    },
+  ];
+
   const onClickTransition = useCallback(
     (path: string) => {
       onClose();
@@ -82,6 +103,7 @@ export const Header: VFC<Props> = memo((props) => {
             wrap={"wrap"}
             justifyContent={{ md: "space-between" }}
             alignItems={"center"}
+            spacing={"0"}
           >
             <Link
               href="/"
@@ -89,13 +111,11 @@ export const Header: VFC<Props> = memo((props) => {
               w={{ md: "inherit", sm: "100%" }}
               my={{ md: "inherit", sm: "1rem" }}
               mx={"2rem"}
+              _focus={{ outline: "none" }}
             >
-              <Box textAlign="center">
-                <Text fontSize="2.5rem" fontWeight={"bold"}>
-                  あなたの脱毛
-                </Text>
-                <Text fontSize="0.7rem">東京都</Text>
-              </Box>
+              <Flex justifyContent={"center"}>
+                <Logo fontSize="2.4rem" color={"originBlack"} />
+              </Flex>
             </Link>
             <Box
               textAlign="center"
@@ -103,10 +123,10 @@ export const Header: VFC<Props> = memo((props) => {
               p={"1rem 2rem"}
               h="100%"
               w={{ md: "inherit", sm: "100%" }}
-              marginInlineStart={"unset !important"}
+              // marginInlineStart={"unset !important"}
             >
               <Text fontSize="0.7rem" mb={"0.5rem"} color={"originGold"}>
-                東京都主要５区のクリニックからほぼ全てのプランを集計
+                東京都激戦５区のクリニックからほぼ全てのプランを分析
               </Text>
               <HStack
                 justifyContent={"center"}
@@ -145,61 +165,22 @@ export const Header: VFC<Props> = memo((props) => {
                 color="originWhite"
                 pl={"1rem"}
               >
-                <Box
-                  textAlign="center"
-                  px={"1.3rem"}
-                  py={"0.1rem"}
-                  cursor="pointer"
-                  onClick={() => onClickTransition("/")}
-                  _hover={{
-                    transition: "0.5s",
-                    backgroundColor: "rgba(220,220,220,0.2)",
-                  }}
-                >
-                  TOP
-                </Box>
-                <Box
-                  textAlign="center"
-                  px={"1.3rem"}
-                  py={"0.1rem"}
-                  mx={2}
-                  cursor="pointer"
-                  onClick={() => onClickTransition("/salon")}
-                  _hover={{
-                    transition: "0.5s",
-                    backgroundColor: "rgba(220,220,220,0.2)",
-                  }}
-                >
-                  プランを探す
-                </Box>
-                <Box
-                  textAlign="center"
-                  px={"1.3rem"}
-                  py={"0.1rem"}
-                  mx={2}
-                  cursor="pointer"
-                  onClick={() => onClickTransition("/treatment-parts")}
-                  _hover={{
-                    transition: "0.5s",
-                    backgroundColor: "rgba(220,220,220,0.2)",
-                  }}
-                >
-                  部位一覧
-                </Box>
-                <Box
-                  textAlign="center"
-                  px={"1.3rem"}
-                  py={"0.1rem"}
-                  mx={2}
-                  cursor="pointer"
-                  _hover={{
-                    transition: "0.5s",
-                    backgroundColor: "rgba(220,220,220,0.2)",
-                  }}
-                  onClick={() => onClickTransition("/clinic")}
-                >
-                  クリニック一覧
-                </Box>
+                {datas.map((data, i) => (
+                  <Box
+                    textAlign="center"
+                    px={"1.3rem"}
+                    py={"0.1rem"}
+                    cursor="pointer"
+                    onClick={() => onClickTransition(data.path)}
+                    _hover={{
+                      transition: "0.5s",
+                      backgroundColor: "rgba(220,220,220,0.2)",
+                    }}
+                    key={i}
+                  >
+                    {data.text}
+                  </Box>
+                ))}
               </HStack>
             </Box>
             <Flex

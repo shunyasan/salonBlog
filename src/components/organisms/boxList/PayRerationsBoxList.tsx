@@ -17,6 +17,7 @@ export const PayRerationsBoxList: VFC<Props> = memo((props) => {
           fontSize={{ true: "0.9em", false: "0.75em" }}
           height={"6em"}
           width={"7.5em"}
+          changeVal={"OK"}
           key={i}
         />
       ))}

@@ -45,15 +45,16 @@ export const FreeServiceBoxList: VFC<Props> = memo((props) => {
   }, [checkNoneValue, clinicOption]);
 
   return (
-    <HStack spacing={"0"} wrap={"wrap"} justifyContent={"center"}>
+    <HStack spacing={"0"} justifyContent={"center"}>
       {optionData &&
         optionData.map((data, i) => (
           <FreeServiceBox
             title={data.title}
             value={data.value}
-            fontSize={{ true: "0.9em", false: "0.75em" }}
+            fontSize={{ true: "0.8em", false: "0.6em" }}
             height={"6em"}
             width={"7.5em"}
+            changeVal={"無料"}
             key={i}
           />
         ))}

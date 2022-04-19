@@ -2,10 +2,10 @@ import { Text } from "@chakra-ui/react";
 import { memo, useEffect, useState, VFC } from "react";
 
 type Props = {
-  text: string;
+  text: string | number;
   first: string;
   second: string;
-  fontSize: string;
+  fontSize?: string;
   other: string;
 };
 export const StatusText: VFC<Props> = memo((props) => {

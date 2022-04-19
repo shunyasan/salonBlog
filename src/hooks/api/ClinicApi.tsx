@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useCallback } from "react";
+import { Feature } from "../../enums/FeatureEnum";
 import { ClinicNestPriceDto } from "../../type/api/dto/ClinicNestPriceDto";
 import { baseURL } from "./config/ApiConfig";
 
@@ -48,5 +49,8 @@ export const ClinicApi = () => {
     []
   );
 
-  return { getAllClinic, getAllClinicByAreaId };
+  return {
+    getAllClinic,
+    getAllClinicByAreaId,
+  };
 };

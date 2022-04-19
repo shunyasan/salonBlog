@@ -2,11 +2,8 @@ import { Button } from "@chakra-ui/button";
 import { Image } from "@chakra-ui/image";
 import { Box, Center, HStack, Text } from "@chakra-ui/layout";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
-import softHair from "../../../../resorces/salon/hair/softHair.jpg";
-import softHair2 from "../../../../resorces/salon/hair/softHair2.jpg";
-import standardHair from "../../../../resorces/salon/hair/standardHair.jpg";
-import hardHair from "../../../../resorces/salon/hair/hardHair.jpg";
 import "../../../../App.css";
+import { HairResource } from "../../../../resorces/HairResource";
 import { ImageAndTextBox } from "../../../atoms/box/ImageAndTextBox";
 
 type Props = {
@@ -52,20 +49,20 @@ export const HairCard: VFC<Props> = memo((props) => {
             <ImageAndTextBox
               targetValue={selected}
               value={"細い（産毛）"}
-              img={softHair}
+              img={HairResource.softHair}
               onClick={() => selectProps("産毛")}
               id={"産毛"}
             />
             <ImageAndTextBox
               targetValue={selected}
               value={"標準"}
-              img={standardHair}
+              img={HairResource.standardHair}
               onClick={() => selectProps("標準")}
             />
             <ImageAndTextBox
               targetValue={selected}
               value={"太い"}
-              img={hardHair}
+              img={HairResource.hardHair}
               onClick={() => selectProps("太い")}
             />
 

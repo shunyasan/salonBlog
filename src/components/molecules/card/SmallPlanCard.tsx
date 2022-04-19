@@ -41,9 +41,9 @@ export const SmallPlanCard: VFC<Props> = memo((props) => {
             </Text> */}
           </Text>
         </Box>
-        <Button variant={"base"} ml={"1rem"} size={"xs"}>
+        {/* <Button variant={"base"} ml={"1rem"} size={"xs"}>
           詳細
-        </Button>
+        </Button> */}
       </HStack>
     </HStack>
   );

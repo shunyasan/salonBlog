@@ -1,15 +1,5 @@
-import { Button } from "@chakra-ui/button";
-import { Box, Center, Flex, HStack, Text } from "@chakra-ui/layout";
-import { Radio } from "@chakra-ui/radio";
-import { Select } from "@chakra-ui/select";
-import {
-  ChangeEvent,
-  memo,
-  useCallback,
-  useEffect,
-  useState,
-  VFC,
-} from "react";
+import { Box, Stack, Text } from "@chakra-ui/layout";
+import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { PartsButton } from "../../../atoms/button/PartsButton";
 import { Image } from "@chakra-ui/react";
 import { AboutCategoryApi } from "../../../../hooks/api/AboutCategoryApi";
@@ -73,12 +63,13 @@ export const PartsCard: VFC<Props> = memo((props) => {
       <div className={change ? change : ""}>
         <Box m={"1rem"} textAlign="center">
           <Box>より詳細な部位を選択</Box>
-          <Flex
+          <Stack
             w={{ md: "65%", sm: "85%" }}
             mx={"auto"}
             my="1.5rem"
             justifyContent={"center"}
             wrap="wrap"
+            spacing={"0"}
           >
             <Box w={"16rem"} m={"auto"}>
               <Image
@@ -100,7 +91,7 @@ export const PartsCard: VFC<Props> = memo((props) => {
                 />
               ))}
             </Box>
-          </Flex>
+          </Stack>
         </Box>
       </div>
     )

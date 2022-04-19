@@ -27,7 +27,7 @@ export const CompleteBadge: VFC<Props> = memo((props) => {
       h={{ md: circle.md, sm: circle.sm }}
       mx={mx}
       backgroundColor={selected ? "" : "inherit"}
-      // borderRadius="50%"
+      borderRadius="50%"
     >
       <Text
         className="showNumber"

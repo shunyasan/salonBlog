@@ -8,6 +8,8 @@ import { Header } from "../components/templete/Header";
 import { clinicRoutes } from "./ClinicRoutes";
 import { featureRoutes } from "./FeatureRoutes";
 import { homeRoutes } from "./HomeRoutes";
+import { informationRoutes } from "./InformationRoutes";
+import { newsRoutes } from "./NewsRoutes";
 import { treatmentPartsRoutes } from "./TreatmentPartsRoutes";
 
 export const Router: VFC = memo(() => {
@@ -87,6 +89,41 @@ export const Router: VFC = memo(() => {
           </Switch>
         )}
       />
+      <Route
+        path="/news"
+        render={({ match: { url } }) => (
+          <Switch>
+            {newsRoutes.map((route) => (
+              <Route
+                key={route.path}
+                exact={route.exact}
+                path={`${url}${route.path}`}
+              >
+                <Header>{route.children}</Header>
+                <Footer />
+              </Route>
+            ))}
+          </Switch>
+        )}
+      />
+      <Route
+        path="/information"
+        render={({ match: { url } }) => (
+          <Switch>
+            {informationRoutes.map((route) => (
+              <Route
+                key={route.path}
+                exact={route.exact}
+                path={`${url}${route.path}`}
+              >
+                <Header>{route.children}</Header>
+                <Footer />
+              </Route>
+            ))}
+          </Switch>
+        )}
+      />
+      {/* ページが引っ掛からなかった場合 */}
       <Route path="*">
         <Header>
           <Page404 />

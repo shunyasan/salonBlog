@@ -131,7 +131,7 @@ export const Clinics: VFC = memo(() => {
         {/* <Box mt={"2rem"}>
           <Checkbox colorScheme="yellow" value={}>系列クリニックをまとめる</Checkbox>
         </Box> */}
-        <Box w={{ md: "80%", sm: "95%" }} m="auto">
+        <Box maxW={{ md: "55rem", sm: "100%" }} m="auto">
           {clinicData.map((data, int) => (
             <ClinicCard clinic={data} key={int} />
           ))}
