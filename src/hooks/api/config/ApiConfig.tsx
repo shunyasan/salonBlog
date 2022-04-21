@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useCallback } from "react";
 
-export const baseURL = "http://127.0.0.1:3002/";
+export const baseURL =
+  "https://k9rjklooj6.execute-api.ap-northeast-1.amazonaws.com/dev";
 
 export const getAxios = async (url: string) => {
   return await axios
