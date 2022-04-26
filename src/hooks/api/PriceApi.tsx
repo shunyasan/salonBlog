@@ -4,7 +4,7 @@ import { IncludePartsAndCategoryPriceDto } from "../../type/api/dto/IncludeParts
 import { PagenationParameter } from "../../type/api/dto/PagenationParameterDto";
 import { PriceDto } from "../../type/api/dto/PriceDto";
 import { OrderPlan } from "../../type/app/OrderPlan";
-import { baseURL } from "./config/ApiConfig";
+import { getAxios } from "./config/ApiConfig";
 
 export const PriceApi = () => {
   const createQuery = useCallback(
@@ -46,8 +46,9 @@ export const PriceApi = () => {
       skip: number
     ): Promise<IncludePartsAndCategoryPriceDto> => {
       const params = createQuery(orderPlan, take, skip);
-      const data: IncludePartsAndCategoryPriceDto = await axios
-        .get(baseURL + "price/order-plan?" + params)
+      const data: IncludePartsAndCategoryPriceDto = await getAxios(
+        "price/order-plan?" + params
+      )
         .then((response) => {
           return response.data;
         })
@@ -64,8 +65,7 @@ export const PriceApi = () => {
   const getCountPrice = useCallback(
     async (orderPlan: OrderPlan): Promise<number> => {
       const params = createQuery(orderPlan);
-      const data: number = await axios
-        .get(baseURL + "price/max-count?" + params)
+      const data: number = await getAxios("price/max-count?" + params)
         .then((response) => {
           return response.data;
         })
@@ -88,10 +88,9 @@ export const PriceApi = () => {
       if (pagenation) {
         query = `take=${pagenation.take}&skip=${pagenation.skip}`;
       }
-      const data: PriceDto[] = await axios
-        .get(
-          baseURL + `price/only-price/pagenation/clinic/${clinicId}?${query}`
-        )
+      const data: PriceDto[] = await getAxios(
+        `price/only-price/pagenation/clinic/${clinicId}?${query}`
+      )
         .then((response) => {
           return response.data;
         })

@@ -2,7 +2,7 @@ import { Box, Text } from "@chakra-ui/react";
 import { memo, VFC } from "react";
 
 type Props = {
-  fontSize: string;
+  fontSize: { md: string; sm: string };
   color: string;
   // fontSize: {md: string, sm: string}
 };
@@ -18,7 +18,7 @@ export const Logo: VFC<Props> = memo((props) => {
       fontSize={fontSize}
       textAlign={"center"}
     >
-      <Text>あなたの脱毛</Text>
+      <Text>あなたのための脱毛</Text>
       <Text fontSize="0.35em">東京都</Text>
     </Box>
   );

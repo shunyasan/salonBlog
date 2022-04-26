@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { Feature } from "../../enums/FeatureEnum";
 import { ClinicNestPriceDto } from "../../type/api/dto/ClinicNestPriceDto";
 import { FeatureDto } from "../../type/api/dto/FeatureDto";
-import { baseURL } from "./config/ApiConfig";
+import { getAxios } from "./config/ApiConfig";
 
 export const FeatureApi = () => {
   const featureValidation = useCallback((val: string) => {
@@ -20,15 +20,8 @@ export const FeatureApi = () => {
   }, []);
 
   const getAllFeature = useCallback(async (): Promise<FeatureDto> => {
-    const data: FeatureDto = await axios
-      .get(baseURL + "feature")
-      .then((response) => {
-        return response.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
+    const api = await getAxios("feature");
+    const data: FeatureDto = api.data;
     return data;
   }, []);
 
@@ -43,8 +36,9 @@ export const FeatureApi = () => {
         throw new Error("featureがありません");
       }
       const query = `take=${take}&skip=${skip}`;
-      const data: ClinicNestPriceDto[] = await axios
-        .get(baseURL + `feature/${feature}?` + query)
+      const data: ClinicNestPriceDto[] = await getAxios(
+        `feature/${feature}?` + query
+      )
         .then((response) => {
           return response.data;
         })
@@ -63,8 +57,7 @@ export const FeatureApi = () => {
       if (!check) {
         throw new Error("featureがありません");
       }
-      const data: number = await axios
-        .get(baseURL + `feature/count/${feature}`)
+      const data: number = await getAxios(`feature/count/${feature}`)
         .then((response) => {
           return response.data;
         })

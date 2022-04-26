@@ -83,7 +83,7 @@ export const Footer: VFC = memo((props) => {
           mx={"auto"}
           _focus={{ outline: "none" }}
         >
-          <Logo fontSize={"2rem"} color={"originWhite"} />
+          <Logo fontSize={{ md: "2rem", sm: "1.6rem" }} color={"originWhite"} />
         </Link>
         <HStack
           as="nav"

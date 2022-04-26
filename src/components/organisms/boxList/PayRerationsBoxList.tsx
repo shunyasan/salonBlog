@@ -14,7 +14,7 @@ export const PayRerationsBoxList: VFC<Props> = memo((props) => {
         <FreeServiceBox
           title={data.name}
           value={data.text}
-          fontSize={{ true: "0.9em", false: "0.75em" }}
+          fontSize={{ true: "0.75em", false: "0.6em" }}
           height={"6em"}
           width={"7.5em"}
           changeVal={"OK"}

@@ -92,6 +92,7 @@ export const ClinicCard: VFC<Props> = memo((props) => {
       my={"3rem"}
       borderRadius={8}
       shadow={"0 4px 8px 2px rgb(180,180,180)"}
+      color={"#333"}
     >
       <HStack
         // minH={"15rem"}
@@ -100,11 +101,11 @@ export const ClinicCard: VFC<Props> = memo((props) => {
         alignItems={"flex-start"}
         spacing={"0"}
       >
-        <Box h={"100%"} w={"22rem"} textAlign={"left"} overflow={"scroll"}>
-          <Box pb={"2px"} pl={"8px"}>
+        <Box h={"100%"} w={"22rem"} textAlign={"left"}>
+          <Box pb={"2px"} pl={"8px"} fontSize={"1.1em"} fontWeight={"bold"}>
             {clinic.name}
           </Box>
-          <Flex wrap={{ md: "wrap", sm: "nowrap" }}>
+          <Flex wrap={{ md: "wrap", sm: "nowrap" }} overflow={"scroll"}>
             <Image maxH={"80%"} src={getRandomImg()} />
             <Image
               maxH={"80%"}
@@ -131,21 +132,6 @@ export const ClinicCard: VFC<Props> = memo((props) => {
           justifyContent={"center"}
         >
           {/* <Box my={"1em"}> */}
-          <Box maxW={"100%"} mt={"1em"}>
-            <Box>
-              <Text
-                textAlign={"left"}
-                fontSize={"0.9em"}
-                color={"originBlack"}
-                fontWeight={"bold"}
-              >
-                オプションサービス
-              </Text>
-            </Box>
-            <Flex wrap={"nowrap"} overflow={"scroll"}>
-              <FreeServiceBoxList clinicOption={clinic.clinicOption} />
-            </Flex>
-          </Box>
           <Flex wrap={"wrap"} w={"100%"} justifyContent="space-between">
             {/* <Box w="50%" px={"5px"}>
                   <PlanConditionBox title={"回数"} text={times + "回"} />
@@ -200,10 +186,33 @@ export const ClinicCard: VFC<Props> = memo((props) => {
             {/* <Box w={"90%"} borderTop={"1px"} borderColor={"originGray"}></Box> */}
           </Flex>
           {/* </Box> */}
-          <Box w="100%" fontSize={"0.8em"} textAlign={"left"} py={"1em"}>
+
+          <Box
+            w="100%"
+            fontSize={"0.8em"}
+            textAlign={"left"}
+            py={"1em"}
+            pl={"1em"}
+          >
             <Text>念の為、公式ホームページのご確認をお願い致します。</Text>
             <Text>掲載情報に相違がある場合がございます。</Text>
           </Box>
+          <Box maxW={"100%"} mt={"1em"}>
+            <Box>
+              <Text
+                textAlign={"left"}
+                fontSize={"0.9em"}
+                color={"originBlack"}
+                fontWeight={"bold"}
+              >
+                オプションサービス
+              </Text>
+            </Box>
+            <Flex wrap={"nowrap"} overflow={"scroll"}>
+              <FreeServiceBoxList clinicOption={clinic.clinicOption} />
+            </Flex>
+          </Box>
+
           {payment && (
             <Box>
               <Box>

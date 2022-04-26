@@ -13,8 +13,8 @@ export const CopyrightImageBox: VFC<Props> = memo((props) => {
   const { src, authority, fontSize, name } = props;
 
   return (
-    <Box pos={"relative"}>
-      <Image h={"100%"} src={src} />
+    <Box pos={"relative"} height="auto">
+      <Image src={src} height="auto" objectFit={"contain"} />
       <Box
         pos={"absolute"}
         left={"2px"}

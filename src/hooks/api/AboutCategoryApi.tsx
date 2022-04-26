@@ -2,13 +2,14 @@ import axios from "axios";
 import { useCallback } from "react";
 import { AboutCategory } from "../../type/api/AboutCategory";
 import { IdAndNameDto } from "../../type/api/dto/IdAndNameDto";
-import { baseURL, getAxios } from "./config/ApiConfig";
+import { getAxios } from "./config/ApiConfig";
 
 export const AboutCategoryApi = () => {
   const getAboutCategoryByOriginId = useCallback(
     async (originId: string): Promise<AboutCategory[]> => {
-      const data: AboutCategory[] = await axios
-        .get(baseURL + "about-category/originId/" + originId)
+      const data: AboutCategory[] = await getAxios(
+        "about-category/originId/" + originId
+      )
         .then((response) => {
           return response.data as AboutCategory[];
         })
@@ -23,8 +24,7 @@ export const AboutCategoryApi = () => {
 
   const getAboutCategoryById = useCallback(
     async (id: string): Promise<AboutCategory | null> => {
-      const data: AboutCategory | null = await axios
-        .get(baseURL + "about-category/" + id)
+      const data: AboutCategory | null = await getAxios("about-category/" + id)
         .then((response) => {
           return response.data;
         })
@@ -43,7 +43,6 @@ export const AboutCategoryApi = () => {
       aboutCategoryId?: string
     ): Promise<IdAndNameDto[]> => {
       const url =
-        baseURL +
         "about-category/id-and-name/sort-selected?" +
         `originCategoryId=${originCategoryId}&`;
 
@@ -52,8 +51,9 @@ export const AboutCategoryApi = () => {
           ? url
           : url + `aboutCategoryId=${aboutCategoryId}`;
 
-      const getData: IdAndNameDto[] = await getAxios(checkedUrl);
-      return getData;
+      const api = await getAxios(checkedUrl);
+      const data: IdAndNameDto[] = api.data;
+      return data;
     },
     []
   );

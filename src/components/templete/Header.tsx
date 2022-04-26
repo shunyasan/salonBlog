@@ -114,7 +114,10 @@ export const Header: VFC<Props> = memo((props) => {
               _focus={{ outline: "none" }}
             >
               <Flex justifyContent={"center"}>
-                <Logo fontSize="2.4rem" color={"originBlack"} />
+                <Logo
+                  fontSize={{ md: "2.4rem", sm: "2.0rem" }}
+                  color={"originBlack"}
+                />
               </Flex>
             </Link>
             <Box

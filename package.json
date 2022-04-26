@@ -18,6 +18,7 @@
     "aws-sdk": "^2.1096.0",
     "axios": "^0.26.1",
     "caniuse-lite": "^1.0.30001319",
+    "dotenv-webpack": "^7.1.0",
     "firebase": "^9.6.1",
     "firestore-export-import": "^0.17.0",
     "framer-motion": "^4.1.17",
@@ -30,7 +31,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -55,9 +55,9 @@ export const Home: VFC = memo(() => {
             // bg={"rgba(170,170,170,0.5)"}
             textShadow={"1px 1px 2px #000"}
           >
-            <Text>東京都の激戦5区からほぼ全てのクリニックを分析</Text>
+            <Text>東京都の激戦5区からほぼ全てのクリニックを分析。</Text>
             <Text>決して安くはない経験だからこそ、</Text>
-            <Text>あなたのための脱毛を。</Text>
+            <Text>あなたのための正しい脱毛を。</Text>
           </Stack>
           {/* <Box mt={"5px"}>
             <BaseButton
@@ -87,9 +87,9 @@ export const Home: VFC = memo(() => {
               spacing={"1rem"}
               fontSize={"0.9rem"}
             >
-              <Text fontSize={"1.2rem"} fontWeight={"bold"}>
+              {/* <Text fontSize={"1.2rem"} fontWeight={"bold"}>
                 「こんなはずじゃなかった」
-              </Text>
+              </Text> */}
               <Text>度々生じてしまうトラブルやアンマッチ。</Text>
               {/* <Text>
                 カウンセリングの度に強引さを感じてしまう営業や、どう決めれば良いのかわからない脱毛プラン。
@@ -102,7 +102,7 @@ export const Home: VFC = memo(() => {
                 初めて脱毛する方から経験されたことのある方まで、最適なプランのご紹介にご協力致します。
               </Text> */}
               <Text>
-                決して安くはない経験だからこそ、あなたのための脱毛を。
+                決して安くはない経験だからこそ、あなたのための正しい脱毛を。
               </Text>
               <Text textAlign={"center"}></Text>
             </Stack>

@@ -68,21 +68,23 @@ export const PlanCard: VFC<Props> = memo((props) => {
       my={"1rem"}
       borderRadius={8}
       shadow={"0 4px 8px 2px rgb(180,180,180)"}
+      color={"#333"}
       // border="2px"
       // borderColor="#00188b"
     >
       <HStack
         // minH={"15rem"}
         wrap={"wrap"}
-        justifyContent={{ md: "space-evenly", sm: "center" }}
+        justifyContent={"center"}
+        // justifyContent={{ md: "space-evenly", sm: "center" }}
         alignItems={"flex-start"}
         spacing={"0"}
       >
-        <Box h={"100%"} w={"22rem"} textAlign={"left"} overflow={"scroll"}>
-          <Box pb={"2px"} pl={"8px"}>
+        <Box h={"100%"} w={"22rem"} textAlign={"left"}>
+          <Box pb={"2px"} pl={"8px"} fontSize={"1.1em"} fontWeight={"bold"}>
             {plan.clinic.name}
           </Box>
-          <Flex wrap={{ md: "wrap", sm: "nowrap" }}>
+          <Flex wrap={{ md: "wrap", sm: "nowrap" }} overflow={"scroll"}>
             <Image maxH={"80%"} src={getRandomImg()} />
             <Image
               maxH={"80%"}
@@ -98,7 +100,7 @@ export const PlanCard: VFC<Props> = memo((props) => {
             spacing={"0"}
             px={"1em"}
           > */}
-        <Box
+        <Stack
           spacing={"0"}
           // w="13.3rem"
           w={{ md: "30rem", sm: "100%" }}
@@ -147,7 +149,7 @@ export const PlanCard: VFC<Props> = memo((props) => {
                 <InlineTitleBadge>回数</InlineTitleBadge>
                 <Text my={1}>{plan.times}回</Text>
               </Box> */}
-          <Box my={"1em"}>
+          <Box mt={"1em !important"}>
             <Box w="96%" mx={"auto"}>
               <Flex
                 justifyContent={"center"}
@@ -224,25 +226,34 @@ export const PlanCard: VFC<Props> = memo((props) => {
               {/* <Box w={"90%"} borderTop={"1px"} borderColor={"originGray"}></Box> */}
             </Flex>
           </Box>
-          <Box w="100%" fontSize={"0.8em"} textAlign={"left"}>
+          <Box
+            w="100%"
+            fontSize={"0.8em"}
+            textAlign={"left"}
+            py={"1em"}
+            pl={"1em"}
+          >
             <Text>念の為、公式ホームページのご確認をお願い致します。</Text>
             <Text>掲載情報に相違がある場合がございます。</Text>
           </Box>
           {/* </Stack>
-        <Stack
-          w={{ md: "inherit", sm: "100%" }}
-          spacing={"1em"}
-          justifyContent={{ md: "center", sm: "left" }}
-          alignItems={"center"}
-          px={"1em"}
-          mt={"1em"}
-        > */}
+          <Stack
+            w={{ md: "inherit", sm: "100%" }}
+            spacing={"1em"}
+            justifyContent={{ md: "center", sm: "left" }}
+            alignItems={"center"}
+            px={"1em"}
+            mt={"1em"}
+          > */}
           <Box w={"100%"} mt={"1em"}>
             <Box textAlign={"left"}>
               <Text
                 fontSize={"0.9em"}
                 color={"originBlack"}
                 fontWeight={"bold"}
+                // color={"originWhite"}
+                // bg={"originBlack"}
+                // display={"inline-block"}
               >
                 オプションサービス
               </Text>
@@ -291,7 +302,7 @@ export const PlanCard: VFC<Props> = memo((props) => {
               <OpeningHoursTable datas={plan.clinic.clinicOpeningHours} />
             </Box>
           </Box>
-          <Flex alignItems={"center"} w={"100%"} mt={"1em"}>
+          <Flex alignItems={"center"} w={"100%"} mt={"1em !important"}>
             <Text
               fontSize={"0.9em"}
               color={"originBlack"}
@@ -308,27 +319,28 @@ export const PlanCard: VFC<Props> = memo((props) => {
               {plan.clinic.nearestStation}
             </Text>
           </Flex>
-        </Box>
+          <Box>
+            <Link
+              href={plan.clinic.url}
+              _hover={{ textDecoration: "none" }}
+              _focus={{ outline: "none" }}
+              isExternal
+            >
+              <Button my={"1rem"} mx={"1.5rem"} size={"lg"} variant="base">
+                公式サイト
+              </Button>
+            </Link>
+            {/* <Button mb={"1rem"} mx={"1.5rem"} size={"lg"} variant={"secBase"}>
+          詳細を開く
+        </Button> */}
+          </Box>
+        </Stack>
+
         {/* </Stack> */}
         {/* </HStack> */}
         {/* </Box> */}
       </HStack>
       {/* <Box borderBottom={"1px"} borderColor={"black"} mt={"0.5rem"}></Box> */}
-      <Box>
-        <Link
-          href={plan.clinic.url}
-          _hover={{ textDecoration: "none" }}
-          _focus={{ outline: "none" }}
-          isExternal
-        >
-          <Button my={"1rem"} mx={"1.5rem"} size={"lg"} variant="base">
-            公式サイト
-          </Button>
-        </Link>
-        {/* <Button mb={"1rem"} mx={"1.5rem"} size={"lg"} variant={"secBase"}>
-          詳細を開く
-        </Button> */}
-      </Box>
       {/* <Link display={"inline-block"} fontSize={"0.7rem"} onClick={detailOpen}>
         {detailViewState ? "閉じる" : "もっと見る"}
       </Link>
