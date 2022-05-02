@@ -34,8 +34,7 @@ export const GenderCard: VFC<Props> = memo((props) => {
   return (
     <div className={change}>
       <Box m={"1.5rem"} textAlign="center">
-        <Box>性別を選択</Box>
-        <Box>「4」以降途中検索可能です</Box>
+        <Box>性別を選択してください</Box>
         <HStack justifyContent={"center"} wrap={"wrap"} my="1.5rem">
           <ImageAndTextBox
             targetValue={selected}

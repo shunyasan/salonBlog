@@ -1,6 +1,8 @@
 import { Box, HStack } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
+import { ClinicDetailHooks } from "../../../hooks/app/clinic/ClinicDetailHooks";
 import { ClinicOption } from "../../../type/api/ClinicOption";
+import { TitleValue } from "../../../type/app/TitleValue";
 import { FreeServiceBox } from "../../molecules/box/FreeServiceBox";
 type Props = {
   clinicOption: ClinicOption;
@@ -8,41 +10,47 @@ type Props = {
 
 export const FreeServiceBoxList: VFC<Props> = memo((props) => {
   const { clinicOption } = props;
-  const [optionData, setOptionData] = useState<
-    {
-      title: string;
-      value: string;
-    }[]
-  >();
+  const { ClinicOptionTitleValue } = ClinicDetailHooks();
 
-  const checkNoneValue = useCallback((val: string) => {
-    if (!val || val === "なし") {
-      return "-";
-    }
-    return val;
-  }, []);
+  const [optionData, setOptionData] = useState<TitleValue[]>();
+
+  const getOption = useCallback(() => {
+    const data = ClinicOptionTitleValue(clinicOption);
+    setOptionData(data);
+  }, [clinicOption, ClinicOptionTitleValue]);
 
   useEffect(() => {
-    const datas = [
-      { title: "初診料", value: checkNoneValue(clinicOption.firstVisitFees) },
-      {
-        title: "再診料",
-        value: checkNoneValue(clinicOption.subsequentVisitFees),
-      },
-      {
-        title: "照射漏れ",
-        value: checkNoneValue(clinicOption.irradiationLeakage),
-      },
-      { title: "アフターケア", value: checkNoneValue(clinicOption.aftercare) },
-      { title: "麻酔", value: checkNoneValue(clinicOption.anesthesia) },
-      { title: "剃毛", value: checkNoneValue(clinicOption.shaving) },
-      {
-        title: "肌トラブル対応",
-        value: checkNoneValue(clinicOption.troubleTreatment),
-      },
-    ];
-    setOptionData(datas);
-  }, [checkNoneValue, clinicOption]);
+    getOption();
+  }, [getOption]);
+
+  // const checkNoneValue = useCallback((val: string) => {
+  //   if (!val || val === "なし") {
+  //     return "-";
+  //   }
+  //   return val;
+  // }, []);
+
+  // useEffect(() => {
+  //   const datas = [
+  //     { title: "初診料", value: checkNoneValue(clinicOption.firstVisitFees) },
+  //     {
+  //       title: "再診料",
+  //       value: checkNoneValue(clinicOption.subsequentVisitFees),
+  //     },
+  //     {
+  //       title: "照射漏れ",
+  //       value: checkNoneValue(clinicOption.irradiationLeakage),
+  //     },
+  //     { title: "アフターケア", value: checkNoneValue(clinicOption.aftercare) },
+  //     { title: "麻酔", value: checkNoneValue(clinicOption.anesthesia) },
+  //     { title: "剃毛", value: checkNoneValue(clinicOption.shaving) },
+  //     {
+  //       title: "肌トラブル対応",
+  //       value: checkNoneValue(clinicOption.troubleTreatment),
+  //     },
+  //   ];
+  //   setOptionData(datas);
+  // }, [checkNoneValue, clinicOption]);
 
   return (
     <HStack spacing={"0"} justifyContent={"center"}>

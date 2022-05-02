@@ -62,7 +62,7 @@ export const PartsCard: VFC<Props> = memo((props) => {
     parts && (
       <div className={change ? change : ""}>
         <Box m={"1rem"} textAlign="center">
-          <Box>より詳細な部位を選択</Box>
+          <Box>脱毛したい部位を選択してください</Box>
           <Stack
             w={{ md: "65%", sm: "85%" }}
             mx={"auto"}

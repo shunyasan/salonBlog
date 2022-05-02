@@ -48,7 +48,7 @@ export const Footer: VFC = memo((props) => {
   return (
     <Box as="footer" bg={"originBlack"} mt={"2rem"} py="2rem">
       <Box textAlign={"center"} w={"80%"} mx={"auto"}>
-        <HStack
+        <Flex
           as="nav"
           bg="originBlack"
           color="originWhite"
@@ -74,7 +74,7 @@ export const Footer: VFC = memo((props) => {
               {data.text}
             </Box>
           ))}
-        </HStack>
+        </Flex>
         <Link
           href="/"
           textDecoration={"none !important"}
@@ -85,7 +85,7 @@ export const Footer: VFC = memo((props) => {
         >
           <Logo fontSize={{ md: "2rem", sm: "1.6rem" }} color={"originWhite"} />
         </Link>
-        <HStack
+        <Flex
           as="nav"
           bg="originBlack"
           color="originWhite"
@@ -94,7 +94,6 @@ export const Footer: VFC = memo((props) => {
           alignItems={"center"}
           justifyContent={"center"}
           wrap={"wrap"}
-          spacing={"0"}
         >
           {profiles.map((data, i) => (
             <Box
@@ -109,7 +108,7 @@ export const Footer: VFC = memo((props) => {
               {data.text}
             </Box>
           ))}
-        </HStack>
+        </Flex>
       </Box>
     </Box>
   );

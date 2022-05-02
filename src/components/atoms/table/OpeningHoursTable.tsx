@@ -5,12 +5,13 @@ import { ClinicOpeningHours } from "../../../type/api/ClinicOpeningHours";
 
 type Props = {
   datas: ClinicOpeningHours[];
+  size?: string;
 };
 
 export const OpeningHoursTable: VFC<Props> = memo((props) => {
-  const { datas } = props;
+  const { datas, size } = props;
   return (
-    <Table variant={"unstyled"} size={"xs"}>
+    <Table variant={"unstyled"} size={size || "xs"}>
       <Thead>
         <Tr>
           <Th>診察時間</Th>

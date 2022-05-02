@@ -29,10 +29,11 @@ import { PagenationParameter } from "../../../type/api/dto/PagenationParameterDt
 import { OptionText } from "../../../type/app/OptionText";
 import { FreeServiceBoxList } from "../boxList/FreeServiceBoxList";
 import { PayRerationsTextList } from "../textList/PayRerationsTextList";
-import { PlanConditionBox } from "../../atoms/box/PlanConditionBox";
 import { PayRerationsBoxList } from "../boxList/PayRerationsBoxList";
 import { TopResource } from "../../../resorces/TopResource";
 import { SearchSalonHooks } from "../../../hooks/app/salon/SearchSalonHooks";
+import { useHistory } from "react-router-dom";
+import { NoticeClinicDetail } from "../../molecules/box/NoticeClinicDetail";
 
 type Props = {
   clinic: ClinicNestPriceDto;
@@ -43,15 +44,24 @@ const skip = 2;
 
 export const ClinicCard: VFC<Props> = memo((props) => {
   const { clinic } = props;
+  const history = useHistory();
+  const { checkFreeOption, newOptionFunc } = SalonListHook();
+  const { getPriceByClinicId } = PriceApi();
+  const { getRandomImg } = SearchSalonHooks();
+
   const [payment, setPayment] = useState<OptionText[]>([]);
   const [additionalPrice, setAdditionalPrice] = useState<PriceDto[]>([]);
   const [detailViewState, setDetailViewState] = useState<boolean>(false);
   const [detailViewClass, setDetailViewClass] =
     useState<string>("defaultDisplayNone");
+  // 画像準備期間のみ
+  const [image, setImage] = useState<string[]>([]);
 
-  const { checkFreeOption, newOptionFunc } = SalonListHook();
-  const { getPriceByClinicId } = PriceApi();
-  const { getRandomImg } = SearchSalonHooks();
+  useEffect(() => {
+    const gets = [...Array(2)].map(() => getRandomImg());
+    setImage(gets);
+  }, [getRandomImg]);
+  //
 
   const getApiPrice = useCallback(
     async (clinicId: string) => {
@@ -106,12 +116,8 @@ export const ClinicCard: VFC<Props> = memo((props) => {
             {clinic.name}
           </Box>
           <Flex wrap={{ md: "wrap", sm: "nowrap" }} overflow={"scroll"}>
-            <Image maxH={"80%"} src={getRandomImg()} />
-            <Image
-              maxH={"80%"}
-              mt={{ md: "5px", sm: "0" }}
-              src={getRandomImg()}
-            />
+            <Image maxH={"80%"} src={image[0]} />
+            <Image maxH={"80%"} mt={{ md: "5px", sm: "0" }} src={image[1]} />
           </Flex>
         </Box>
         <Stack
@@ -131,62 +137,7 @@ export const ClinicCard: VFC<Props> = memo((props) => {
           py={"1em"}
           justifyContent={"center"}
         >
-          {/* <Box my={"1em"}> */}
-          <Flex wrap={"wrap"} w={"100%"} justifyContent="space-between">
-            {/* <Box w="50%" px={"5px"}>
-                  <PlanConditionBox title={"回数"} text={times + "回"} />
-                </Box> */}
-            <Box w="50%" px={"5px"}>
-              <PlanConditionBox
-                title={"施術者"}
-                text={clinic.staffGender}
-                gender={true}
-              />
-            </Box>
-            <Box w="50%" px={"5px"}>
-              <PlanConditionBox
-                title={"予約"}
-                text={clinic.reserve}
-                first={"優良"}
-                second={"良好"}
-                other={"不明"}
-              />
-            </Box>
-            <Box w="50%" px={"5px"}>
-              <PlanConditionBox
-                title={"内装"}
-                text={clinic.interior}
-                first={"豪華"}
-                second={"綺麗"}
-                other={"不明"}
-              />
-            </Box>
-            <Box w="50%" px={"5px"}>
-              <PlanConditionBox
-                title={"施術室"}
-                text={clinic.roomType}
-                first={"完全個室"}
-                second={"個室"}
-                other={"不明"}
-              />
-            </Box>
-
-            <Box
-              ml={"5px"}
-              w={"47.3%"}
-              borderTop={"1px"}
-              borderColor={"originGray"}
-            ></Box>
-            <Box
-              mr={"5px"}
-              w={"47.3%"}
-              borderTop={"1px"}
-              borderColor={"originGray"}
-            ></Box>
-            {/* <Box w={"90%"} borderTop={"1px"} borderColor={"originGray"}></Box> */}
-          </Flex>
-          {/* </Box> */}
-
+          <NoticeClinicDetail clinic={clinic} width={"46%"} py={"8px"} />
           <Box
             w="100%"
             fontSize={"0.8em"}
@@ -258,18 +209,31 @@ export const ClinicCard: VFC<Props> = memo((props) => {
               {clinic.nearestStation}
             </Text>
           </Flex>
-          <Box>
-            <Link
-              href={clinic.url}
-              _hover={{ textDecoration: "none" }}
-              _focus={{ outline: "none" }}
-              isExternal
-            >
-              <Button my={"1rem"} mx={"1.5rem"} size={"lg"} variant="base">
-                公式サイト
+          <Flex justifyContent={"center"}>
+            <Box>
+              <Link
+                href={clinic.url}
+                _hover={{ textDecoration: "none" }}
+                _focus={{ outline: "none" }}
+                isExternal
+              >
+                <Button my={"1rem"} mx={"1.5rem"} size={"lg"} variant="base">
+                  公式サイト
+                </Button>
+              </Link>
+            </Box>
+            <Box>
+              <Button
+                my={"1rem"}
+                mx={"1.5rem"}
+                size={"lg"}
+                variant="secBase"
+                onClick={() => history.push(`/clinic/${clinic.id}`)}
+              >
+                詳細
               </Button>
-            </Link>
-          </Box>
+            </Box>
+          </Flex>
         </Stack>
       </HStack>
       <Flex wrap={"wrap"} justifyContent={"space-evenly"}>

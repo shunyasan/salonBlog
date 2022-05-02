@@ -32,7 +32,7 @@ export const SearchSalonHooks = () => {
       TopResource.clinicImg9,
       TopResource.clinicImg10,
     ];
-    const randomNum = Math.floor(Math.random() * 10);
+    const randomNum = Math.floor(Math.random() * 9);
     return img[randomNum];
   }, []);
 

@@ -8,23 +8,24 @@ import {
   Link,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { OptionServiceCard } from "../../molecules/card/OptionServiceCard";
 import { useHistory } from "react-router-dom";
 import { StaffGenderText } from "../../atoms/text/StaffGenderText";
 import { InlineTitleBadge } from "../../atoms/badge/InlineTitleBadge";
-import { StatusText } from "../../atoms/text/StatusText";
 import { SalonListHook } from "../../../hooks/app/salon/search/SalonListHook";
 import { PriceDto } from "../../../type/api/dto/PriceDto";
 import { OrderPlanIdName } from "../../../type/app/OrderPlanIdName";
 import { OptionText } from "../../../type/app/OptionText";
 import { FreeServiceBoxList } from "../boxList/FreeServiceBoxList";
 import { PayRerationsBoxList } from "../boxList/PayRerationsBoxList";
-import { PlanConditionBox } from "../../atoms/box/PlanConditionBox";
 import { OpeningHoursTable } from "../../atoms/table/OpeningHoursTable";
 import { TopResource } from "../../../resorces/TopResource";
 import { SearchSalonHooks } from "../../../hooks/app/salon/SearchSalonHooks";
+import { NoticeClinicDetail } from "../../molecules/box/NoticeClinicDetail";
+import { PlanDetailModal } from "../modal/PlanDetailModal";
 
 type Props = {
   plan: PriceDto;
@@ -32,15 +33,24 @@ type Props = {
 };
 export const PlanCard: VFC<Props> = memo((props) => {
   const { plan, orderDataIdName } = props;
+  const { newOptionFunc } = SalonListHook();
+  const { getRandomImg } = SearchSalonHooks();
+  const history = useHistory();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [detailViewState, setDetailViewState] = useState<boolean>(false);
   const [detailViewClass, setDetailViewClass] =
     useState<string>("defaultDisplayNone");
   const [optionService, setOptionService] = useState<OptionText[]>();
   const [medicalFee, setMedicalFee] = useState<OptionText[]>();
   const [payment, setPayment] = useState<OptionText[]>();
-  const { newOptionFunc } = SalonListHook();
-  const { getRandomImg } = SearchSalonHooks();
-  const history = useHistory();
+  const [image, setImage] = useState<string[]>([]);
+
+  useEffect(() => {
+    const gets = [...Array(2)].map(() => getRandomImg());
+    setImage(gets);
+  }, [getRandomImg]);
+  //
 
   const OptionFunc = useCallback(() => {
     const clinicOption = newOptionFunc(plan.clinic);
@@ -65,7 +75,7 @@ export const PlanCard: VFC<Props> = memo((props) => {
   return (
     <Box
       py={"1rem"}
-      my={"1rem"}
+      // my={"1rem"}
       borderRadius={8}
       shadow={"0 4px 8px 2px rgb(180,180,180)"}
       color={"#333"}
@@ -85,21 +95,10 @@ export const PlanCard: VFC<Props> = memo((props) => {
             {plan.clinic.name}
           </Box>
           <Flex wrap={{ md: "wrap", sm: "nowrap" }} overflow={"scroll"}>
-            <Image maxH={"80%"} src={getRandomImg()} />
-            <Image
-              maxH={"80%"}
-              mt={{ md: "5px", sm: "0" }}
-              src={getRandomImg()}
-            />
+            <Image maxH={"80%"} src={image[0]} />
+            <Image maxH={"80%"} mt={{ md: "5px", sm: "0" }} src={image[1]} />
           </Flex>
         </Box>
-        {/* <Box h={"100%"} w={{ md: "inherit", sm: "100%" }} px={"1em"}> */}
-        {/* <HStack
-            wrap={"wrap"}
-            justifyContent={"space-around"}
-            spacing={"0"}
-            px={"1em"}
-          > */}
         <Stack
           spacing={"0"}
           // w="13.3rem"
@@ -109,7 +108,6 @@ export const PlanCard: VFC<Props> = memo((props) => {
         >
           <Text fontSize={"0.9rem"}>{plan.name}</Text>
           <Box my={"5px"}>
-            {/* <InlineTitleBadge fontSize={"0.9rem"}>料金</InlineTitleBadge> */}
             <Box>
               <Text as={"a"} fontSize={"0.4rem"}>
                 ({plan.clinic.tax || "不明"})
@@ -145,86 +143,27 @@ export const PlanCard: VFC<Props> = memo((props) => {
               )}
             </Box>
           </Box>
-          {/* <Box my={"5px"} display={{ md: "block", sm: "none" }}>
-                <InlineTitleBadge>回数</InlineTitleBadge>
-                <Text my={1}>{plan.times}回</Text>
-              </Box> */}
-          <Box mt={"1em !important"}>
-            <Box w="96%" mx={"auto"}>
-              <Flex
-                justifyContent={"center"}
-                alignItems={"center"}
-                borderTop={"1px"}
-                borderColor={"originGray"}
-                textAlign={"left"}
-                py={"3px"}
-              >
-                <Text
-                  color={"originLiteBlack"}
-                  fontWeight={"bold"}
-                  // w={"3.5rem"}
-                  fontSize={"0.8em"}
-                  px={"1em"}
-                >
-                  回数
-                </Text>
-                <Text px={"1em"}>{plan.times}回</Text>
-              </Flex>
-              {/* <PlanConditionBox title={"回数"} text={plan.times + "回"} /> */}
-            </Box>
-            <Flex wrap={"wrap"} w={"100%"} justifyContent="space-between">
-              {/* <Box w="50%" px={"5px"}>
-                  <PlanConditionBox title={"回数"} text={plan.times + "回"} />
-                </Box> */}
-              <Box w="50%" px={"5px"}>
-                <PlanConditionBox
-                  title={"施術者"}
-                  text={plan.clinic.staffGender}
-                  gender={true}
-                />
-              </Box>
-              <Box w="50%" px={"5px"}>
-                <PlanConditionBox
-                  title={"予約"}
-                  text={plan.clinic.reserve}
-                  first={"優良"}
-                  second={"良好"}
-                  other={"不明"}
-                />
-              </Box>
-              <Box w="50%" px={"5px"}>
-                <PlanConditionBox
-                  title={"内装"}
-                  text={plan.clinic.interior}
-                  first={"豪華"}
-                  second={"綺麗"}
-                  other={"不明"}
-                />
-              </Box>
-              <Box w="50%" px={"5px"}>
-                <PlanConditionBox
-                  title={"施術室"}
-                  text={plan.clinic.roomType}
-                  first={"完全個室"}
-                  second={"個室"}
-                  other={"不明"}
-                />
-              </Box>
-
-              <Box
-                mx={"5px"}
-                w={"46%"}
-                borderTop={"1px"}
-                borderColor={"originGray"}
-              ></Box>
-              <Box
-                mx={"5px"}
-                w={"46%"}
-                borderTop={"1px"}
-                borderColor={"originGray"}
-              ></Box>
-              {/* <Box w={"90%"} borderTop={"1px"} borderColor={"originGray"}></Box> */}
-            </Flex>
+          <Flex
+            justifyContent={"center"}
+            alignItems={"center"}
+            // borderTop={"1px"}
+            // borderColor={"originGray"}
+            textAlign={"left"}
+            py={"8px"}
+          >
+            <Text
+              color={"originLiteBlack"}
+              fontWeight={"bold"}
+              // w={"3.5rem"}
+              fontSize={"0.8em"}
+              px={"1em"}
+            >
+              回数
+            </Text>
+            <Text px={"1em"}>{plan.times}回</Text>
+          </Flex>
+          <Box mt={"1em"}>
+            <NoticeClinicDetail clinic={plan.clinic} width={"46%"} py={"8px"} />
           </Box>
           <Box
             w="100%"
@@ -236,15 +175,6 @@ export const PlanCard: VFC<Props> = memo((props) => {
             <Text>念の為、公式ホームページのご確認をお願い致します。</Text>
             <Text>掲載情報に相違がある場合がございます。</Text>
           </Box>
-          {/* </Stack>
-          <Stack
-            w={{ md: "inherit", sm: "100%" }}
-            spacing={"1em"}
-            justifyContent={{ md: "center", sm: "left" }}
-            alignItems={"center"}
-            px={"1em"}
-            mt={"1em"}
-          > */}
           <Box w={"100%"} mt={"1em"}>
             <Box textAlign={"left"}>
               <Text
@@ -257,9 +187,6 @@ export const PlanCard: VFC<Props> = memo((props) => {
               >
                 オプションサービス
               </Text>
-              {/* <InlineTitleBadge bg={"originWhite"}>
-                    オプションサービス
-                  </InlineTitleBadge> */}
             </Box>
             <Flex wrap={"nowrap"} overflow={"scroll"}>
               <FreeServiceBoxList clinicOption={plan.clinic.clinicOption} />
@@ -275,16 +202,12 @@ export const PlanCard: VFC<Props> = memo((props) => {
                 >
                   契約/支払い
                 </Text>
-                {/* <InlineTitleBadge bg={"originWhite"}>
-                      契約/支払い
-                    </InlineTitleBadge> */}
               </Box>
               <Flex wrap={"nowrap"} overflow={"scroll"}>
                 <PayRerationsBoxList payments={payment} />
               </Flex>
             </Box>
           )}
-          {/* <Stack spacing={"1em"} w={{ md: "48%", sm: "100%" }}> */}
           <Box w={"100%"} justifyContent={"left"} alignItems={"center"}>
             <Box w="100%" textAlign={"left"}>
               <Text
@@ -294,9 +217,6 @@ export const PlanCard: VFC<Props> = memo((props) => {
               >
                 診察時間
               </Text>
-              {/* <InlineTitleBadge bg={"originWhite"}>
-                    診察時間
-                  </InlineTitleBadge> */}
             </Box>
             <Box mt={"3px"} overflow={"scroll"} w={{ md: "20em", sm: "95%" }}>
               <OpeningHoursTable datas={plan.clinic.clinicOpeningHours} />
@@ -312,9 +232,6 @@ export const PlanCard: VFC<Props> = memo((props) => {
             >
               アクセス
             </Text>
-            {/* <InlineTitleBadge bg={"originWhite"}>
-                    アクセス
-                  </InlineTitleBadge> */}
             <Text fontSize={"0.8rem"} textAlign={"left"}>
               {plan.clinic.nearestStation}
             </Text>
@@ -330,48 +247,25 @@ export const PlanCard: VFC<Props> = memo((props) => {
                 公式サイト
               </Button>
             </Link>
-            {/* <Button mb={"1rem"} mx={"1.5rem"} size={"lg"} variant={"secBase"}>
-          詳細を開く
-        </Button> */}
+            <Button
+              my={"1rem"}
+              mx={"1.5rem"}
+              size={"lg"}
+              variant={"secBase"}
+              onClick={onOpen}
+            >
+              詳細を開く
+            </Button>
           </Box>
         </Stack>
-
-        {/* </Stack> */}
-        {/* </HStack> */}
-        {/* </Box> */}
       </HStack>
-      {/* <Box borderBottom={"1px"} borderColor={"black"} mt={"0.5rem"}></Box> */}
-      {/* <Link display={"inline-block"} fontSize={"0.7rem"} onClick={detailOpen}>
-        {detailViewState ? "閉じる" : "もっと見る"}
-      </Link>
-      <Box className={detailViewClass}>
-        <Stack spacing={"0"} justifyContent={"center"}>
-          {optionService && (
-            <Box w={"100%"}>
-              <InlineTitleBadge bg={"originWhite"}>
-                オプションサービス
-              </InlineTitleBadge>
-              <Flex wrap={"nowrap"} overflow={"scroll"}>
-                <FreeServiceBoxList clinicOption={plan.clinic.clinicOption} />
-              </Flex>
-            </Box>
-          )}
-          <Box
-            w={"80%"}
-            mx={"auto"}
-            borderTop={"1px"}
-            borderColor={"originGray"}
-          ></Box>
-          {payment && (
-            <Box mt={"1em"}>
-              <InlineTitleBadge bg={"originWhite"}>
-                契約/支払い
-              </InlineTitleBadge>
-              <PayRerationsBoxList payments={payment} />
-            </Box>
-          )}
-        </Stack>
-      </Box> */}
+      <PlanDetailModal
+        isOpen={isOpen}
+        onClose={onClose}
+        price={plan}
+        clinic={plan.clinic}
+        clinicButton={true}
+      />
     </Box>
   );
 });

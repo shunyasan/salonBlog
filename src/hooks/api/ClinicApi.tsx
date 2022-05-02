@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useCallback } from "react";
 import { Feature } from "../../enums/FeatureEnum";
+import { Clinic } from "../../type/api/Clinic";
 import { ClinicNestPriceDto } from "../../type/api/dto/ClinicNestPriceDto";
 import { getAxios } from "./config/ApiConfig";
 
@@ -11,6 +12,21 @@ export const ClinicApi = () => {
       const data: ClinicNestPriceDto[] = await getAxios(
         "clinic/clinic-nest-price/pagenation?" + query
       )
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      return data;
+    },
+    []
+  );
+
+  const getOneClinic = useCallback(
+    async (clinicId: string): Promise<Clinic> => {
+      const data: Clinic = await getAxios("clinic/" + clinicId)
         .then((response) => {
           return response.data;
         })
@@ -48,5 +64,6 @@ export const ClinicApi = () => {
   return {
     getAllClinic,
     getAllClinicByAreaId,
+    getOneClinic,
   };
 };

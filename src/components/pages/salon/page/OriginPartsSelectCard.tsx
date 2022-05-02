@@ -43,7 +43,7 @@ export const OriginPartsSelectCard: VFC<Props> = memo((props) => {
     originParts && (
       <div className={change}>
         <Box m={6} textAlign="center">
-          <Box>大まかな部位を選択</Box>
+          <Box>脱毛したい部位カテゴリを選択してください</Box>
           <HStack justifyContent={"center"} wrap={"wrap"} my="1.5rem">
             {originParts.map((data) => (
               <>

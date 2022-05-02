@@ -8,7 +8,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
-import { ConditionData } from "../../../type/app/ConditionData";
+import { TitleValue } from "../../../type/app/TitleValue";
 import { OrderPlanIdName } from "../../../type/app/OrderPlanIdName";
 import { PlanResearchModal } from "../../organisms/modal/PlanResearchModal";
 
@@ -19,11 +19,11 @@ type Props = {
 
 export const SearchResultCard: VFC<Props> = memo((props) => {
   const { orderPlan, resetPages } = props;
-  const [orderData, setOrderData] = useState<ConditionData[]>([]);
+  const [orderData, setOrderData] = useState<TitleValue[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const getOrderData = useCallback(async () => {
-    const data: ConditionData[] = [
+    const data: TitleValue[] = [
       {
         title: "性別",
         value: orderPlan.gender,

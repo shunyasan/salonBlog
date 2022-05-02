@@ -18,22 +18,24 @@ export const CategoryBox: VFC<Props> = memo((props) => {
     // <Box>
     <Box
       m={"1rem !important"}
-      py={"0.5em"}
+      pb={"0.5em"}
       w={width}
-      h={{ md: "13em", sm: "12em" }}
+      h={search ? { md: "12em", sm: "10em" } : ""}
       cursor={"pointer"}
       onClick={onClick}
       // border={arrow ? "4px" : ""}
-      border={arrow ? "4px" : "1px"}
+      // border={arrow ? "4px" : ""}
       transition={"0.2s"}
       transitionTimingFunction={"linear"}
-      // shadow={arrow ? "0 0 3px 2px #111" : ""}
+      shadow={arrow ? "0 0 3px 2px #888" : ""}
     >
       <Image
         src={gender === "男性" ? category.imgUrlMen : category.imgUrlLady}
       />
-      <Text py={"0.7rem"}>{category.name}</Text>
-      {arrow && (
+      <Text py={"0.7rem"} fontSize={{ md: "1em", sm: "0.8em" }}>
+        {category.name}
+      </Text>
+      {arrow && search ? (
         <Box>
           <Button
             variant={"whiteNotSpace"}
@@ -44,6 +46,8 @@ export const CategoryBox: VFC<Props> = memo((props) => {
             このプランを探す
           </Button>
         </Box>
+      ) : (
+        ""
       )}
     </Box>
     // {arrow && <Box fontSize={"1.3rem"}>▼</Box>}

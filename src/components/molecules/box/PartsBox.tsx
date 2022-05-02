@@ -13,6 +13,7 @@ export const PartsBox: VFC<Props> = memo((props) => {
   return (
     <Box
       w={width}
+      px={"8px"}
       // onClick={() => getId(category.id)}
     >
       <Text pt={"0.7rem"}>{parts.name}</Text>

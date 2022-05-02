@@ -5,7 +5,7 @@ type Props = {
   text: string | number;
   first: string;
   second: string;
-  fontSize?: string;
+  fontSize?: { md: string; sm: string };
   other: string;
 };
 export const StatusText: VFC<Props> = memo((props) => {
@@ -25,7 +25,7 @@ export const StatusText: VFC<Props> = memo((props) => {
   }, [first, second, text]);
 
   return (
-    <Text bg={statusColor} px={"5px"} display={"inline"} fontSize={fontSize}>
+    <Text as={"a"} bg={statusColor} px={"5px"} fontSize={fontSize}>
       {text || other}
     </Text>
   );

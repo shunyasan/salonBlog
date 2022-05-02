@@ -105,5 +105,27 @@ export const PriceApi = () => {
     []
   );
 
-  return { getTreatmentPrice, getPriceByClinicId, getCountPrice };
+  const getPriceByAboutIdAndClinicId = useCallback(
+    async (clinicId: string, aboutId: string): Promise<PriceDto[]> => {
+      const data: PriceDto[] = await getAxios(
+        `price/clinic/${clinicId}?aboutId=${aboutId}`
+      )
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      return data;
+    },
+    []
+  );
+
+  return {
+    getTreatmentPrice,
+    getPriceByClinicId,
+    getCountPrice,
+    getPriceByAboutIdAndClinicId,
+  };
 };

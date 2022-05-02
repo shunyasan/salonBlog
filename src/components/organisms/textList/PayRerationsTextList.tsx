@@ -11,8 +11,8 @@ export const PayRerationsTextList: VFC<Props> = memo((props) => {
   const { payments } = props;
   return (
     <Stack spacing={"0"} wrap={"wrap"} w={"100%"}>
-      {payments.map((data) => (
-        <HStack justifyContent={"space-between"} fontSize={"0.8em"}>
+      {payments.map((data, i) => (
+        <HStack key={i} justifyContent={"space-between"} fontSize={"0.8em"}>
           <Box>{data.name}:</Box>
           <Box>{data.text || "-"}</Box>
         </HStack>

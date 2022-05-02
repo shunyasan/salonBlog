@@ -15,6 +15,13 @@ export const FeatureBoxList: VFC<Props> = memo((props) => {
   const { clinics, onClick, itemWidth } = props;
   const { getRandomImg } = SearchSalonHooks();
 
+  const [image, setImage] = useState<string>();
+
+  useEffect(() => {
+    const get = getRandomImg();
+    setImage(get);
+  }, [getRandomImg]);
+
   return (
     <HStack
       // w={"40rem"}
@@ -31,12 +38,14 @@ export const FeatureBoxList: VFC<Props> = memo((props) => {
           onClick={onClick}
           key={i}
         >
-          <CopyrightImageBox
-            src={getRandomImg()}
-            // src={TopResource.clinicImg}
-            authority={"urk"}
-            fontSize={"0.7em"}
-          />
+          {image && (
+            <CopyrightImageBox
+              src={image}
+              // src={TopResource.clinicImg}
+              authority={"urk"}
+              fontSize={"0.7em"}
+            />
+          )}
           <Stack p="1em">
             <Text>{data.name}</Text>
             <Text pt={"0.6em"} fontSize={"0.7em"}>

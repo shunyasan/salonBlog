@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { AbobutCategiryId } from "../../../enums/AbobutCategiryIdEnum";
 import { OriginCategiryId } from "../../../enums/OriginCategiryIdEnum";
 import { CardName } from "../../../enums/SerchSalonCardName";
+import { IdAndNameDto } from "../../../type/api/dto/IdAndNameDto";
 
 export const TreatmentPartsHook = () => {
   const history = useHistory();
@@ -29,33 +30,6 @@ export const TreatmentPartsHook = () => {
     const dataKey = func[aboutCategoryId];
     return dataKey;
   }, []);
-
-  const boxData = [
-    {
-      name: "顔",
-      originId: OriginCategiryId.face,
-    },
-    {
-      name: "四肢",
-      originId: OriginCategiryId.limb,
-    },
-    {
-      name: "体幹",
-      originId: OriginCategiryId.body,
-    },
-    {
-      name: "VIO",
-      originId: OriginCategiryId.vio,
-    },
-    {
-      name: "全身",
-      originId: OriginCategiryId.allBody,
-    },
-    {
-      name: "その他",
-      originId: OriginCategiryId.other,
-    },
-  ];
 
   const checkAboutCategoryKey = useCallback((originId: string) => {
     const func: any = {};
@@ -88,5 +62,5 @@ export const TreatmentPartsHook = () => {
     [history]
   );
 
-  return { checkBasePartsKey, checkAboutCategoryKey, boxData, searchForPlan };
+  return { checkBasePartsKey, checkAboutCategoryKey, searchForPlan };
 };

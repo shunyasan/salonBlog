@@ -22,7 +22,7 @@ export const PriceViewCard: VFC<Props> = memo((props) => {
   return (
     <div className={change ? change : ""}>
       <Box m={6} textAlign="center">
-        <Box>料金の表示タイプを選択</Box>
+        <Box>料金の表示タイプを選択してください</Box>
         <HStack justifyContent={"center"} wrap={"wrap"} my="1.5rem">
           <Box
             w="18rem"
