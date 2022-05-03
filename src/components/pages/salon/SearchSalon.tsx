@@ -269,16 +269,6 @@ export const SearchSalon: VFC = memo(() => {
             戻る
           </Button>
         )}
-        {/* {showNumber !== 6 && (
-          <Button
-            mx="7"
-            onClick={nextClick}
-            disabled={newParams === ""}
-            variant={"secBase"}
-          >
-            次へ
-          </Button>
-        )} */}
       </Box>
       {showNumber > 2 && (
         <Box>

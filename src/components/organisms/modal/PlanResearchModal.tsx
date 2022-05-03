@@ -14,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { CardName } from "../../../enums/SerchSalonCardName";
 import { SalonListHook } from "../../../hooks/app/salon/search/SalonListHook";
 import { IdAndNameDto } from "../../../type/api/dto/IdAndNameDto";
 import { OrderPlanIdName } from "../../../type/app/OrderPlanIdName";

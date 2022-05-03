@@ -26,20 +26,6 @@ export const HairCard: VFC<Props> = memo((props) => {
     [setHairData]
   );
 
-  // const NextClick = useCallback(() => {
-  // 	setChange("slide");
-  // 	setTimeout(() => {
-  // 		onClickNext();
-  // 	}, 500);
-  // }, [onClickNext]);
-
-  // const PrevClick = useCallback(() => {
-  // 	setChange("slide");
-  // 	setTimeout(() => {
-  // 		onClickPrev();
-  // 	}, 500);
-  // }, [onClickPrev]);
-
   return (
     <>
       <div className={change ? change : ""}>
@@ -65,43 +51,6 @@ export const HairCard: VFC<Props> = memo((props) => {
               img={HairResource.hardHair}
               onClick={() => selectProps("太い")}
             />
-
-            {/* <Box
-								w="220px"
-								shadow="xl"
-								cursor="pointer"
-								onClick={() => selectProps("産毛")}
-								filter={
-									selected === "産毛" ? "brightness(50%)" : "brightness(100%)"
-								}
-							>
-								<Image src={softHair} />
-								<Text p="5">細い（産毛）</Text>
-							</Box>
-							<Box
-								w="220px"
-								shadow="xl"
-								cursor="pointer"
-								onClick={() => selectProps("標準")}
-								filter={
-									selected === "標準" ? "brightness(50%)" : "brightness(100%)"
-								}
-							>
-								<Image src={standardHair} />
-								<Text p="5">標準</Text>
-							</Box>
-							<Box
-								w="220px"
-								shadow="xl"
-								cursor="pointer"
-								onClick={() => selectProps("太い")}
-								filter={
-									selected === "太い" ? "brightness(50%)" : "brightness(100%)"
-								}
-							>
-								<Image src={hardHair} />
-								<Text p="5">太い</Text>
-							</Box> */}
           </HStack>
         </Box>
       </div>

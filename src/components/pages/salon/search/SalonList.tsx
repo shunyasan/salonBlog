@@ -137,7 +137,7 @@ export const SalonList: VFC = memo(() => {
               getPageNumber(page, block)
             }
           >
-            <Stack justifyContent={"center"} spacing={"1.2em"}>
+            <Stack justifyContent={"center"} spacing={"1.2em"} my={"1em"}>
               {orderDataIdName &&
                 planData.map((plan) => (
                   <PlanCard

@@ -46,43 +46,16 @@ export const OriginPartsSelectCard: VFC<Props> = memo((props) => {
           <Box>脱毛したい部位カテゴリを選択してください</Box>
           <HStack justifyContent={"center"} wrap={"wrap"} my="1.5rem">
             {originParts.map((data) => (
-              <>
-                <NarrowImageAndTextBox
-                  key={data.id}
-                  targetValue={selected}
-                  value={data.name}
-                  img={
-                    orderPlan.gender === "男性"
-                      ? data.imgUrlMen
-                      : data.imgUrlLady
-                  }
-                  id={data.id}
-                  onClick={() => selectAboutPartsSelect(data.id)}
-                />
-                {/* <WrapItem
-                  key={data.id}
-                  w={{}}
-                  shadow="xl"
-                  cursor="pointer"
-                  onClick={() => selectAboutPartsSelect(data.id)}
-                  filter={
-                    selected === data.id
-                      ? "brightness(50%)"
-                      : "brightness(100%)"
-                  }
-                >
-                  <Box>
-                    <Image
-                      src={
-                        orderPlan.gender === "男性"
-                          ? data.imgUrlMen
-                          : data.imgUrlLady
-                      }
-                    />
-                    <Text p="5">{data.name}</Text>
-                  </Box>
-                </WrapItem> */}
-              </>
+              <NarrowImageAndTextBox
+                key={data.id}
+                targetValue={selected}
+                value={data.name}
+                img={
+                  orderPlan.gender === "男性" ? data.imgUrlMen : data.imgUrlLady
+                }
+                id={data.id}
+                onClick={() => selectAboutPartsSelect(data.id)}
+              />
             ))}
           </HStack>
         </Box>

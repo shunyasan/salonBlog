@@ -49,44 +49,17 @@ export const AboutPartsSelectCard: VFC<Props> = memo((props) => {
           <HStack justifyContent={"center"} wrap={"wrap"} my="1.5rem">
             {/* <Wrap my={4} spacing="1rem" justify="center"> */}
             {aboutParts?.map((data) => (
-              <>
-                <NarrowImageAndTextBox
-                  key={data.id}
-                  targetValue={selected}
-                  value={data.name}
-                  img={
-                    orderPlan.gender === "男性"
-                      ? data.imgUrlMen
-                      : data.imgUrlLady
-                  }
-                  id={data.id}
-                  onClick={() => selectAboutPartsSelect(data.id)}
-                />
-                {/* <WrapItem
+              <NarrowImageAndTextBox
                 key={data.id}
-                w={{ md: "14rem", sm: "9rem" }}
-                shadow="xl"
-                cursor="pointer"
-                onClick={() => selectAboutPartsSelect(data.id)}
-                filter={
-                  selected === data.id ? "brightness(50%)" : "brightness(100%)"
+                targetValue={selected}
+                value={data.name}
+                img={
+                  orderPlan.gender === "男性" ? data.imgUrlMen : data.imgUrlLady
                 }
-              >
-                <Box>
-                  <Image
-                    w={"100%"}
-                    src={
-                      orderPlan.gender === "男性"
-                        ? data.imgUrlMen
-                        : data.imgUrlLady
-                    }
-                  />
-                  <Text p="5">{data.name}</Text>
-                </Box>
-              </WrapItem> */}
-              </>
+                id={data.id}
+                onClick={() => selectAboutPartsSelect(data.id)}
+              />
             ))}
-            {/* </Wrap> */}
           </HStack>
         </Box>
       </div>

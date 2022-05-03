@@ -48,36 +48,6 @@ export const GenderCard: VFC<Props> = memo((props) => {
             img={ManResource.ladyImg}
             onClick={() => selectGender("女性")}
           />
-          {/* <Box
-            w="14rem"
-            shadow="xl"
-            m={{ md: "2rem", sm: "0.5rem" }}
-            cursor="pointer"
-            onClick={() => selectGender("男性")}
-            filter={
-              selected === "男性" ? "brightness(50%)" : "brightness(100%)"
-            }
-          >
-            <Image src={menImg} />
-            <Text p={"1rem"} fontSize={{ md: "1rem", sm: "0.8rem" }}>
-              男性
-            </Text>
-          </Box>
-          <Box
-            w="14rem"
-            shadow="xl"
-            m={{ md: "2rem", sm: "0.5rem !important" }}
-            cursor="pointer"
-            onClick={() => selectGender("女性")}
-            filter={
-              selected === "女性" ? "brightness(50%)" : "brightness(100%)"
-            }
-          >
-            <Image src={ladyImg} />
-            <Text p={"1rem"} fontSize={{ md: "1rem", sm: "0.8rem" }}>
-              女性
-            </Text>
-          </Box> */}
         </HStack>
       </Box>
     </div>
