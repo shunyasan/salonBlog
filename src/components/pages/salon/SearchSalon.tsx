@@ -2,7 +2,9 @@ import { Button } from "@chakra-ui/button";
 import { Box, Center, Flex, HStack, Text } from "@chakra-ui/layout";
 import React, { memo, useCallback, useEffect, useState, VFC } from "react";
 import { useHistory, useLocation } from "react-router";
-import { CardName } from "../../../enums/SerchSalonCardName";
+import { useParams } from "react-router-dom";
+import { QueryKey } from "../../../enums/QueryKey";
+import { CreateParameterHooks } from "../../../hooks/app/parameter/CreateParameterHooks";
 import { QueryOrderPlan } from "../../../type/app/QueryOrderPlan";
 import { ViewCard } from "../../../type/app/ViewCard";
 import { CompleteBadge } from "../../atoms/badge/CompleteBadge";
@@ -15,61 +17,16 @@ import { PartsCard } from "./page/PartsCard";
 import { PriceViewCard } from "./page/PriceViewCard";
 import { SkinCollorCard } from "./page/SkinCollarCard";
 
-const viewCard: ViewCard[] = [
-  { name: CardName.first, number: 1 },
-  { name: CardName.second, number: 2 },
-  { name: CardName.third, number: 3 },
-  { name: CardName.fourth, number: 4 },
-  { name: CardName.fifth, number: 5 },
-  { name: CardName.sixth, number: 6 },
-  { name: CardName.seventh, number: 7 },
-];
-
 export const SearchSalon: VFC = memo(() => {
-  const [change, setChange] = useState<string>("fade");
-  const [prevParamsData, setPrevParamsData] = useState<string>("?");
-  // const [newParams, setNewParams] = useState<string>("");
-  const [showNumber, setShowNumber] = useState<number>(0);
-  const [queryOrderPlan, setQueryOrderPlan] = useState<QueryOrderPlan>();
-
+  const { getQueryOrderPlan } = CreateParameterHooks();
   const history = useHistory();
   const { search } = useLocation();
 
-  const getQueryOrderPlan = useCallback(() => {
-    const decode = decodeURI(search);
-    const query = new URLSearchParams(decode);
-    const orderPlanViewCard: QueryOrderPlan = {
-      gender: query.get("gender"),
-      skinCollor: query.get("skinCollor"),
-      hair: query.get("hair"),
-      paySystem: query.get("paySystem"),
-      originParts: query.get("originParts"),
-      AboutCategory: query.get("AboutCategory"),
-      parts: query.get("parts"),
-    };
-
-    setQueryOrderPlan(orderPlanViewCard);
-    return orderPlanViewCard;
-  }, [search]);
-
-  const getViewCardData = useCallback((orderPlanViewCard: QueryOrderPlan) => {
-    const existOrder: string[] = [];
-    for (const [key, val] of Object.entries(orderPlanViewCard)) {
-      if (val) {
-        existOrder.push(key);
-      }
-    }
-
-    const findViewCard = viewCard.filter((card) => {
-      return existOrder.includes(card.name);
-    });
-
-    const sortViewData = findViewCard.sort((a, b) => {
-      return b.number - a.number;
-    });
-
-    return sortViewData[0];
-  }, []);
+  const [change, setChange] = useState<string>("fade");
+  const [prevParamsData, setPrevParamsData] = useState<string>("?");
+  // const [newParams, setNewParams] = useState<string>("");
+  const [showPage, setShowPage] = useState<number>(0);
+  const [queryOrderPlan, setQueryOrderPlan] = useState<QueryOrderPlan>();
 
   // 次ボタン
   const nextClick = useCallback(
@@ -102,12 +59,11 @@ export const SearchSalon: VFC = memo(() => {
 
   // 最後の条件ボタン
   const FindPlanLastCondition = useCallback(
-    (data: string, query: string) => {
-      const param = `${query}=${data}&`;
-
+    (query: string) => {
+      const decode = decodeURI(search);
       history.push({
         pathname: "/salon/search",
-        search: search + param,
+        search: decode + query,
       });
     },
     [history, search]
@@ -119,23 +75,31 @@ export const SearchSalon: VFC = memo(() => {
       pathname: "/salon/search",
       search: search,
     });
-
-    // 編集前
-    // history.push({
-    //   pathname: "/salon/search",
-    //   search: search + newParams,
-    // });
   }, [history, search]);
 
   // パラメーター
   const selectParamsData = useCallback(
-    (data: string, query: string) => {
-      const param = `${query}=${data}&`;
-      nextClick(param);
+    (query: string, page: number) => {
+      nextClick(query);
+      setShowPage(page || 0);
+
       // setNewParams(`${query}=${data}&`);
     },
     [nextClick]
   );
+
+  // 修正前
+  // const selectParamsData = useCallback(
+  //   (data: string, query: string, page: number) => {
+  //     const param = `${query}=${data}&`;
+  //     nextClick(param);
+  //     setShowPage(page || 0);
+
+  //     // setNewParams(`${query}=${data}&`);
+  //   },
+  //   [nextClick]
+  // );
+
   // 戻るパラメーター
   const prevQuery = useCallback(
     (name: string) => {
@@ -146,21 +110,10 @@ export const SearchSalon: VFC = memo(() => {
     [search]
   );
 
-  const readViewData = useCallback(() => {
-    const orderPlanViewCard = getQueryOrderPlan();
-    const cardDatas = getViewCardData(orderPlanViewCard);
-
-    if (cardDatas) {
-      setShowNumber(cardDatas.number);
-      prevQuery(cardDatas.name);
-    } else {
-      setShowNumber(0);
-    }
-  }, [getQueryOrderPlan, getViewCardData, prevQuery]);
-
   useEffect(() => {
-    readViewData();
-  }, [readViewData]);
+    const orderPlanViewCard = getQueryOrderPlan(search);
+    setQueryOrderPlan(orderPlanViewCard);
+  }, [getQueryOrderPlan, search]);
 
   return (
     <>
@@ -169,108 +122,69 @@ export const SearchSalon: VFC = memo(() => {
           プランを探す{" "}
         </Center>
         <HStack justifyContent={"center"} wrap={"wrap"}>
-          <CompleteBadge
-            number={1}
-            selected={showNumber >= 0}
-            mx={"5px"}
-            circle={{ md: "2.5rem", sm: "2rem" }}
-          />
-          <CompleteBadge
-            number={2}
-            selected={showNumber >= 1}
-            mx={"5px"}
-            circle={{ md: "2.5rem", sm: "2rem" }}
-          />
-          <CompleteBadge
-            number={3}
-            selected={showNumber >= 2}
-            mx={"5px"}
-            circle={{ md: "2.5rem", sm: "2rem" }}
-          />
-          <CompleteBadge
-            number={4}
-            selected={showNumber >= 3}
-            mx={"5px"}
-            circle={{ md: "2.5rem", sm: "2rem" }}
-          />
-          <CompleteBadge
-            number={5}
-            selected={showNumber >= 4}
-            mx={"5px"}
-            circle={{ md: "2.5rem", sm: "2rem" }}
-          />
-          <CompleteBadge
-            number={6}
-            selected={showNumber >= 5}
-            mx={"5px"}
-            circle={{ md: "2.5rem", sm: "2rem" }}
-          />
-          <CompleteBadge
-            number={7}
-            selected={showNumber >= 6}
-            mx={"5px"}
-            circle={{ md: "2.5rem", sm: "2rem" }}
-          />
+          {[...Array(7)].map((_, i) => (
+            <CompleteBadge
+              key={i}
+              number={i + 1}
+              selected={showPage >= i}
+              mx={"5px"}
+              circle={{ md: "2.5rem", sm: "2rem" }}
+            />
+          ))}
         </HStack>
       </Box>
       {/* 毛量を選択 */}
-      {showNumber === 6 && queryOrderPlan ? (
-        <HairCard
-          setHairData={(data) => FindPlanLastCondition(data, CardName.seventh)}
-        />
+      {showPage === 6 && queryOrderPlan ? (
+        <HairCard setHairData={(query) => FindPlanLastCondition(query)} />
       ) : null}
       {/* 肌色を選択 */}
-      {showNumber === 5 && queryOrderPlan ? (
+      {showPage === 5 && queryOrderPlan ? (
         <SkinCollorCard
-          setSkinCollorData={(data) => selectParamsData(data, CardName.sixth)}
+          setSkinCollorData={(query) => selectParamsData(query, 6)}
         />
       ) : null}
       {/* 部位別を選択 */}
-      {showNumber === 4 && queryOrderPlan ? (
+      {showPage === 4 && queryOrderPlan ? (
         <PartsCard
-          setPartsData={(data) => selectParamsData(data, CardName.fifth)}
+          setPartsData={(query) => selectParamsData(query, 5)}
           orderPlan={queryOrderPlan}
         />
       ) : null}
       {/* 大まかな部位を選ぶ */}
-      {showNumber === 3 && queryOrderPlan ? (
+      {showPage === 3 && queryOrderPlan ? (
         <AboutPartsSelectCard
-          setAboutPartsSelectData={(data) =>
-            selectParamsData(data, CardName.fourth)
-          }
+          setAboutPartsSelectData={(query) => selectParamsData(query, 4)}
           orderPlan={queryOrderPlan}
         />
       ) : null}
       {/* カテゴリを選ぶ */}
-      {showNumber === 2 && queryOrderPlan ? (
+      {showPage === 2 && queryOrderPlan ? (
         <OriginPartsSelectCard
-          setOriginPartsSelectData={(data) =>
-            selectParamsData(data, CardName.third)
-          }
+          setOriginPartsSelectData={(query) => selectParamsData(query, 3)}
           orderPlan={queryOrderPlan}
         />
       ) : null}
       {/* 料金表示を選択 */}
-      {showNumber === 1 && queryOrderPlan ? (
+      {showPage === 1 && queryOrderPlan ? (
         <PriceViewCard
-          selectParamsData={(data) => selectParamsData(data, CardName.second)}
+          selectParamsData={(query) => selectParamsData(query, 2)}
         />
       ) : null}
       {/* 性別を選択する */}
-      {showNumber === 0 && queryOrderPlan ? (
+      {showPage === 0 && queryOrderPlan ? (
         <GenderCard
-          setGenderData={(data) => selectParamsData(data, CardName.first)}
+          setGenderData={(query) => selectParamsData(query, 1)}
           setAnimation={change}
         />
       ) : null}
       <Box m="2em" textAlign="center">
-        {showNumber === 0 || (
+        {showPage === 0 || (
           <Button mx="7" onClick={prevClick} variant={"secBase"}>
             戻る
           </Button>
         )}
       </Box>
-      {showNumber > 2 && (
+      {showPage > 2 && (
         <Box>
           <Center m="2em" textAlign="center">
             <Button
@@ -294,9 +208,6 @@ export const SearchSalon: VFC = memo(() => {
           size={undefined}
           base={"secBase"}
         />
-        {/* <Button bg={"red"} onClick={importFunc}>
-					import
-				</Button> */}
       </Center>
     </>
   );

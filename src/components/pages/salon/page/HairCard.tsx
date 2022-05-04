@@ -3,13 +3,12 @@ import { Image } from "@chakra-ui/image";
 import { Box, Center, HStack, Text } from "@chakra-ui/layout";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import "../../../../App.css";
+import { QueryKey } from "../../../../enums/QueryKey";
 import { HairResource } from "../../../../resorces/HairResource";
 import { ImageAndTextBox } from "../../../atoms/box/ImageAndTextBox";
 
 type Props = {
-  // onClickNext: () => void;
-  // onClickPrev: () => void;
-  setHairData: (data: any) => void;
+  setHairData: (data: string) => void;
 };
 
 export const HairCard: VFC<Props> = memo((props) => {
@@ -20,7 +19,8 @@ export const HairCard: VFC<Props> = memo((props) => {
 
   const selectProps = useCallback(
     (data: string) => {
-      setHairData(data);
+      const param = `${QueryKey.hair}=${data}&`;
+      setHairData(param);
       setSelected(data);
     },
     [setHairData]

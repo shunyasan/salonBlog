@@ -5,6 +5,7 @@ import { transition } from "@chakra-ui/styled-system";
 import { Slide, SlideFade } from "@chakra-ui/transition";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import "../../../../App.css";
+import { QueryKey } from "../../../../enums/QueryKey";
 import { ManResource } from "../../../../resorces/ManResource";
 import { ImageAndTextBox } from "../../../atoms/box/ImageAndTextBox";
 
@@ -21,7 +22,8 @@ export const GenderCard: VFC<Props> = memo((props) => {
 
   const selectGender = useCallback(
     (data: string) => {
-      setGenderData(data);
+      const param = `${QueryKey.gender}=${data}&`;
+      setGenderData(param);
       setSelected(data);
     },
     [setGenderData]

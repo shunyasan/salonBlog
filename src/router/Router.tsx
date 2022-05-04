@@ -7,7 +7,7 @@ import { Footer } from "../components/templete/Footer";
 import { Header } from "../components/templete/Header";
 import { clinicRoutes } from "./ClinicRoutes";
 import { featureRoutes } from "./FeatureRoutes";
-import { homeRoutes } from "./HomeRoutes";
+import { salonRoutes } from "./SalonRoutes";
 import { informationRoutes } from "./InformationRoutes";
 import { newsRoutes } from "./NewsRoutes";
 import { treatmentPartsRoutes } from "./TreatmentPartsRoutes";
@@ -25,7 +25,7 @@ export const Router: VFC = memo(() => {
         path="/salon"
         render={({ match: { url } }) => (
           <Switch>
-            {homeRoutes.map((route) => (
+            {salonRoutes.map((route) => (
               <Route
                 key={route.path}
                 exact={route.exact}

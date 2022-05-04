@@ -1,6 +1,7 @@
 import { Button } from "@chakra-ui/button";
 import { Box, Center, Text, HStack } from "@chakra-ui/layout";
 import { memo, useCallback, useState, VFC } from "react";
+import { QueryKey } from "../../../../enums/QueryKey";
 
 type Props = {
   selectParamsData: (data: any) => void;
@@ -13,7 +14,8 @@ export const PriceViewCard: VFC<Props> = memo((props) => {
 
   const selectItem = useCallback(
     (data: string) => {
-      selectParamsData(data);
+      const param = `${QueryKey.paySystem}=${data}&`;
+      selectParamsData(param);
       setSelected(data);
     },
     [selectParamsData]

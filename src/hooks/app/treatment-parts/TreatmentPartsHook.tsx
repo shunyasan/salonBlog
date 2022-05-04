@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { AbobutCategiryId } from "../../../enums/AbobutCategiryIdEnum";
 import { OriginCategiryId } from "../../../enums/OriginCategiryIdEnum";
-import { CardName } from "../../../enums/SerchSalonCardName";
+import { QueryKey } from "../../../enums/QueryKey";
 import { IdAndNameDto } from "../../../type/api/dto/IdAndNameDto";
 
 export const TreatmentPartsHook = () => {
@@ -50,10 +50,10 @@ export const TreatmentPartsHook = () => {
       aboutCategoryId: string,
       partsId?: string
     ) => {
-      const genderParam = `${CardName.first}=${gender}&`;
-      const originCategory = `${CardName.third}=${originId}&`;
-      const aboutCategory = `${CardName.fourth}=${aboutCategoryId}&`;
-      const parts = partsId ? `${CardName.fifth}=${partsId}&` : "";
+      const genderParam = `${QueryKey.gender}=${gender}&`;
+      const originCategory = `${QueryKey.originParts}=${originId}&`;
+      const aboutCategory = `${QueryKey.aboutCategory}=${aboutCategoryId}&`;
+      const parts = partsId ? `${QueryKey.parts}=${partsId}&` : "";
       history.push({
         pathname: "/salon/search",
         search: genderParam + originCategory + aboutCategory + parts,

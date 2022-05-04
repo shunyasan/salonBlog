@@ -11,11 +11,13 @@ import { PriceDto } from "../../../../type/api/dto/PriceDto";
 import { OrderPlanIdName } from "../../../../type/app/OrderPlanIdName";
 import { OrderPlan } from "../../../../type/app/OrderPlan";
 import { BaseButton } from "../../../atoms/button/BaseButton";
+import { CreateParameterHooks } from "../../../../hooks/app/parameter/CreateParameterHooks";
 
 const numOfTakeData = 10;
 
 export const SalonList: VFC = memo(() => {
   const { getTreatmentPrice, getCountPrice } = PriceApi();
+  const { getQueryOrderPlanInSearch } = CreateParameterHooks();
   const { search } = useLocation();
 
   const [orderDataIdName, setOrderDataIdName] = useState<OrderPlanIdName>();
@@ -81,19 +83,10 @@ export const SalonList: VFC = memo(() => {
   );
 
   useEffect(() => {
-    const query = new URLSearchParams(search);
-    const orderParams: OrderPlan = {
-      gender: query.get("gender") || "女性",
-      paySystem: query.get("paySystem") || "総額",
-      originParts: query.get("originParts") || "Z000001",
-      AboutCategory: query.get("AboutCategory") || "A000001",
-      parts: query.get("parts"),
-      skinCollor: query.get("skinCollor"),
-      hair: query.get("hair"),
-    };
-    getTreatmentPriceFunc(orderParams, numOfTakeData, 0);
-    setOrderPlanData(orderParams);
-  }, [search, getTreatmentPriceFunc]);
+    const param = getQueryOrderPlanInSearch(search);
+    getTreatmentPriceFunc(param, numOfTakeData, 0);
+    setOrderPlanData(param);
+  }, [search, getTreatmentPriceFunc, getQueryOrderPlanInSearch]);
 
   useEffect(() => {
     if (orderPlanData) {

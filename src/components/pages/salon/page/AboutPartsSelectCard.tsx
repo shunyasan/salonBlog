@@ -3,6 +3,7 @@ import { Image } from "@chakra-ui/image";
 import { Box, Center, HStack, Text, Wrap, WrapItem } from "@chakra-ui/layout";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import "../../../../App.css";
+import { QueryKey } from "../../../../enums/QueryKey";
 import { AboutCategoryApi } from "../../../../hooks/api/AboutCategoryApi";
 import { AboutCategory } from "../../../../type/api/AboutCategory";
 import { QueryOrderPlan } from "../../../../type/app/QueryOrderPlan";
@@ -23,9 +24,10 @@ export const AboutPartsSelectCard: VFC<Props> = memo((props) => {
   const { getAboutCategoryByOriginId } = AboutCategoryApi();
 
   const selectAboutPartsSelect = useCallback(
-    (aboutParts: string) => {
-      setAboutPartsSelectData(aboutParts);
-      setSelected(aboutParts);
+    (data: string) => {
+      const param = `${QueryKey.aboutCategory}=${data}&`;
+      setAboutPartsSelectData(param);
+      setSelected(data);
     },
     [setAboutPartsSelectData]
   );

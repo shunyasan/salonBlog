@@ -7,6 +7,7 @@ import { BasePartsApi } from "../../../../hooks/api/BasePartsApi";
 import { AboutCategory } from "../../../../type/api/AboutCategory";
 import { IdAndNameDto } from "../../../../type/api/dto/IdAndNameDto";
 import { QueryOrderPlan } from "../../../../type/app/QueryOrderPlan";
+import { QueryKey } from "../../../../enums/QueryKey";
 
 type Props = {
   setPartsData: (data: any) => void;
@@ -29,8 +30,9 @@ export const PartsCard: VFC<Props> = memo((props) => {
 
   const selectParts = useCallback(
     (data) => {
+      const param = `${QueryKey.parts}=${data}&`;
       setSelected(data);
-      setPartsData(data);
+      setPartsData(param);
     },
     [setPartsData]
   );

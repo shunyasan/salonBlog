@@ -3,6 +3,7 @@ import { Image } from "@chakra-ui/image";
 import { Box, Center, HStack, Text } from "@chakra-ui/layout";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import "../../../../App.css";
+import { QueryKey } from "../../../../enums/QueryKey";
 import { HairResource } from "../../../../resorces/HairResource";
 import { SkinResource } from "../../../../resorces/SkinResource";
 import { ImageAndTextBox } from "../../../atoms/box/ImageAndTextBox";
@@ -19,7 +20,8 @@ export const SkinCollorCard: VFC<Props> = memo((props) => {
 
   const selectProps = useCallback(
     (data: string) => {
-      setSkinCollorData(data);
+      const param = `${QueryKey.skinCollor}=${data}&`;
+      setSkinCollorData(param);
       setSelected(data);
     },
     [setSkinCollorData]
@@ -49,54 +51,7 @@ export const SkinCollorCard: VFC<Props> = memo((props) => {
               img={SkinResource.darkImg}
               onClick={() => selectProps("色黒")}
             />
-            {/* <Box
-              w={"14rem"}
-              m={{ md: "2rem", sm: "0.5rem" }}
-              shadow="xl"
-              cursor="pointer"
-              onClick={() => selectProps("白色")}
-              filter={
-                selected === "白色" ? "brightness(50%)" : "brightness(100%)"
-              }
-            >
-              <Image src={whiteImg} />
-              <Text p="5">白色</Text>
-            </Box>
-            <Box
-              w={"14rem"}
-              shadow="xl"
-              m={{ md: "2rem", sm: "0.5rem" }}
-              cursor="pointer"
-              onClick={() => selectProps("薄茶色")}
-              filter={
-                selected === "薄茶色" ? "brightness(50%)" : "brightness(100%)"
-              }
-            >
-              <Image src={baigeImg} />
-              <Text p="5">薄茶色</Text>
-            </Box>
-            <Box
-              w={"14rem"}
-              shadow="xl"
-              m={{ md: "2rem", sm: "0.5rem" }}
-              cursor="pointer"
-              onClick={() => selectProps("色黒")}
-              filter={
-                selected === "色黒" ? "brightness(50%)" : "brightness(100%)"
-              }
-            >
-              <Image src={darkImg} />
-              <Text p="5">色黒</Text>
-            </Box> */}
           </HStack>
-          {/* <Box m="14">
-						<Button mx="7" onClick={PrevClick}>
-							戻る
-						</Button>
-						<Button mx="7" onClick={NextClick}>
-							次へ
-						</Button>
-					</Box> */}
         </Box>
       </div>
     </>

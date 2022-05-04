@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { CardName } from "../../../../enums/SerchSalonCardName";
+import { QueryKey } from "../../../../enums/QueryKey";
 import { Clinic } from "../../../../type/api/Clinic";
 import { ClinicOption } from "../../../../type/api/ClinicOption";
 import { ClinicNestPriceDto } from "../../../../type/api/dto/ClinicNestPriceDto";
@@ -156,15 +156,18 @@ export const SalonListHook = () => {
   const createParameter = useCallback(
     async (orderData: OrderPlanIdName) => {
       let newParams: string = "";
-      newParams += createParam(CardName.first, orderData.gender);
-      newParams += createParam(CardName.second, orderData.paySystem);
-      newParams += createParam(CardName.third, orderData.originParts.id);
-      newParams += createParam(CardName.fourth, orderData.AboutCategory.id);
+      newParams += createParam(QueryKey.gender, orderData.gender);
+      newParams += createParam(QueryKey.paySystem, orderData.paySystem);
+      newParams += createParam(QueryKey.originParts, orderData.originParts.id);
+      newParams += createParam(
+        QueryKey.aboutCategory,
+        orderData.AboutCategory.id
+      );
       newParams += orderData.parts
-        ? checkNoneParameter(CardName.fifth, orderData.parts.id)
+        ? checkNoneParameter(QueryKey.parts, orderData.parts.id)
         : "";
-      newParams += createParam(CardName.sixth, orderData.skinCollor || "");
-      newParams += createParam(CardName.seventh, orderData.hair || "");
+      newParams += createParam(QueryKey.skinCollor, orderData.skinCollor || "");
+      newParams += createParam(QueryKey.hair, orderData.hair || "");
       history.push({
         pathname: "/salon/search",
         search: `?${newParams}`,
