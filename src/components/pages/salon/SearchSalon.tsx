@@ -5,6 +5,7 @@ import { useHistory, useLocation } from "react-router";
 import { useParams } from "react-router-dom";
 import { QueryKey } from "../../../enums/QueryKey";
 import { CreateParameterHooks } from "../../../hooks/app/parameter/CreateParameterHooks";
+import { PageQuery } from "../../../type/app/PageQuery";
 import { QueryOrderPlan } from "../../../type/app/QueryOrderPlan";
 import { ViewCard } from "../../../type/app/ViewCard";
 import { CompleteBadge } from "../../atoms/badge/CompleteBadge";
@@ -24,38 +25,86 @@ export const SearchSalon: VFC = memo(() => {
 
   const [change, setChange] = useState<string>("fade");
   const [prevParamsData, setPrevParamsData] = useState<string>("?");
-  // const [newParams, setNewParams] = useState<string>("");
   const [showPage, setShowPage] = useState<number>(0);
   const [queryOrderPlan, setQueryOrderPlan] = useState<QueryOrderPlan>();
+  const [pageQuery, setPageQuery] = useState<PageQuery>({
+    1: "",
+    2: "",
+    3: "",
+    4: "",
+    5: "",
+    6: "",
+    7: "",
+  });
 
   // 次ボタン
-  const nextClick = useCallback(
-    async (newParams: string) => {
+  // const nextClick = useCallback(
+  //   async (newParams: string) => {
+  //     setChange("slide");
+  //     const decode = decodeURI(search);
+  //     setPrevParamsData(decode);
+  //     const createParams = `${decode}${newParams}`;
+  //     const encode = encodeURI(createParams);
+  //     history.push({
+  //       pathname: "/salon",
+  //       search: encode,
+  //     });
+  //     // 編集前
+  //     // setNewParams("");
+  //   },
+  //   [history, search]
+  // );
+
+  const createPageQuery = useCallback(
+    (query: string, page: number) => {
+      const queryData: any = pageQuery;
+      queryData[page] = query;
+      setPageQuery(queryData);
+    },
+    [pageQuery]
+  );
+
+  // 次ボタン　パラメーター
+  const selectParamsData = useCallback(
+    (query: string, page: number) => {
       setChange("slide");
+      createPageQuery(query, page);
       const decode = decodeURI(search);
       setPrevParamsData(decode);
-      const createParams = `${decode}${newParams}`;
+      const createParams = `${decode}${query}`;
       const encode = encodeURI(createParams);
+      setShowPage(page || 0);
+
       history.push({
         pathname: "/salon",
         search: encode,
       });
-      // 編集前
-      // setNewParams("");
     },
-    [history, search]
+    [history, search, createPageQuery]
   );
 
   // 戻るボタン
   const prevClick = useCallback(async () => {
+    const queryData: any = pageQuery;
+    const page = showPage - 1;
+    const query = queryData[page];
+
+    for (const key in pageQuery) {
+      if (showPage <= Number(key)) {
+        queryData[key] = "";
+      }
+    }
+    setPageQuery(queryData);
+
     setChange("");
+    setShowPage(page < 0 ? 0 : page);
     history.push({
       pathname: "/salon",
-      search: prevParamsData,
+      search: query,
     });
     // 編集前
     // setNewParams("");
-  }, [history, prevParamsData]);
+  }, [history, showPage, pageQuery]);
 
   // 最後の条件ボタン
   const FindPlanLastCondition = useCallback(
@@ -77,38 +126,11 @@ export const SearchSalon: VFC = memo(() => {
     });
   }, [history, search]);
 
-  // パラメーター
-  const selectParamsData = useCallback(
-    (query: string, page: number) => {
-      nextClick(query);
-      setShowPage(page || 0);
-
-      // setNewParams(`${query}=${data}&`);
-    },
-    [nextClick]
-  );
-
-  // 修正前
-  // const selectParamsData = useCallback(
-  //   (data: string, query: string, page: number) => {
-  //     const param = `${query}=${data}&`;
-  //     nextClick(param);
-  //     setShowPage(page || 0);
-
-  //     // setNewParams(`${query}=${data}&`);
-  //   },
-  //   [nextClick]
-  // );
-
-  // 戻るパラメーター
-  const prevQuery = useCallback(
-    (name: string) => {
-      const decode = decodeURI(search);
-      const prevQuery = decode.replace(new RegExp(name + ".*"), "");
-      setPrevParamsData(prevQuery);
-    },
-    [search]
-  );
+  const transitionTop = useCallback(() => {
+    setShowPage(0);
+    setChange("fade");
+    history.push("/salon");
+  }, [history]);
 
   useEffect(() => {
     const orderPlanViewCard = getQueryOrderPlan(search);
@@ -202,12 +224,9 @@ export const SearchSalon: VFC = memo(() => {
         </Box>
       )}
       <Center m="2em">
-        <BaseButton
-          text={"最初からやり直す"}
-          path={"/salon"}
-          size={undefined}
-          base={"secBase"}
-        />
+        <Button variant={"secBase"} onClick={transitionTop}>
+          最初からやり直す
+        </Button>
       </Center>
     </>
   );

@@ -1,9 +1,9 @@
 export enum QueryKey {
-  gender = "gender",
-  paySystem = "paySystem",
-  originParts = "originParts",
-  aboutCategory = "AboutCategory",
-  parts = "parts",
-  skinCollor = "skinCollor",
-  hair = "hair",
+  gender = "ge",
+  paySystem = "pay",
+  originParts = "ori",
+  aboutCategory = "abo",
+  parts = "par",
+  skinCollor = "sk",
+  hair = "ha",
 }

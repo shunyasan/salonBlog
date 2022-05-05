@@ -39,7 +39,7 @@ export const PriceViewCard: VFC<Props> = memo((props) => {
             <Text as={"a"} fontSize={"2rem"}>
               総額
             </Text>
-            <Text as={"a"}>を表示</Text>
+            <Text as={"a"}>から考える</Text>
           </Box>
           <Box
             w="18rem"
@@ -54,7 +54,7 @@ export const PriceViewCard: VFC<Props> = memo((props) => {
             <Text as={"a"} fontSize={"2rem"}>
               １回分
             </Text>
-            <Text as={"a"}>を表示</Text>
+            <Text as={"a"}>から考える</Text>
           </Box>
         </HStack>
       </Box>
