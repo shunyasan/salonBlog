@@ -2,39 +2,34 @@ import { Box, Center, Flex, Link, Text } from "@chakra-ui/react";
 import { memo, VFC } from "react";
 
 type Props = {
-  title: string;
+  title?: string;
   orderData: string;
-  texts: string[];
-  onClick: (val: string) => void;
+  texts: { id: string; text: string }[];
+  onClick: (val: string, id: string) => void;
 };
 export const ConditionText: VFC<Props> = memo((props) => {
   const { title, orderData, texts, onClick } = props;
   return (
-    <Flex>
-      <Center
-        w={{ md: "30%", sm: "38%" }}
-        display={"inline-block"}
-        bg={"originLiteGray"}
-        border={"1px"}
-        borderColor={"originBlack"}
-      >
-        {title}
-      </Center>
+    <Flex fontSize={"0.8rem"} justifyContent={!title ? "space-evenly" : ""}>
+      {title && (
+        <Center w={{ md: "30%", sm: "38%" }} fontWeight={"bold"}>
+          {title}
+        </Center>
+      )}
       <Flex
         justifyContent={"space-evenly"}
         w={{ md: "70%", sm: "62%" }}
         alignItems={"center"}
       >
-        {texts.map((text, int) => (
+        {texts.map((data, int) => (
           <Link
             key={int}
-            fontSize="0.8rem"
-            p={orderData === text ? "2px 5px" : ""}
-            color={orderData === text ? "originWhite" : "originBlack"}
-            bg={orderData === text ? "originBlack" : ""}
-            onClick={() => onClick(text)}
+            p={orderData === data.id ? "2px 5px" : ""}
+            color={orderData === data.id ? "originWhite" : "originBlack"}
+            bg={orderData === data.id ? "originBlack" : ""}
+            onClick={() => onClick(data.text, data.id)}
           >
-            {text}
+            {data.text}
           </Link>
         ))}
       </Flex>

@@ -1,5 +1,6 @@
 import { Box, Checkbox, Flex, HStack, Text } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
+import { Adsense } from "../../../Adsense";
 import { ClinicApi } from "../../../hooks/api/ClinicApi";
 import { ClinicAreaApi } from "../../../hooks/api/ClinicAreaApi";
 import { ClinicArea } from "../../../type/api/ClinicArea";
@@ -119,6 +120,7 @@ export const Clinics: VFC = memo(() => {
           />
         ))}
       </HStack>
+      <Adsense />
       <Pagenation
         max={areaIdState.max}
         take={numOfTakeData}
@@ -137,6 +139,7 @@ export const Clinics: VFC = memo(() => {
           ))}
         </Box>
       </Pagenation>
+      <Adsense />
     </Box>
   );
 });

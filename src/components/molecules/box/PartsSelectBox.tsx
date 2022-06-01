@@ -1,4 +1,4 @@
-import { Box, Center, Select, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Select, Text } from "@chakra-ui/react";
 import { ChangeEvent, memo, useCallback, VFC } from "react";
 import { IdAndNameDto } from "../../../type/api/dto/IdAndNameDto";
 
@@ -23,20 +23,13 @@ export const PartsSelectBox: VFC<Props> = memo((props) => {
   );
 
   return (
-    <Box>
-      <Center
-        w={{ md: "30%", sm: "38%" }}
-        display={"inline-block"}
-        bg={"originLiteGray"}
-        border={"1px"}
-        borderColor={"originBlack"}
-      >
+    <Flex fontSize={"0.8rem"}>
+      <Center w={{ md: "30%", sm: "38%" }} fontWeight={"bold"}>
         {title}
       </Center>
-      <Box w={{ md: "70%", sm: "62%" }} display={"inline-block"}>
+      <Flex w={{ md: "70%", sm: "62%" }} justifyContent={"center"}>
         <Select
           textAlign={"center"}
-          display={"inline-block"}
           border={"none"}
           w={"10rem"}
           size={"xs"}
@@ -52,7 +45,7 @@ export const PartsSelectBox: VFC<Props> = memo((props) => {
             </option>
           ))}
         </Select>
-      </Box>
-    </Box>
+      </Flex>
+    </Flex>
   );
 });

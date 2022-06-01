@@ -6,4 +6,11 @@ export type QueryOrderPlan = {
   parts: string | null;
   skinCollor: string | null;
   hair: string | null;
+  roomType: string | null;
+  interior: string | null;
+  staff: number | null;
+  card: string | null;
+  loan: string | null;
+  contract: string | null;
+  option: string | null;
 };

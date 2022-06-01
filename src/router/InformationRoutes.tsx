@@ -6,11 +6,15 @@ export const informationRoutes = [
   {
     path: "/profile",
     exact: false,
+    title: "プロフィール | あなたのための脱毛",
+    description: "",
     children: <Profile />,
   },
   {
     path: "/for-clinics",
     exact: false,
+    title: "クリニック様へ | あなたのための脱毛",
+    description: "",
     children: <ForClinics />,
   },
 ];

@@ -13,6 +13,7 @@ import { FeatureDto } from "../../type/api/dto/FeatureDto";
 import { HomeHook } from "../../hooks/app/top/HomeHook";
 import { FeatureViewData } from "../../type/app/FeatureViewData";
 import { TopResource } from "../../resorces/TopResource";
+import { Adsense } from "../../Adsense";
 
 export const Home: VFC = memo(() => {
   const { getAllFeature } = FeatureApi();
@@ -127,6 +128,7 @@ export const Home: VFC = memo(() => {
           <Box>リリースしました</Box>
         </Box>
         <Box mt={"4rem"} borderBottom={"1px"}></Box>
+        <Adsense />
         <Box display={"inline-block"} ml={"3rem"}>
           <Box w={"100%"} borderTop={"4px"} borderColor={"#000"}></Box>
           <Text fontSize={"1.5rem"} display={"inline-block"}>
@@ -148,6 +150,7 @@ export const Home: VFC = memo(() => {
           ))}
           {/* <HomeFeaturesBoxList /> */}
         </Box>
+        <Adsense />
       </Box>
     </Box>
   );

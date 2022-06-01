@@ -3,7 +3,14 @@ export type OrderPlan = {
   paySystem: string;
   originParts: string;
   AboutCategory: string;
-  parts: string | null;
-  skinCollor: string | null;
-  hair: string | null;
+  parts: string;
+  skinCollor: string;
+  hair: string;
+  roomType: string;
+  interior: string;
+  staff: number;
+  card: string;
+  loan: string;
+  contract: string;
+  option: string;
 };

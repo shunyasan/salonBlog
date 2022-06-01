@@ -7,7 +7,6 @@ import { QueryKey } from "../../../../enums/QueryKey";
 import { AboutCategoryApi } from "../../../../hooks/api/AboutCategoryApi";
 import { AboutCategory } from "../../../../type/api/AboutCategory";
 import { QueryOrderPlan } from "../../../../type/app/QueryOrderPlan";
-import { ImageAndTextBox } from "../../../atoms/box/ImageAndTextBox";
 import { NarrowImageAndTextBox } from "../../../atoms/box/NarrowImageAndTextBox";
 
 type Props = {

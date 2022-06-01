@@ -1,6 +1,6 @@
 import { Box, Flex, HStack, Text } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
-import { AbobutCategiryId } from "../../../enums/AbobutCategiryIdEnum";
+import { Adsense } from "../../../Adsense";
 import { OriginCategiryId } from "../../../enums/OriginCategiryIdEnum";
 import { AboutCategoryApi } from "../../../hooks/api/AboutCategoryApi";
 import { BasePartsApi } from "../../../hooks/api/BasePartsApi";
@@ -163,6 +163,7 @@ export const TreatmentParts: VFC = memo(() => {
           />
         ))}
       </HStack>
+      <Adsense />
     </Box>
   );
 });

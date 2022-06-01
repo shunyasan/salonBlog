@@ -138,49 +138,51 @@ export const SalonListHook = () => {
     return optionList === "" ? "不明" : optionList;
   }, []);
 
-  const createParam = useCallback((key: string, value: string) => {
-    return `${key}=${value}&`;
-  }, []);
+  // const createParam = useCallback((key: string, value: string) => {
+  //   return `${key}=${value}&`;
+  // }, []);
 
-  const checkNoneParameter = useCallback(
-    (cardName: string, id: string) => {
-      if (id === "none") {
-        return "";
-      } else {
-        return createParam(cardName, id);
-      }
-    },
-    [createParam]
-  );
+  // const checkNoneParameter = useCallback(
+  //   (cardName: string, id: string) => {
+  //     if (id === "none") {
+  //       return "";
+  //     } else {
+  //       return createParam(cardName, id);
+  //     }
+  //   },
+  //   [createParam]
+  // );
 
-  const createParameter = useCallback(
-    async (orderData: OrderPlanIdName) => {
-      let newParams: string = "";
-      newParams += createParam(QueryKey.gender, orderData.gender);
-      newParams += createParam(QueryKey.paySystem, orderData.paySystem);
-      newParams += createParam(QueryKey.originParts, orderData.originParts.id);
-      newParams += createParam(
-        QueryKey.aboutCategory,
-        orderData.AboutCategory.id
-      );
-      newParams += orderData.parts
-        ? checkNoneParameter(QueryKey.parts, orderData.parts.id)
-        : "";
-      newParams += createParam(QueryKey.skinCollor, orderData.skinCollor || "");
-      newParams += createParam(QueryKey.hair, orderData.hair || "");
-      history.push({
-        pathname: "/salon/search",
-        search: `?${newParams}`,
-      });
-    },
-    [history, createParam, checkNoneParameter]
-  );
+  // const createParameter = useCallback(
+  //   async (orderData: OrderPlanIdName) => {
+  //     let newParams: string = "";
+  //     newParams += createParam(QueryKey.gender, orderData.gender.id);
+  //     newParams += createParam(QueryKey.paySystem, orderData.paySystem.id);
+  //     newParams += createParam(QueryKey.originParts, orderData.originParts.id);
+  //     newParams += createParam(
+  //       QueryKey.aboutCategory,
+  //       orderData.AboutCategory.id
+  //     );
+  //     newParams += orderData.parts
+  //       ? checkNoneParameter(QueryKey.parts, orderData.parts.id)
+  //       : "";
+  //     newParams += createParam(
+  //       QueryKey.skinCollor,
+  //       orderData.skinCollor.id || ""
+  //     );
+  //     newParams += createParam(QueryKey.hair, orderData.hair.id || "");
+  //     history.push({
+  //       pathname: "/salon/search",
+  //       search: `?${newParams}`,
+  //     });
+  //   },
+  //   [history, createParam, checkNoneParameter]
+  // );
 
   return {
     getResearchCardData,
     newOptionFunc,
     checkFreeOption,
-    createParameter,
     noneValuePush,
   };
 };

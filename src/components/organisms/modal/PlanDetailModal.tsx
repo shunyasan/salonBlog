@@ -229,7 +229,7 @@ export const PlanDetailModal: VFC<Props> = memo((props) => {
                       my={"1rem"}
                       mx={"1.5rem"}
                       size={"lg"}
-                      variant="base"
+                      variant="secBase"
                       onClick={() => history.push(`/clinic/${clinic.id}`)}
                     >
                       クリニック情報

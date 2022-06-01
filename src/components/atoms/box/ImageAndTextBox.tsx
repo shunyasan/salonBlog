@@ -14,13 +14,13 @@ export const ImageAndTextBox: VFC<Props> = (props) => {
   return (
     <Box
       w={"14em"}
-      shadow="xl"
+      shadow={targetValue === (id || value) ? "0 0 3px 2px #888" : "md"}
       m={{ md: "2em !important", sm: "1em !important" }}
       cursor="pointer"
       onClick={onClick}
-      filter={
-        targetValue === (id || value) ? "brightness(50%)" : "brightness(100%)"
-      }
+      // filter={
+      //   targetValue === (id || value) ? "brightness(50%)" : "brightness(100%)"
+      // }
     >
       <Image src={img} />
       <Text p="1em">{value}</Text>

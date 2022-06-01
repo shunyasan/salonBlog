@@ -2,21 +2,18 @@ import { Button } from "@chakra-ui/button";
 import { Box, Center, Flex, HStack, Text } from "@chakra-ui/layout";
 import React, { memo, useCallback, useEffect, useState, VFC } from "react";
 import { useHistory, useLocation } from "react-router";
-import { useParams } from "react-router-dom";
-import { QueryKey } from "../../../enums/QueryKey";
+import { Adsense } from "../../../Adsense";
 import { CreateParameterHooks } from "../../../hooks/app/parameter/CreateParameterHooks";
 import { PageQuery } from "../../../type/app/PageQuery";
 import { QueryOrderPlan } from "../../../type/app/QueryOrderPlan";
-import { ViewCard } from "../../../type/app/ViewCard";
 import { CompleteBadge } from "../../atoms/badge/CompleteBadge";
-import { BaseButton } from "../../atoms/button/BaseButton";
 import { AboutPartsSelectCard } from "./page/AboutPartsSelectCard";
+import { ClinicSearchCard } from "./page/ClinicSearchCard";
 import { GenderCard } from "./page/GenderCard";
-import { HairCard } from "./page/HairCard";
 import { OriginPartsSelectCard } from "./page/OriginPartsSelectCard";
 import { PartsCard } from "./page/PartsCard";
-import { PriceViewCard } from "./page/PriceViewCard";
-import { SkinCollorCard } from "./page/SkinCollarCard";
+import { PlanSearchCard } from "./page/PlanSearchCard";
+import { YourselfCard } from "./page/YourselfCard";
 
 export const SearchSalon: VFC = memo(() => {
   const { getQueryOrderPlan } = CreateParameterHooks();
@@ -36,24 +33,6 @@ export const SearchSalon: VFC = memo(() => {
     6: "",
     7: "",
   });
-
-  // 次ボタン
-  // const nextClick = useCallback(
-  //   async (newParams: string) => {
-  //     setChange("slide");
-  //     const decode = decodeURI(search);
-  //     setPrevParamsData(decode);
-  //     const createParams = `${decode}${newParams}`;
-  //     const encode = encodeURI(createParams);
-  //     history.push({
-  //       pathname: "/salon",
-  //       search: encode,
-  //     });
-  //     // 編集前
-  //     // setNewParams("");
-  //   },
-  //   [history, search]
-  // );
 
   const createPageQuery = useCallback(
     (query: string, page: number) => {
@@ -141,7 +120,7 @@ export const SearchSalon: VFC = memo(() => {
     <>
       <Box textAlign="center" m={8}>
         <Center my={"1rem"} fontSize={"1.5rem"}>
-          プランを探す{" "}
+          プランを探す
         </Center>
         <HStack justifyContent={"center"} wrap={"wrap"}>
           {[...Array(7)].map((_, i) => (
@@ -155,43 +134,60 @@ export const SearchSalon: VFC = memo(() => {
           ))}
         </HStack>
       </Box>
-      {/* 毛量を選択 */}
-      {showPage === 6 && queryOrderPlan ? (
+      {/* 毛量を選択
+      {showPage === 5 && queryOrderPlan ? (
         <HairCard setHairData={(query) => FindPlanLastCondition(query)} />
       ) : null}
       {/* 肌色を選択 */}
-      {showPage === 5 && queryOrderPlan ? (
+      {/* {showPage === 4 && queryOrderPlan ? (
         <SkinCollorCard
           setSkinCollorData={(query) => selectParamsData(query, 6)}
         />
+      ) : null}  */}
+
+      {/* プラン情報を選択 */}
+      {showPage === 6 && queryOrderPlan ? (
+        <PlanSearchCard
+          setQueryData={(query) => FindPlanLastCondition(query)}
+        />
+      ) : null}
+      {/* クリニック情報を選択 */}
+      {showPage === 5 && queryOrderPlan ? (
+        <ClinicSearchCard
+          setQueryData={(query) => selectParamsData(query, 6)}
+        />
+      ) : null}
+      {/* 自身の情報を選択 */}
+      {showPage === 4 && queryOrderPlan ? (
+        <YourselfCard setQueryData={(query) => selectParamsData(query, 5)} />
       ) : null}
       {/* 部位別を選択 */}
-      {showPage === 4 && queryOrderPlan ? (
+      {showPage === 3 && queryOrderPlan ? (
         <PartsCard
-          setPartsData={(query) => selectParamsData(query, 5)}
+          setPartsData={(query) => selectParamsData(query, 4)}
           orderPlan={queryOrderPlan}
         />
       ) : null}
       {/* 大まかな部位を選ぶ */}
-      {showPage === 3 && queryOrderPlan ? (
+      {showPage === 2 && queryOrderPlan ? (
         <AboutPartsSelectCard
-          setAboutPartsSelectData={(query) => selectParamsData(query, 4)}
+          setAboutPartsSelectData={(query) => selectParamsData(query, 3)}
           orderPlan={queryOrderPlan}
         />
       ) : null}
       {/* カテゴリを選ぶ */}
-      {showPage === 2 && queryOrderPlan ? (
+      {showPage === 1 && queryOrderPlan ? (
         <OriginPartsSelectCard
-          setOriginPartsSelectData={(query) => selectParamsData(query, 3)}
+          setOriginPartsSelectData={(query) => selectParamsData(query, 2)}
           orderPlan={queryOrderPlan}
         />
       ) : null}
-      {/* 料金表示を選択 */}
+      {/* 料金表示を選択
       {showPage === 1 && queryOrderPlan ? (
         <PriceViewCard
           selectParamsData={(query) => selectParamsData(query, 2)}
         />
-      ) : null}
+      ) : null} */}
       {/* 性別を選択する */}
       {showPage === 0 && queryOrderPlan ? (
         <GenderCard
@@ -206,7 +202,7 @@ export const SearchSalon: VFC = memo(() => {
           </Button>
         )}
       </Box>
-      {showPage > 2 && (
+      {/* {showPage > 2 && (
         <Box>
           <Center m="2em" textAlign="center">
             <Button
@@ -218,16 +214,14 @@ export const SearchSalon: VFC = memo(() => {
               検索
             </Button>
           </Center>
-          {/* <Center m="14" textAlign="center">
-            〇件見つかりました
-          </Center> */}
         </Box>
-      )}
+      )} */}
       <Center m="2em">
         <Button variant={"secBase"} onClick={transitionTop}>
           最初からやり直す
         </Button>
       </Center>
+      <Adsense />
     </>
   );
 });

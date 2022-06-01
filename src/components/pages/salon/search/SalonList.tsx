@@ -12,12 +12,20 @@ import { OrderPlanIdName } from "../../../../type/app/OrderPlanIdName";
 import { OrderPlan } from "../../../../type/app/OrderPlan";
 import { BaseButton } from "../../../atoms/button/BaseButton";
 import { CreateParameterHooks } from "../../../../hooks/app/parameter/CreateParameterHooks";
+import { OrderPlanIdNameClass } from "../../../../hooks/app/class/OrderPlanIdName.class";
+import { Adsense } from "../../../../Adsense";
 
 const numOfTakeData = 10;
 
-export const SalonList: VFC = memo(() => {
+type Props = {
+  title: (value: string) => void;
+};
+export const SalonList: VFC<Props> = memo((props) => {
+  const { title } = props;
   const { getTreatmentPrice, getCountPrice } = PriceApi();
   const { getQueryOrderPlanInSearch } = CreateParameterHooks();
+  const { changeOrderPlanToOrderPlanIdName } = OrderPlanIdNameClass();
+
   const { search } = useLocation();
 
   const [orderDataIdName, setOrderDataIdName] = useState<OrderPlanIdName>();
@@ -32,21 +40,27 @@ export const SalonList: VFC = memo(() => {
     block: 0,
   });
 
+  const createTitle = useCallback(
+    (idName: OrderPlanIdName) => {
+      const data = Object.entries(idName).map(([key, value]) => value.name);
+      const res = data.reduce((a, b) => a + "," + b);
+      title(res);
+    },
+    [title]
+  );
+
   const getTreatmentPriceFunc = useCallback(
     async (orderParams: OrderPlan, take: number, skip: number) => {
       const data = await getTreatmentPrice(orderParams, take, skip);
+      const idName = changeOrderPlanToOrderPlanIdName(orderParams);
+      idName.originParts = data.originCategory;
+      idName.AboutCategory = data.aboutCategory;
+      idName.parts = data.baseParts;
+      createTitle(idName);
+      setOrderDataIdName(idName);
       setPlanData(data.prices);
-      setOrderDataIdName({
-        gender: orderParams.gender,
-        paySystem: orderParams.paySystem,
-        originParts: data.originCategory,
-        AboutCategory: data.aboutCategory,
-        parts: data.baseParts,
-        skinCollor: orderParams.skinCollor,
-        hair: orderParams.hair,
-      });
     },
-    [getTreatmentPrice]
+    [getTreatmentPrice, changeOrderPlanToOrderPlanIdName, createTitle]
   );
 
   const getMaxDataCount = useCallback(
@@ -102,7 +116,7 @@ export const SalonList: VFC = memo(() => {
       wrap={"wrap"}
       justifyContent={"center"}
     >
-      <Box w={{ md: "24rem", sm: "20rem" }} pt={"3rem"} mx={"auto"}>
+      <Box w={{ md: "24rem", sm: "20rem" }} mx={"auto"}>
         <Text>検索結果</Text>
         {orderDataIdName && (
           <SearchResultCard
@@ -119,6 +133,7 @@ export const SalonList: VFC = memo(() => {
           />
         </Box>
       </Box>
+      <Adsense />
       <Box w={{ md: "55rem", sm: "100%" }} mx={"auto !important"}>
         {maxValue && maxValue > 0 ? (
           <Pagenation
@@ -151,6 +166,7 @@ export const SalonList: VFC = memo(() => {
           </Box>
         )}
       </Box>
+      <Adsense />
     </Stack>
   );
 });

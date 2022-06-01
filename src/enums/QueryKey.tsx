@@ -6,4 +6,11 @@ export enum QueryKey {
   parts = "par",
   skinCollor = "sk",
   hair = "ha",
+  roomType = "ro",
+  interior = "in",
+  staff = "sta",
+  card = "ca",
+  loan = "lo",
+  contract = "co",
+  option = "op",
 }

@@ -1,6 +1,7 @@
 import { Box, Checkbox, Flex, HStack, Stack, Text } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, useState, VFC } from "react";
 import { useLocation, useParams, useRouteMatch } from "react-router-dom";
+import { Adsense } from "../../../../Adsense";
 import { ClinicApi } from "../../../../hooks/api/ClinicApi";
 import { Clinic } from "../../../../type/api/Clinic";
 import { ClinicNestPriceDto } from "../../../../type/api/dto/ClinicNestPriceDto";
@@ -9,7 +10,12 @@ import { ClinicOptionCard } from "../../../organisms/card/ClinicOptionCard";
 import { ClinicPlanCard } from "../../../organisms/card/ClinicPlanCard";
 import { ClinicSummaryCard } from "../../../organisms/card/ClinicSummaryCard";
 
-export const ClinicDetail: VFC = memo(() => {
+type Props = {
+  title: (value: string) => void;
+};
+
+export const ClinicDetail: VFC<Props> = memo((props) => {
+  const { title } = props;
   const param = useParams<{ id: string }>();
   const { getOneClinic } = ClinicApi();
 
@@ -19,9 +25,10 @@ export const ClinicDetail: VFC = memo(() => {
   const getOneClinicFunc = useCallback(
     async (clinicId: string) => {
       const data = await getOneClinic(clinicId);
+      title(data.name);
       setClinicData(data);
     },
-    [getOneClinic]
+    [getOneClinic, title]
   );
 
   const changeTab = useCallback((tab: string) => {
@@ -97,6 +104,7 @@ export const ClinicDetail: VFC = memo(() => {
                 {/* プラン詳細 */}
               </Box>
             </HStack>
+            <Adsense />
           </Stack>
         </>
       )}

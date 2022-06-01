@@ -112,7 +112,7 @@ export const PlanCard: VFC<Props> = memo((props) => {
               <Text as={"a"} fontSize={"0.4rem"}>
                 ({plan.clinic.tax || "不明"})
               </Text>
-              {orderDataIdName.paySystem !== "総額" ? (
+              {orderDataIdName.paySystem.id !== "総額" ? (
                 <>
                   <Text as={"a"} fontSize={{ md: "1.8rem", sm: "1.5rem" }}>
                     ￥{plan.oncePrice.toLocaleString()}
@@ -129,7 +129,7 @@ export const PlanCard: VFC<Props> = memo((props) => {
               )}
             </Box>
             <Box fontSize={"0.7rem"}>
-              {orderDataIdName.paySystem !== "総額" ? (
+              {orderDataIdName.paySystem.id !== "総額" ? (
                 <>
                   <Text as="a">総額</Text>
                   <Text as="a">￥{plan.price.toLocaleString()}</Text>

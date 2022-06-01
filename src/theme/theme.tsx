@@ -93,6 +93,14 @@ const theme = extendTheme({
         },
       },
     },
+    CheckBox: {
+      baseStyle: {
+        _focus: {
+          boxShadow: "none",
+          outline: "none",
+        },
+      },
+    },
   },
 });
 
